@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1092944715077-25m1mdalujbnfab12hsr73oetjgmmdeh.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1092944715077-25m1mdalujbnfab12hsr73oetjgmmdeh</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>1092944715077-4reu6hmeodq55k91c09tno2qdvr4poc3.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB-4xgwAtHJJ-Y9qulowHgvGpgYZ3lbptw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1092944715077</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>ly.sabek.delivery</string>
+	<key>PROJECT_ID</key>
+	<string>sabek-6fd3f</string>
+	<key>STORAGE_BUCKET</key>
+	<string>sabek-6fd3f.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1092944715077:ios:ebcbc08af35c7b99fab22c</string>
+	<key>DATABASE_URL</key>
+	<string>https://sabek-6fd3f-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>
