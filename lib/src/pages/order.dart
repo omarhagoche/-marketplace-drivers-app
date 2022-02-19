@@ -88,7 +88,7 @@ class _OrderWidgetState extends StateMVC<OrderWidget>
         ),
       )
           : Container(
-        height: _con.order!.orderStatus!.key == 'delivered' ? 190 : 250,
+        height: _con.order?.orderStatus?.key == 'delivered' ? 190 : 250,
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         decoration: BoxDecoration(
             color: Theme

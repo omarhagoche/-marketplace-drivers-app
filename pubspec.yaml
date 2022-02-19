@@ -50,6 +50,11 @@ dependencies:
   firebase_analytics: ^9.1.0
   intl: 0.17.0
   http: ^0.13.4
+  # getx
+  get: ^4.6.1
+  dio: ^4.0.4
+  flutter_form_builder: ^7.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
