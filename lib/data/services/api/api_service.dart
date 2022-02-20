@@ -10,7 +10,7 @@ class ApiService {
   ApiService()
       : dio = Dio(
           BaseOptions(
-            baseUrl: '',
+            baseUrl: 'https://test.sabek.app/api/',
             connectTimeout: 10000,
             receiveTimeout: 15000,
             headers: {

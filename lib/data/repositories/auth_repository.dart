@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../core/utils/token.dart';
@@ -14,31 +15,47 @@ class AuthRepository extends ApiService {
   }
 
 
-  Future<String?> logIn({
-    required String name,
+  Future<dynamic?> logIn({
+    required String phoneNumber,
     required String password,
   }) async {
     final requestBody = {
-      'name': name,
+      'phone_number': phoneNumber,
       'password': password,
     };
     String? token;
+    dynamic responseBody;
 
-    String loginUrl = '';
+    String loginUrl = 'driver/login';
 
     await post(
       loginUrl,
       data: json.encode(requestBody),
       requireAuthorization: false,
     ).then((response) async {
-      if (response.statusCode == 200) {
-        token = response.data['token'];
-        if (token != null) {
-          await Token.persistToken(token!);
+
+        print('${response.statusCode}');
+       // print('${response.data}');
+        if (response.statusCode == 200) {
+          token = response.data['data']['token'];
+          responseBody = response.data['data'];
+        /*  if (token != null) {
+            await Token.persistToken(token!);
+          }*/
+        } else if (response.statusCode == 422) {
+          token = '442';
         }
-      }
+
+    }).catchError((onError) async{
+      print('error : ${onError} ${onError.toString().isEmpty}');
+
+      responseBody = 'error';
+
     });
-    return token;
+    //
+    print('token $token');
+  //  print('response body $responseBody');
+    return responseBody;
   }
 
   Future<String?> signUp({
@@ -72,5 +89,19 @@ class AuthRepository extends ApiService {
     return token;
   }
 
+
+
+  void setCurrentUser(jsonString) async {
+    try {
+      if (json.decode(jsonString)['data'] != null) {
+
+      //  SharedPreferences prefs = await SharedPreferences.getInstance();
+       /* await prefs.setString(
+            'current_user', json.encode(json.decode(jsonString)['data']));*/
+      }
+    } catch (e) {
+      throw new Exception(e);
+    }
+  }
 
 }
