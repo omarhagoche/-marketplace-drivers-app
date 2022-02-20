@@ -41,16 +41,17 @@ class StatisticsCarouselWidget extends StatelessWidget {
                       amount: double.tryParse(statistics.availabelOrdersForSettlement!.fee!),
                     ),
                     StatisticCarouselItemWidget(
-                      title: 'coupons',
-                      amount: double.tryParse(statistics.availabelOrdersForSettlement!.amountRestaurantCoupons!)!
-                          +double.tryParse(statistics.availabelOrdersForSettlement!.amountDeliveryCoupons!)!,
+                      title: 'total_earning_before',
+                      amount:  double.tryParse(statistics.availabelOrdersForSettlement!.delivery_fee!)!-double.tryParse(statistics.availabelOrdersForSettlement!.fee!)!,
                     ),
+
                   ],
                 ),
                 SizedBox(height: 10,),
                 StatisticCarouselItemWidget(
-                  title: 'total_earning_before',
-                  amount:  double.tryParse(statistics.availabelOrdersForSettlement!.delivery_fee!)!-double.tryParse(statistics.availabelOrdersForSettlement!.fee!)!,
+                  title: 'coupons',
+                  amount: double.tryParse(statistics.availabelOrdersForSettlement!.amountRestaurantCoupons!)!
+                      +double.tryParse(statistics.availabelOrdersForSettlement!.amountDeliveryCoupons!)!,
                 ),
               ],
             ));

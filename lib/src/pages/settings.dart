@@ -150,7 +150,7 @@ class _SettingsWidgetState extends StateMVC<SettingsWidget> {
                               style: Theme.of(context).textTheme.bodyText2,
                             ),
                             trailing: Text(
-                              Helper.limitString(currentUser.value.address!),
+                              Helper.limitString(currentUser.value.address??""),
                               overflow: TextOverflow.fade,
                               softWrap: false,
                               style: TextStyle(color: Theme.of(context).focusColor),

@@ -28,6 +28,9 @@ import 'package:overlay_support/overlay_support.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  ErrorWidget.builder = (FlutterErrorDetails errorDetails) {
+    return Container();
+  };
   print(CustomTrace(StackTrace.current, message: "base_url: ${baseURL}"));
   print(CustomTrace(StackTrace.current, message: "api_base_url: ${apiBaseUrl}"));
   runApp(MyApp());
