@@ -35,6 +35,8 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>MinimumOSVersion</key>
+	<string>10.0</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Camera permission is required for order barcode scanning.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
