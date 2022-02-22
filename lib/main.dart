@@ -1,28 +1,17 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:deliveryboy/routes/app_pages.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:location/location.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'core/values/colors.dart';
+import 'data/repositories/settings_repository.dart';
 import 'generated/l10n.dart';
-import 'route_generator.dart';
-import 'src/helpers/app_config.dart' as config;
-import 'src/helpers/base.dart';
-import 'src/helpers/custom_trace.dart';
-import 'src/helpers/fallback-cupertino-localization-delegete.dart';
-import 'src/models/setting.dart';
-import 'src/models/user.dart';
-import 'src/repository/settings_repository.dart' as settingRepo;
-import 'src/repository/user_repository.dart' as userRepo;
-import 'package:timeago/timeago.dart' as timeago;
+import 'core/values/app_config.dart' as config;
+import 'core/utils/fallback-cupertino-localization-delegete.dart';
+import 'data/models/setting.dart';
 import 'package:overlay_support/overlay_support.dart';
+
+import 'routes/app_pages.dart';
 
 /*
 Future<void> main() async {
@@ -180,13 +169,13 @@ Future<void> main() async {
     ResponsiveSizer(
       builder: (context, orientation, screenType,) {
         return ValueListenableBuilder(
-          valueListenable: settingRepo.setting,
+          valueListenable: setting,
           builder: (context, Setting _setting, _) {
              FirebaseAnalytics analytics = FirebaseAnalytics.instance;
             return OverlaySupport.global(
               child: GetMaterialApp(
                 onInit: (){
-                  settingRepo.initSettings();
+                  SettingRepository.instance.initSettings();
                 },
                 debugShowCheckedModeBanner: false,
                 defaultTransition: Transition.topLevel,

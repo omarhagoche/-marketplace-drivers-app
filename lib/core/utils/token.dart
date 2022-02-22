@@ -1,6 +1,5 @@
 
-
-import '../../src/models/user.dart';
+import '../../data/models/user.dart';
 
 class CurrentUser {
   static Future<void> saveUser(String? user) async {

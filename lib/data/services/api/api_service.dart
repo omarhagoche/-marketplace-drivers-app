@@ -11,14 +11,16 @@ class ApiService {
       : dio = Dio(
           BaseOptions(
             baseUrl: 'https://test.sabek.app/api/',
-            connectTimeout: 10000,
-            receiveTimeout: 15000,
+           // connectTimeout: 10000,
+          //  receiveTimeout: 15000,
             headers: {
               Headers.contentTypeHeader: Headers.jsonContentType,
               'charset': 'utf-8'
             },
           ),
-        );
+        )..interceptors.addAll([
+    LogInterceptor(request: true, responseBody: true, requestBody: true),
+  ]);
 
   factory ApiService.getInstance() {
     return ApiService();
