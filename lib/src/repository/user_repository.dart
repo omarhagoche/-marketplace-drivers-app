@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import '../../data/models/user.dart';
 import '../helpers/base.dart';
 import '../models/confirm_reset_code.dart';
 import '../models/driver_type.dart';
@@ -14,7 +15,6 @@ import '../helpers/custom_trace.dart';
 import '../helpers/helper.dart';
 import '../models/address.dart';
 import '../models/credit_card.dart';
-import '../models/user.dart';
 import '../repository/user_repository.dart' as userRepo;
 
 ValueNotifier<User> currentUser = new ValueNotifier(User());

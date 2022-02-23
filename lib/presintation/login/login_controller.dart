@@ -1,18 +1,14 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/utils/token.dart';
+import '../../data/models/user.dart';
 import '../../data/repositories/auth_repository.dart';
+import '../../data/repositories/category_repository.dart';
+import '../../data/repositories/faq_repository.dart';
 import '../../routes/app_pages.dart';
-import '../../src/helpers/base.dart';
-import '../../src/helpers/custom_trace.dart';
-import '../../src/models/credit_card.dart';
-import '../../src/models/user.dart';
+
+
 
 class LoginController extends GetxController {
   final formKey = GlobalKey<FormBuilderState>();
@@ -25,7 +21,13 @@ class LoginController extends GetxController {
     hidePassword.value = !hidePassword.value;
   }
 
-
+@override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+CategoryRepository.instance.getCategories();
+FaqCategoryRepository.instance.getFaqCategories();
+CategoryRepository.instance.getCategory('10');  }
   void forgetPassword(){
     // TODO : go to forget password
   }

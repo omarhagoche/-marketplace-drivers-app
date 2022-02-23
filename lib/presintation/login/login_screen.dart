@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
+import '../../core/utils/helper.dart';
 import '../../generated/l10n.dart';
-import '../../routes/app_pages.dart';
 import '../../src/elements/BlockButtonWidget.dart';
-import '../../src/helpers/helper.dart';
-import '../widgets/text_field.dart';
 import 'login_controller.dart';
-import '../../src/helpers/app_config.dart' as config;
+import '../../core/values/app_config.dart' as config;
 
 class LoginScreen extends GetView<LoginController> {
   const LoginScreen({key}) : super(key: key);
