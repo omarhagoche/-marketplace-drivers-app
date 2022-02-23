@@ -58,6 +58,47 @@ class AuthRepository extends ApiService {
     return responseBody;
   }
 
+
+  Future<dynamic?> resetPassword({
+    required String password,
+  }) async {
+    final requestBody = {
+      'password': password,
+    };
+    String? token;
+    dynamic responseBody;
+
+    String loginUrl = 'reset_password';
+
+    await post(
+      loginUrl,
+      data: json.encode(requestBody),
+      requireAuthorization: false,
+    ).then((response) async {
+
+        print('${response.statusCode}');
+       // print('${response.data}');
+        if (response.statusCode == 200) {
+          responseBody = response.data['data'];
+        /*  if (token != null) {
+            await Token.persistToken(token!);
+          }*/
+        } else if (response.statusCode == 422) {
+          token = '442';
+        }
+
+    }).catchError((onError) async{
+      print('error : ${onError} ${onError.toString().isEmpty}');
+
+      responseBody = 'error';
+
+    });
+    //
+    print('token $token');
+  //  print('response body $responseBody');
+    return responseBody;
+  }
+
   Future<String?> signUp({
     required String phoneNumber,
     required String password,
