@@ -9,9 +9,9 @@ import '../controllers/chat_controller.dart';
 import '../elements/ChatMessageListItemWidget.dart';
 import '../elements/EmptyMessagesWidget.dart';
 import '../elements/ShoppingCartButtonWidget.dart';
-import '../models/chat.dart';
-import '../models/conversation.dart';
-import '../models/route_argument.dart';
+import '../../data/models/chat.dart';
+import '../../data/models/conversation.dart';
+import '../../data/models/route_argument.dart';
 
 class ChatWidget extends StatefulWidget {
   final RouteArgument? routeArgument;

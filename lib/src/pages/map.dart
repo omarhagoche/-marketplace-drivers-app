@@ -6,9 +6,9 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import '../../generated/l10n.dart';
 import '../controllers/map_controller.dart';
 import '../elements/CircularLoadingWidget.dart';
-import '../helpers/helper.dart';
-import '../models/order.dart';
-import '../models/route_argument.dart';
+import '../../core/utils/helper.dart';
+import '../../data/models/order.dart';
+import '../../data/models/route_argument.dart';
 
 class MapWidget extends StatefulWidget {
   final RouteArgument? routeArgument;

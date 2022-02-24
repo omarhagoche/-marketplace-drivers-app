@@ -4,7 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import '../../generated/l10n.dart';
 import 'package:flutter/material.dart';
 
-import '../models/user.dart';
+import '../../data/models/user.dart';
 
 class ProfileAvatarWidget extends StatelessWidget {
   final User? user;

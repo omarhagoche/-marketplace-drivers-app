@@ -3,13 +3,14 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../helpers/base.dart';
-import '../helpers/custom_trace.dart';
-import '../helpers/helper.dart';
-import '../models/address.dart';
-import '../models/filter.dart';
-import '../models/restaurant.dart';
-import '../models/review.dart';
+
+import '../../core/utils/custom_trace.dart';
+import '../../core/utils/helper.dart';
+import '../../core/values/urls.dart';
+import '../../data/models/address.dart';
+import '../../data/models/filter.dart';
+import '../../data/models/restaurant.dart';
+import '../../data/models/review.dart';
 import '../repository/user_repository.dart';
 
 Future<Stream<Restaurant>> getNearRestaurants(Address myLocation, Address areaLocation) async {

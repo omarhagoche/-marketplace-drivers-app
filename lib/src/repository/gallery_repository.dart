@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../helpers/base.dart';
-import '../helpers/helper.dart';
-import '../models/gallery.dart';
-import '../models/user.dart';
+import '../../core/utils/helper.dart';
+import '../../core/values/urls.dart';
+import '../../data/models/gallery.dart';
+import '../../data/models/user.dart';
 import '../repository/user_repository.dart';
 
 Future<Stream<Gallery>> getGalleries(String idRestaurant) async {

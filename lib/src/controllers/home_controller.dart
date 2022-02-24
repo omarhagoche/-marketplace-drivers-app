@@ -1,10 +1,10 @@
 import 'package:mvc_pattern/mvc_pattern.dart';
 
-import '../models/category.dart';
-import '../models/food.dart';
-import '../models/restaurant.dart';
-import '../models/review.dart';
-import '../repository/category_repository.dart';
+import '../../data/models/category.dart';
+import '../../data/models/food.dart';
+import '../../data/models/restaurant.dart';
+import '../../data/models/review.dart';
+// import '../repository/category_repository.dart';
 import '../repository/food_repository.dart';
 import '../repository/restaurant_repository.dart';
 
@@ -20,11 +20,11 @@ class HomeController extends ControllerMVC {
     listenForTrendingFoods();
   }
 
-  void listenForCategories() async {
+  void listenForCategories() async {/*
     final Stream<Category> stream = await getCategories();
     stream.listen((Category _category) {
       setState(() => categories.add(_category));
-    }, onError: (a) {}, onDone: () {});
+    }, onError: (a) {}, onDone: () {});*/
   }
 
   void listenForRecentReviews() async {

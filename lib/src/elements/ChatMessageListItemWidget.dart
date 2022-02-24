@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../models/chat.dart';
+import '../../data/models/chat.dart';
 import '../repository/user_repository.dart';
 
 class ChatMessageListItem extends StatelessWidget {

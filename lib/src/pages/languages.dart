@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../generated/l10n.dart';
 import '../elements/ShoppingCartButtonWidget.dart';
-import '../models/language.dart';
+import '../../data/models/language.dart';
 import '../repository/settings_repository.dart' as settingRepo;
 
 class LanguagesWidget extends StatefulWidget {

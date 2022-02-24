@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
-import '../models/food.dart';
-import '../models/gallery.dart';
-import '../models/restaurant.dart';
-import '../models/review.dart';
+import '../../data/models/food.dart';
+import '../../data/models/gallery.dart';
+import '../../data/models/restaurant.dart';
+import '../../data/models/review.dart';
 import '../repository/food_repository.dart';
 import '../repository/gallery_repository.dart';
 import '../repository/restaurant_repository.dart';

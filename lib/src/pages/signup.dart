@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import '../helpers/helper.dart';
-import '../models/route_argument.dart';
+import '../../core/utils/helper.dart';
+import '../../data/models/route_argument.dart';
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
 import '../controllers/user_controller.dart';
 import '../elements/BlockButtonWidget.dart';
-import '../helpers/app_config.dart' as config;
+import '../../core/values/app_config.dart' as config;
 
 class SignUpWidget extends StatefulWidget {
   final RouteArgument? routeArgument;

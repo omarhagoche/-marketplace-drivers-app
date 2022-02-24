@@ -1,5 +1,5 @@
 import 'package:deliveryboy/generated/l10n.dart';
-import 'package:deliveryboy/src/models/route_argument.dart';
+import 'package:deliveryboy/data/models/route_argument.dart';
 import 'package:flutter/material.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import '../elements/BlockButtonWidget.dart';

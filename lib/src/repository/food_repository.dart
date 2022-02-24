@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import '../helpers/base.dart';
-import '../helpers/helper.dart';
-import '../models/favorite.dart';
-import '../models/food.dart';
-import '../models/user.dart';
+import '../../core/utils/helper.dart';
+import '../../core/values/urls.dart';
+import '../../data/models/favorite.dart';
+import '../../data/models/food.dart';
+import '../../data/models/user.dart';
 import '../repository/user_repository.dart' as userRepo;
 
 Future<Stream<Food>> getTrendingFoods() async {

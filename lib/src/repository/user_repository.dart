@@ -1,20 +1,22 @@
 import 'dart:convert';
 import 'dart:io';
 
+import '../../core/values/urls.dart';
+import '../../core/utils/helper.dart';
 import '../../data/models/user.dart';
-import '../helpers/base.dart';
-import '../models/confirm_reset_code.dart';
-import '../models/driver_type.dart';
-import '../models/reset_password.dart';
-import '../models/statistic.dart';
+
+import '../../data/models/confirm_reset_code.dart';
+
+import '../../data/models/driver_type.dart';
+import '../../data/models/reset_password.dart';
+import '../../data/models/statistic.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../helpers/custom_trace.dart';
-import '../helpers/helper.dart';
-import '../models/address.dart';
-import '../models/credit_card.dart';
+import '../../core/utils/custom_trace.dart';
+import '../../data/models/address.dart';
+import '../../data/models/credit_card.dart';
 import '../repository/user_repository.dart' as userRepo;
 
 ValueNotifier<User> currentUser = new ValueNotifier(User());

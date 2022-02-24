@@ -13,8 +13,8 @@ import '../../generated/l10n.dart';
 import '../controllers/order_details_controller.dart';
 import '../elements/DrawerWidget.dart';
 import '../elements/ShoppingCartButtonWidget.dart';
-import '../helpers/helper.dart';
-import '../models/route_argument.dart';
+import '../../core/utils/helper.dart';
+import '../../data/models/route_argument.dart';
 
 class OrderNotWidget extends StatefulWidget {
   final RouteArgument? routeArgument;

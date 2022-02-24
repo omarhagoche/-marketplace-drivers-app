@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../elements/StatisticsCarouselLoaderWidget.dart';
-import '../models/statistic.dart';
+import '../../data/models/statistic.dart';
 import 'StatisticCarouselItemWidget.dart';
 
 class StatisticsCarouselWidget extends StatelessWidget {

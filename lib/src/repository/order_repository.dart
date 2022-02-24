@@ -4,13 +4,14 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
 
-import '../helpers/base.dart';
-import '../helpers/custom_trace.dart';
-import '../helpers/helper.dart';
-import '../models/address.dart';
-import '../models/order.dart';
-import '../models/order_status.dart';
-import '../models/user.dart';
+import '../../core/utils/custom_trace.dart';
+import '../../core/utils/helper.dart';
+
+import '../../core/values/urls.dart';
+import '../../data/models/address.dart';
+import '../../data/models/order.dart';
+import '../../data/models/order_status.dart';
+import '../../data/models/user.dart';
 import '../repository/user_repository.dart' as userRepo;
 
 Future<Stream<Order>> getOrders() async {

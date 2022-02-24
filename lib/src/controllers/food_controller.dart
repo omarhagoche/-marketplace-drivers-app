@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
-import '../models/cart.dart';
-import '../models/extra.dart';
-import '../models/favorite.dart';
-import '../models/food.dart';
+import '../../data/models/cart.dart';
+import '../../data/models/extra.dart';
+import '../../data/models/favorite.dart';
+import '../../data/models/food.dart';
 import '../repository/food_repository.dart';
 
 class FoodController extends ControllerMVC {

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
-import '../models/credit_card.dart';
-import '../models/user.dart';
+import '../../data/models/credit_card.dart';
+import '../../data/models/user.dart';
 import '../repository/user_repository.dart' as repository;
 
 class SettingsController extends ControllerMVC {

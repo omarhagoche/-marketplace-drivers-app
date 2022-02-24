@@ -1,4 +1,4 @@
-import '../helpers/sabek_icons.dart';
+import '../../core/utils/sabek_icons.dart';
 import 'messages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,7 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../generated/l10n.dart';
 import '../elements/DrawerWidget.dart';
-import '../models/route_argument.dart';
+import '../../data/models/route_argument.dart';
 import '../pages/orders.dart';
 import '../pages/orders_history.dart';
 import '../pages/profile.dart';

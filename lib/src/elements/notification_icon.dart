@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../helpers/sabek_icons.dart';
+import '../../core/utils/sabek_icons.dart';
 
 class NotificationIcon extends StatelessWidget {
 

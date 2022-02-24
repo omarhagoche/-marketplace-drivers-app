@@ -2,7 +2,7 @@ import '../elements/EmptyOrdersWidget.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../controllers/order_controller.dart';
-import '../models/order_noti.dart';
+import '../../data/models/order_noti.dart';
 import '../elements/OrderNotificationItemWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';

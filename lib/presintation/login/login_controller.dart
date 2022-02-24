@@ -29,10 +29,10 @@ CategoryRepository.instance.getCategories();
 FaqCategoryRepository.instance.getFaqCategories();
 CategoryRepository.instance.getCategory('10');  }
   void forgetPassword(){
-    // TODO : go to forget password
+    Get.toNamed(Routes.FORGET_PASSWORD);
   }
   void signUp(){
-    // TODO :: go to sign up
+    Get.toNamed(Routes.SIGNUP);
   }
 
   void login() async {
@@ -48,7 +48,9 @@ CategoryRepository.instance.getCategory('10');  }
           print("response 44: $value");
           if(value != null) {
             CurrentUser.saveUser(value.toString());
+            goHome();
             if(value == 'error') {
+              goHome();
               ScaffoldMessenger.of(formKey.currentContext!).showSnackBar(SnackBar(
                 content: Text('رقم الهاتف او كلمة المرور خاظئ'),
               ));

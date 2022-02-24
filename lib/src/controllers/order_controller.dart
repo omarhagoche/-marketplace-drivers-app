@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../helpers/helper.dart';
-import '../models/route_argument.dart';
+import '../../core/utils/helper.dart';
+import '../../data/models/route_argument.dart';
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
-import '../models/order.dart';
+import '../../data/models/order.dart';
 import '../repository/order_repository.dart';
 
 class OrderController extends ControllerMVC {

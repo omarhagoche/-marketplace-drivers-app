@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
-import '../helpers/base.dart';
+import '../../core/values/urls.dart';
 import 'settings_repository.dart';
 import 'package:http/http.dart' as http;
-import '../helpers/helper.dart';
-import '../models/notification.dart';
-import '../models/user.dart';
+import '../../core/utils/helper.dart';
+import '../../data/models/notification.dart';
+import '../../data/models/user.dart';
 import '../repository/user_repository.dart' as userRepo;
 
 Future<Stream<Notification>> getNotifications() async {

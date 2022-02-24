@@ -1,19 +1,19 @@
 import 'dart:io';
 import 'dart:async';
 
-import '../models/driver_type.dart';
+import '../../core/utils/helper.dart';
 
-import '../models/confirm_reset_code.dart';
-import '../models/reset_password.dart';
-import '../models/route_argument.dart';
+import '../../data/models/driver_type.dart';
+import '../../data/models/confirm_reset_code.dart';
+import '../../data/models/reset_password.dart';
+import '../../data/models/route_argument.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
-import '../helpers/helper.dart';
-import '../models/user.dart';
+import '../../data/models/user.dart';
 import '../repository/user_repository.dart' as repository;
 
 class UserController extends ControllerMVC {

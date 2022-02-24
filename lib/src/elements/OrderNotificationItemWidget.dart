@@ -1,8 +1,8 @@
 import '../../generated/l10n.dart';
 
-import '../models/route_argument.dart';
+import '../../data/models/route_argument.dart';
 
-import '../models/order_noti.dart';
+import '../../data/models/order_noti.dart';
 import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
 

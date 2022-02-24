@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
-import '../models/conversation.dart' as model;
-import '../models/route_argument.dart';
+import '../../data/models/conversation.dart' as model;
+import '../../data/models/route_argument.dart';
 import '../repository/user_repository.dart';
 
 class MessageItemWidget extends StatefulWidget {

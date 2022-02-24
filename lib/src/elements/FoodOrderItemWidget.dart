@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../helpers/helper.dart';
-import '../models/food_order.dart';
-import '../models/order.dart';
-import '../models/route_argument.dart';
+import '../../core/utils/helper.dart';
+import '../../data/models/food_order.dart';
+import '../../data/models/order.dart';
+import '../../data/models/route_argument.dart';
 
 class FoodOrderItemWidget extends StatelessWidget {
   final String? heroTag;

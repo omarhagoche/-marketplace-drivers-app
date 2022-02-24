@@ -4,11 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
-import '../helpers/app_config.dart' as config;
-import '../helpers/helper.dart';
-import '../helpers/maps_util.dart';
-import '../models/address.dart';
-import '../models/order.dart';
+import '../../core/values/app_config.dart' as config;
+import '../../core/utils/helper.dart';
+import '../../core/utils/maps_util.dart';
+import '../../data/models/address.dart';
+import '../../data/models/order.dart';
 import '../repository/order_repository.dart';
 import '../repository/settings_repository.dart' as sett;
 

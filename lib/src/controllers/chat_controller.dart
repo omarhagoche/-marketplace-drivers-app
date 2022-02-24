@@ -2,10 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
+import '../../data/models/chat.dart';
+import '../../data/models/conversation.dart';
+import '../../data/repositories/chat_repository.dart';
 import '../../generated/l10n.dart';
-import '../models/chat.dart';
-import '../models/conversation.dart';
-import '../repository/chat_repository.dart';
+
 import '../repository/notification_repository.dart';
 import '../repository/user_repository.dart';
 

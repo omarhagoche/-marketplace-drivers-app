@@ -1,12 +1,12 @@
-import '../models/route_argument.dart';
+import '../../data/models/route_argument.dart';
 
-import '../helpers/helper.dart';
+import '../../core/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import '../../generated/l10n.dart';
 import '../controllers/user_controller.dart';
 import '../elements/BlockButtonWidget.dart';
-import '../helpers/app_config.dart' as config;
+import '../../core/values/app_config.dart' as config;
 import '../repository/user_repository.dart' as userRepo;
 import 'package:form_field_validator/form_field_validator.dart';
 

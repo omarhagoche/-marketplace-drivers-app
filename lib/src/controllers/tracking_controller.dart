@@ -3,9 +3,9 @@ import 'package:intl/intl.dart' show DateFormat;
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
-import '../helpers/helper.dart';
-import '../models/order.dart';
-import '../models/order_status.dart';
+import '../../core/utils/helper.dart';
+import '../../data/models/order.dart';
+import '../../data/models/order_status.dart';
 import '../repository/order_repository.dart';
 
 class TrackingController extends ControllerMVC {

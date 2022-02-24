@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
-import '../models/notification.dart' as model;
+import '../../data/models/notification.dart' as model;
 import '../repository/notification_repository.dart';
 
 class NotificationController extends ControllerMVC {

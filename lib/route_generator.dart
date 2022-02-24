@@ -6,7 +6,7 @@ import 'package:deliveryboy/src/pages/order_not.dart';
 import 'package:deliveryboy/src/pages/reset_password.dart';
 import 'package:flutter/material.dart';
 
-import 'src/models/route_argument.dart';
+import 'data/models/route_argument.dart';
 import 'src/pages/forget_password.dart';
 import 'src/pages/help.dart';
 import 'src/pages/languages.dart';

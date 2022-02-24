@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:deliveryboy/src/models/route_argument.dart';
+import 'package:deliveryboy/data/models/route_argument.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../repository/settings_repository.dart';

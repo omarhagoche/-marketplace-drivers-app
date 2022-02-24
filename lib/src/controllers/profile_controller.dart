@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
-import '../models/statistic.dart';
+import '../../data/models/statistic.dart';
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import '../../generated/l10n.dart';
-import '../models/order.dart';
-import '../models/user.dart';
+import '../../data/models/order.dart';
+import '../../data/models/user.dart';
 import '../repository/order_repository.dart';
 import '../repository/user_repository.dart';
 

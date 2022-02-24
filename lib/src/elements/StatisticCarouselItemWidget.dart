@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../helpers/helper.dart';
+import '../../core/utils/helper.dart';
 
 class StatisticCarouselItemWidget extends StatelessWidget {
   final double? amount;

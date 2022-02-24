@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../elements/DrawerWidget.dart';
 import '../elements/OrderItemWidget.dart';
 import '../elements/OrderNotificationItemWidget.dart';
-import '../models/order_noti.dart';
+import '../../data/models/order_noti.dart';
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import '../repository/user_repository.dart' as userRepo;

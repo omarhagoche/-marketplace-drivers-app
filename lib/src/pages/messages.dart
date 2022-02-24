@@ -6,7 +6,7 @@ import '../controllers/chat_controller.dart';
 import '../elements/EmptyMessagesWidget.dart';
 import '../elements/MessageItemWidget.dart';
 import '../elements/ShoppingCartButtonWidget.dart';
-import '../models/conversation.dart';
+import '../../data/models/conversation.dart';
 
 class MessagesWidget extends StatefulWidget {
   final GlobalKey<ScaffoldState>? parentScaffoldKey;

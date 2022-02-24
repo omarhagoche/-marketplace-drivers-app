@@ -5,7 +5,7 @@ import '../../generated/l10n.dart';
 import '../controllers/settings_controller.dart';
 import '../elements/CircularLoadingWidget.dart';
 import '../elements/ProfileSettingsDialog.dart';
-import '../helpers/helper.dart';
+import '../../core/utils/helper.dart';
 import '../repository/user_repository.dart';
 
 class SettingsWidget extends StatefulWidget {
