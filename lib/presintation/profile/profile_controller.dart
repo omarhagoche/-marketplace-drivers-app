@@ -13,26 +13,26 @@ class ProfileController extends GetxController {
   Rxn<User> user = Rxn();
   RxList<Order> recentOrders = <Order>[].obs;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  Rxn<Statistics> statistics =  Rxn();
+  Rxn<Statistics> statistics = Rxn();
   Rxn<OverlayEntry?> loader = Rxn();
   final ImagePicker picker = ImagePicker();
   File? image;
+
   void updateDriverState(driverState) {
-    try{
+    try {
 
 
-
-    }catch(e){
+    } catch (e) {
       ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
         content: Text('حدث خطأ ما !'),
       ));
-
-    }}
+    }
+  }
 
   @override
   void onInit() {
-   // listenForUser();
-   // listenForStatistics();
+    // listenForUser();
+    // listenForStatistics();
     //listenForRecentOrders();
     super.onInit();
   }
@@ -43,10 +43,9 @@ class ProfileController extends GetxController {
         source: ImageSource.gallery,
 
       );
-      if(pickedFile != null) {
+      if (pickedFile != null) {
         image = File(pickedFile.path);
       }
-
     } catch (e) {
       // _pickImageError = e;
 
@@ -59,14 +58,12 @@ class ProfileController extends GetxController {
         source: ImageSource.camera,
 
       );
-      if(pickedFile != null) {
+      if (pickedFile != null) {
         image = File(pickedFile.path);
       }
-
     } catch (e) {
       // _pickImageError = e;
 
     }
   }
-
 }

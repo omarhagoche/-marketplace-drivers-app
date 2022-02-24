@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
-import '../controllers/chat_controller.dart';
+import '../../presintation/chat/chat_controller.dart';
 import '../elements/ChatMessageListItemWidget.dart';
 import '../elements/EmptyMessagesWidget.dart';
 import '../elements/ShoppingCartButtonWidget.dart';
@@ -28,9 +28,9 @@ class _ChatWidgetState extends StateMVC<ChatWidget> {
 
   late ChatController _con;
 
-  _ChatWidgetState() : super(ChatController()) {
+/*  _ChatWidgetState() : super(ChatController()) {
     _con = controller as ChatController;
-  }
+  }*/
 
   @override
   void initState() {

@@ -12,4 +12,5 @@ class AppStrings {
   static String dob = "تاريخ الميلاد";
   static String identityId = "الرقم الوطني";
   static String addStudent = "اضافة طفل";
+  static String newMessageFrom = "رسالة جديدة من";
 }

@@ -1,64 +1,62 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:get/get.dart';
 
 import '../../data/models/chat.dart';
 import '../../data/models/conversation.dart';
 import '../../data/repositories/chat_repository.dart';
 import '../../generated/l10n.dart';
 
-import '../repository/notification_repository.dart';
-import '../repository/user_repository.dart';
 
-class ChatController extends ControllerMVC {
+import '../../data/repositories/notification_repository.dart';
+import '../../src/repository/user_repository.dart' as userRepo;
+class ChatController extends GetxController {
   Conversation? conversation;
-  ChatRepository? _chatRepository;
   Stream<QuerySnapshot>? conversations;
   Stream<QuerySnapshot>? chats;
   GlobalKey<ScaffoldState>? scaffoldKey;
-
-  ChatController() {
+  @override
+  void onInit() {
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
-    _chatRepository = new ChatRepository();
+    super.onInit();
+
   }
 
 
   createConversation(Conversation _conversation) async {
-    _chatRepository!.createConversation(conversation!).then((value) {
+    ChatRepository.instance.createConversation(conversation!).then((value) {
       listenForChats(conversation!);
     });
   }
 
   listenForConversations() async {
-    _chatRepository!.getUserConversations(currentUser.value.id!).then((snapshots) {
-      setState(() {
+    ChatRepository.instance.getUserConversations(userRepo.currentUser.value.id!).then((snapshots) {
         conversations = snapshots;
-      });
+        update();
     });
   }
 
   listenForChats(Conversation _conversation) async {
-    _conversation.readByUsers!.add(currentUser.value.id!);
-    _chatRepository!.getChats(_conversation).then((snapshots) {
-      setState(() {
+    _conversation.readByUsers!.add(userRepo.currentUser.value.id!);
+    ChatRepository.instance.getChats(_conversation).then((snapshots) {
         chats = snapshots;
-      });
+        update();
     });
   }
 
   addMessage(Conversation _conversation, String text) {
-    Chat _chat = new Chat(text, DateTime.now().toUtc().millisecondsSinceEpoch, currentUser.value.id);
+    Chat _chat = new Chat(text, DateTime.now().toUtc().millisecondsSinceEpoch, userRepo.currentUser.value.id);
     if (_conversation.id == null) {
       _conversation.id = UniqueKey().toString();
       createConversation(_conversation);
     }
     _conversation.lastMessage = text;
     _conversation.lastMessageTime = _chat.time;
-    _conversation.readByUsers = [currentUser.value.id!];
-    _chatRepository!.addMessage(_conversation, _chat).then((value) {
+    _conversation.readByUsers = [userRepo.currentUser.value.id!];
+    ChatRepository.instance.addMessage(_conversation, _chat).then((value) {
       _conversation.users!.forEach((_user) {
-        if (_user.id != currentUser.value.id) {
-          sendNotification(text, S.of(state!.context)!.newMessageFrom + " " + currentUser.value.name!, _user);
+        if (_user.id != userRepo.currentUser.value.id) {
+          NotificationRepository.instance.sendNotification(text, 'newMessageFrom'.tr + " " + userRepo.currentUser.value.name!, _user);
         }
       });
     });
