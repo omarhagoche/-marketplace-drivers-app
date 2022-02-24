@@ -183,7 +183,7 @@ Future<void> main() async {
                 debugShowCheckedModeBanner: false,
                 defaultTransition: Transition.topLevel,
                 title: "sabek app",
-                initialRoute: Routes.HOME,
+                initialRoute: Routes.LOGIN,
                 getPages: AppPages.routes,
                 navigatorObservers: [
                   FirebaseAnalyticsObserver(analytics: analytics),
