@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../controllers/splash_screen_controller.dart';
 import '../repository/user_repository.dart';
@@ -25,7 +26,8 @@ class SplashScreenState extends StateMVC<SplashScreen> {
     loadData();
   }
 
-  void loadData() {
+  void loadData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     _con.progress.addListener(() {
       double progress = 0;
       _con.progress.value.values.forEach((_progress) {
@@ -33,10 +35,15 @@ class SplashScreenState extends StateMVC<SplashScreen> {
       });
       if (progress == 100) {
         try {
-          if (currentUser.value.apiToken == null) {
-            Navigator.of(context).pushReplacementNamed('/Login');
+          if (prefs.containsKey('permission')) {
+            if (currentUser.value.apiToken == null) {
+              Navigator.of(context).pushReplacementNamed('/Login');
+            } else {
+              settingRepo.versionCheck(context);
+            }
           } else {
-            settingRepo.versionCheck(context);          }
+            Navigator.of(context).pushReplacementNamed('/Permission');
+          }
         } catch (e) {}
       }
     });
@@ -65,7 +72,8 @@ class SplashScreenState extends StateMVC<SplashScreen> {
                 ),
                 SizedBox(height: 50),
                 CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).hintColor),
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      Theme.of(context).hintColor),
                 ),
               ],
             ),

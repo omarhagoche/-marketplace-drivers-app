@@ -115,7 +115,15 @@ class _OrderWidgetState extends StateMVC<OrderNotWidget> with SingleTickerProvid
                         Helper.getPrice(_con.order!.deliveryFee!, context, style: Theme.of(context).textTheme.subtitle1)
                       ],
                     ),
-
+                    _con.order!.restaurantCouponId != null ?
+                    rowPrice(price: _con.order!.restaurantCouponValue)
+                        : _con.order!.deliveryCouponId != null ?
+                    rowPrice(price: _con.order!.deliveryCouponValue)
+                        : _con.order!.deliveryCouponId != null &&
+                        _con.order!.restaurantCouponId != null
+                        ? rowPrice(price: _con.order!.deliveryCouponValue! +
+                        _con.order!.restaurantCouponValue!)
+                        : SizedBox(),
                     Divider(height: 30),
                     Row(
                       children: <Widget>[
@@ -612,4 +620,28 @@ class _OrderWidgetState extends StateMVC<OrderNotWidget> with SingleTickerProvid
             ]),
     );
   }
+  Widget rowPrice({price}) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Text(
+            'قيمة الخصم (يتم استعادتها من الشركة)',
+            style: Theme
+                .of(context)
+                .textTheme
+                .bodyText1,
+          ),
+        ),
+        Helper.getPrice(
+            price,
+            context,
+            style:
+            Theme
+                .of(context)
+                .textTheme
+                .headline4)
+      ],
+    );
+  }
+
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../helpers/sabek_icons.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class DrawerWidget extends StatefulWidget {
 }
 
 class _DrawerWidgetState extends StateMVC<DrawerWidget> {
-  FirebaseMessaging _firebaseMessaging=FirebaseMessaging.instance;
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
   _DrawerWidgetState() : super(ProfileController()) {
     //_con = controller;
@@ -43,7 +44,6 @@ class _DrawerWidgetState extends StateMVC<DrawerWidget> {
                   child: UserAccountsDrawerHeader(
                     decoration: BoxDecoration(
                       color: Theme.of(context).hintColor.withOpacity(0.1),
-//              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(35)),
                     ),
                     accountName: Text(
                       currentUser.value.name!,
@@ -150,6 +150,19 @@ class _DrawerWidgetState extends StateMVC<DrawerWidget> {
                   ),
                 ),
                 ListTile(
+                  onTap: () async {
+                    await launch(Privacy_Policy);
+                  },
+                  leading: Icon(
+                    SabekIcons.privacy,
+                    color: Theme.of(context).focusColor.withOpacity(1),
+                  ),
+                  title: Text(
+                    'سياسية الخصوصية',
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                ),
+                ListTile(
                   onTap: () {
                     if (Theme.of(context).brightness == Brightness.dark) {
                       setBrightness(Brightness.light);
@@ -181,7 +194,6 @@ class _DrawerWidgetState extends StateMVC<DrawerWidget> {
                     }).catchError((e) {
                       print('Notification not configured');
                     });
-
                   },
                   leading: Icon(
                     SabekIcons.logout,

@@ -2,15 +2,11 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:overlay_support/overlay_support.dart';
-
 import '../elements/notification_icon.dart';
 import '../models/route_argument.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-
 import '../../generated/l10n.dart';
 import '../helpers/custom_trace.dart';
 import '../repository/settings_repository.dart' as settingRepo;
@@ -23,7 +19,6 @@ class SplashScreenController extends ControllerMVC with ChangeNotifier {
 
   SplashScreenController() {
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
-    // Should define these variables before the app loaded
     progress.value = {"Setting": 0, "User": 0};
   }
 

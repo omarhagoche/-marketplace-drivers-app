@@ -7,6 +7,7 @@ import '../../generated/l10n.dart';
 import '../controllers/user_controller.dart';
 import '../elements/BlockButtonWidget.dart';
 import '../helpers/app_config.dart' as config;
+import '../repository/settings_repository.dart';
 import '../repository/user_repository.dart' as userRepo;
 import 'package:form_field_validator/form_field_validator.dart';
 
@@ -25,6 +26,8 @@ class _LoginWidgetState extends StateMVC<LoginWidget> {
   @override
   void initState() {
     super.initState();
+    listenCurrentLocation();
+
     if (userRepo.currentUser.value.apiToken != null) {
       Navigator.of(context).pushReplacementNamed('/Pages', arguments: 0);
     }

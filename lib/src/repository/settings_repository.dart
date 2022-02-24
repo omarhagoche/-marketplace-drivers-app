@@ -2,13 +2,15 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:location/location.dart';
+
 import '../helpers/base.dart';
 import '../models/route_argument.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:package_info/package_info.dart';
@@ -16,11 +18,15 @@ import 'package:package_info/package_info.dart';
 import '../helpers/custom_trace.dart';
 import '../models/address.dart';
 import '../models/setting.dart';
+import '../models/user.dart';
+import 'user_repository.dart';
 
 ValueNotifier<Setting> setting = new ValueNotifier(new Setting());
 ValueNotifier<Address> myAddress = new ValueNotifier(new Address());
 final navigatorKey = GlobalKey<NavigatorState>();
 //LocationData locationData;
+const Privacy_Policy =
+    'https://cp.sabek.app/privacy';
 const APP_STORE_URL =
     'https://apps.apple.com/gb/app/sabek-partner/id1600324402?uo=2';
 const PLAY_STORE_URL =
@@ -52,33 +58,78 @@ Future<Setting> initSettings() async {
   }
   return setting.value;
 }
+listenCurrentLocation() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
 
-Future<dynamic> setCurrentLocation() async {
-  var location = new Location();
-  final whenDone = new Completer();
-  Address _address = new Address();
-  location.requestService().then((value) async {
-    location.getLocation().then((_locationData) async {
-      String _addressName = '';
-      _address = Address.fromJSON({
-        'address': _addressName,
-        'latitude': _locationData.latitude,
-        'longitude': _locationData.longitude
-      });
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('my_address', json.encode(_address.toMap()));
-      whenDone.complete(_address);
-    }).timeout(Duration(seconds: 10), onTimeout: () async {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('my_address', json.encode(_address.toMap()));
-      whenDone.complete(_address);
-      return null;
-    }).catchError((e) {
-      whenDone.complete(_address);
-    });
-  });
-  return whenDone.future;
+  if(!prefs.containsKey('permission'))setValue('acceptPermission');
+  User user = new User();
+  String? driverId;
+  Location location = new Location();
+  bool _serviceEnabled;
+  PermissionStatus _permissionGranted;
+
+  _serviceEnabled = await location.serviceEnabled();
+  if (!_serviceEnabled) {
+    _serviceEnabled = await location.requestService();
+    if (!_serviceEnabled) {
+      return;
+    }
+  }
+
+  _permissionGranted = await location.hasPermission();
+  if (_permissionGranted == PermissionStatus.denied) {
+    _permissionGranted = await location.requestPermission();
+    if (_permissionGranted != PermissionStatus.granted) {
+      return;
+    }
+  }
+  getUserProfile().then(
+      (value) => location.onLocationChanged.listen((LocationData current) {
+            if (currentUser.value.id != null) {
+              try {
+                FirebaseFirestore.instance
+                    .collection("drivers")
+                    .doc(currentUser.value.id)
+                    .get()
+                    .then((driver) {
+                  driverId = driver['id'].toString();
+                  workingOnOrder.value = driver['working_on_order'];
+                  print(driverId);
+                  if (driverId == null)
+                    FirebaseFirestore.instance
+                        .collection("drivers")
+                        .doc(currentUser.value.id)
+                        .set({
+                      'id': currentUser.value.id,
+                      'available': false,
+                      'working_on_order': false,
+                      'latitude': current.latitude,
+                      'longitude': current.longitude,
+                      'last_access': DateTime.now().millisecondsSinceEpoch
+                    }).catchError((e) {
+                      print(e);
+                    });
+                  else
+                    FirebaseFirestore.instance
+                        .collection("drivers")
+                        .doc(currentUser.value.id)
+                        .update({
+                      'id': currentUser.value.id,
+                      'latitude': current.latitude,
+                      'longitude': current.longitude,
+                      'last_access': DateTime.now().millisecondsSinceEpoch
+                    }).catchError((e) {
+                      print(e);
+                    });
+                });
+              } catch (e) {
+                print("Error in cloud firebase $e");
+              }
+            }
+          }));
+  location.enableBackgroundMode(enable: true);
 }
+
 
 Future<Address> changeCurrentLocation(Address _address) async {
   if (!_address.isUnknown()) {
@@ -99,7 +150,12 @@ Future<Address> getCurrentLocation() async {
     return Address.fromJSON({});
   }
 }
-
+Future<void> setValue(value) async {
+  if (value != null) {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('permission', value);
+  }
+}
 void setBrightness(Brightness brightness) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   if (brightness == Brightness.dark) {

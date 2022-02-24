@@ -1,4 +1,5 @@
 import '../helpers/sabek_icons.dart';
+import '../repository/settings_repository.dart';
 import 'messages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -43,6 +44,8 @@ class _PagesTestWidgetState extends State<PagesTestWidget> {
   initState() {
     super.initState();
     _selectTab(widget.currentTab);
+    listenCurrentLocation();
+
   }
   @override
   void didUpdateWidget(PagesTestWidget oldWidget) {

@@ -1,4 +1,3 @@
-import 'package:location/location.dart';
 
 import '../helpers/custom_trace.dart';
 
@@ -42,10 +41,4 @@ class Address {
     return map;
   }
 
-  LocationData toLocationData() {
-    return LocationData.fromMap({
-      "latitude": latitude,
-      "longitude": longitude,
-    });
-  }
 }

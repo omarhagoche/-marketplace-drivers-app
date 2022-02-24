@@ -1,7 +1,6 @@
 import 'package:deliveryboy/src/pages/chat.dart';
 import 'package:deliveryboy/src/pages/code_view.dart';
 import 'package:deliveryboy/src/pages/forceUpdateView.dart';
-import 'package:deliveryboy/src/pages/map.dart';
 import 'package:deliveryboy/src/pages/order_not.dart';
 import 'package:deliveryboy/src/pages/reset_password.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +13,7 @@ import 'src/pages/login.dart';
 import 'src/pages/notifications.dart';
 import 'src/pages/order.dart';
 import 'src/pages/pages.dart';
+import 'src/pages/permissionView.dart';
 import 'src/pages/settings.dart';
 import 'src/pages/signup.dart';
 import 'src/pages/splash_screen.dart';
@@ -25,6 +25,8 @@ class RouteGenerator {
     switch (settings.name) {
       case '/Splash':
         return MaterialPageRoute(builder: (_) => SplashScreen());
+      case '/Permission':
+        return MaterialPageRoute(builder: (_) => PermissionView());
       case '/SignUp':
         return MaterialPageRoute(builder: (_) => SignUpWidget(routeArgument: args as RouteArgument));
       case '/MobileVerification':
@@ -35,8 +37,6 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => ChatWidget(routeArgument: args as RouteArgument));
       case '/ForceUpdate':
         return MaterialPageRoute(builder: (_) => ForceUpdateView(routeArgument: args as RouteArgument));
-        case '/Map':
-        return MaterialPageRoute(builder: (_) => MapWidget(routeArgument: args as RouteArgument));
       case '/Login':
         return MaterialPageRoute(builder: (_) => LoginWidget());
       case '/ForgetPassword':

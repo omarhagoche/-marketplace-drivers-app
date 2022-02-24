@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:deliveryboy/src/models/route_argument.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../repository/settings_repository.dart';
 
 class ForceUpdateView extends StatelessWidget {
@@ -97,9 +98,9 @@ class ForceUpdateView extends StatelessWidget {
                             ),
                             onPressed: () async {
                               if (Platform.isIOS) {
-                                launchURL(APP_STORE_URL);
+                                await launch(APP_STORE_URL);
                               } else if (Platform.isAndroid) {
-                                launchURL(PLAY_STORE_URL);
+                                  await launch(PLAY_STORE_URL);
                               }
                             },
                           ),

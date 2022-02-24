@@ -1,10 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:location/location.dart';
 import 'generated/l10n.dart';
 import 'route_generator.dart';
 import 'src/helpers/app_config.dart' as config;
@@ -12,7 +10,6 @@ import 'src/helpers/base.dart';
 import 'src/helpers/custom_trace.dart';
 import 'src/helpers/fallback-cupertino-localization-delegete.dart';
 import 'src/models/setting.dart';
-import 'src/models/user.dart';
 import 'src/repository/settings_repository.dart' as settingRepo;
 import 'src/repository/user_repository.dart' as userRepo;
 import 'package:timeago/timeago.dart' as timeago;
@@ -35,58 +32,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  User user = new User();
-  String? driverId;
   @override
   void initState() {
     timeago.setLocaleMessages('ar', timeago.ArMessages());
     settingRepo.initSettings();
-    settingRepo.setCurrentLocation();
-    settingRepo.getCurrentLocation();
     userRepo.getCurrentUser();
-    var location = new Location();
-    userRepo.getUserProfile().then((value)=>
-        location.onLocationChanged.listen((LocationData current) {
-          if (userRepo.currentUser.value.id != null) {
-            try{
-              FirebaseFirestore.instance
-                  .collection("drivers")
-                  .doc(userRepo.currentUser.value.id).get().then((driver) {
-                driverId = driver['id'].toString();
-                userRepo.workingOnOrder.value = driver['working_on_order'];
-                print(driverId);
-                if (driverId == null)
-                  FirebaseFirestore.instance.collection("drivers").doc(
-                      userRepo.currentUser.value.id).set({
-                    'id': userRepo.currentUser.value.id,
-                    'available': false,
-                    'working_on_order': false,
-                    'latitude': current.latitude,
-                    'longitude': current.longitude,
-                    'last_access': DateTime
-                        .now()
-                        .millisecondsSinceEpoch
-                  }).catchError((e) {
-                    print(e);
-                  });
-                else
-                  FirebaseFirestore.instance.collection("drivers").doc(
-                      userRepo.currentUser.value.id).update({
-                    'id': userRepo.currentUser.value.id,
-                    'latitude': current.latitude,
-                    'longitude': current.longitude,
-                    'last_access': DateTime
-                        .now()
-                        .millisecondsSinceEpoch
-                  }).catchError((e) {
-                    print(e);
-                  });
-              });
-            }catch(e){
-              print("Error in cloud firebase $e");
-            }}
-        }));
-    location.enableBackgroundMode(enable: true);
+
     super.initState();
   }
 
