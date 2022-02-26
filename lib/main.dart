@@ -1,309 +1,77 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:get_storage/get_storage.dart';
+import 'core/values/colors.dart';
+import 'data/repositories/auth_repository.dart';
 import 'data/repositories/settings_repository.dart';
-import 'generated/l10n.dart';
-import 'core/values/app_config.dart' as config;
-import 'core/utils/fallback-cupertino-localization-delegete.dart';
-import 'data/models/setting.dart';
 import 'package:overlay_support/overlay_support.dart';
-
 import 'routes/app_pages.dart';
+import 'translation/lang_service.dart';
 
-/*
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
   await Firebase.initializeApp();
-  ErrorWidget.builder = (FlutterErrorDetails errorDetails) {
-    return Container();
-  };
-  print(CustomTrace(StackTrace.current, message: "base_url: ${baseURL}"));
-  print(CustomTrace(StackTrace.current, message: "api_base_url: ${apiBaseUrl}"));
+  Get.put<GetStorage>(GetStorage());
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  User user = new User();
-  String? driverId;
-  @override
-  void initState() {
-    timeago.setLocaleMessages('ar', timeago.ArMessages());
-    settingRepo.initSettings();
-    settingRepo.setCurrentLocation();
-    settingRepo.getCurrentLocation();
-    userRepo.getCurrentUser();
-    var location = new Location();
-    userRepo.getUserProfile().then((value)=>
-        location.onLocationChanged.listen((LocationData current) {
-          if (userRepo.currentUser.value.id != null) {
-            try{
-              FirebaseFirestore.instance
-                  .collection("drivers")
-                  .doc(userRepo.currentUser.value.id).get().then((driver) {
-                driverId = driver['id'].toString();
-                userRepo.workingOnOrder.value = driver['working_on_order'];
-                print(driverId);
-                if (driverId == null)
-                  FirebaseFirestore.instance.collection("drivers").doc(
-                      userRepo.currentUser.value.id).set({
-                    'id': userRepo.currentUser.value.id,
-                    'available': false,
-                    'working_on_order': false,
-                    'latitude': current.latitude,
-                    'longitude': current.longitude,
-                    'last_access': DateTime
-                        .now()
-                        .millisecondsSinceEpoch
-                  }).catchError((e) {
-                    print(e);
-                  });
-                else
-                  FirebaseFirestore.instance.collection("drivers").doc(
-                      userRepo.currentUser.value.id).update({
-                    'id': userRepo.currentUser.value.id,
-                    'latitude': current.latitude,
-                    'longitude': current.longitude,
-                    'last_access': DateTime
-                        .now()
-                        .millisecondsSinceEpoch
-                  }).catchError((e) {
-                    print(e);
-                  });
-              });
-            }catch(e){
-              print("Error in cloud firebase $e");
-            }}
-        }));
-    location.enableBackgroundMode(enable: true);
-    super.initState();
-  }
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-        valueListenable: settingRepo.setting,
-        builder: (context, Setting _setting, _) {
-          print(CustomTrace(StackTrace.current, message: _setting.toMap().toString()));
-          FirebaseAnalytics analytics = FirebaseAnalytics.instance;
-          return OverlaySupport.global(
-              child:MaterialApp(
-              navigatorObservers: [
-                FirebaseAnalyticsObserver(analytics: analytics),
-              ],
-              navigatorKey: settingRepo.navigatorKey,
-              title: 'Sabek: Partner',
-              initialRoute: '/Splash',
-              onGenerateRoute: RouteGenerator.generateRoute,
-              debugShowCheckedModeBanner: false,
-              locale: _setting.mobileLanguage!.value,
-              localizationsDelegates: [
-                S.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                FallbackCupertinoLocalisationsDelegate()
-              ],
-              supportedLocales: S.delegate.supportedLocales,
-              theme: _setting.brightness!.value == Brightness.light
-                  ? ThemeData(
-                      fontFamily: 'Tajawal',
-                      primaryColor: Colors.white,
-                      floatingActionButtonTheme: FloatingActionButtonThemeData(elevation: 0, foregroundColor: Colors.white),
-                      brightness: Brightness.light,
-                      accentColor: config.Colors().mainColor(1),
-                      dividerColor: config.Colors().accentColor(0.1),
-                      focusColor: config.Colors().accentColor(1),
-                      hintColor: config.Colors().secondColor(1),
-                      textTheme: TextTheme(
-                        headline5: TextStyle(fontSize: 20.0, color: config.Colors().mainColor(1), height: 1.35),
-                        headline4: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600, color: config.Colors().mainColor(1), height: 1.35),
-                        headline3: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600, color: config.Colors().mainColor(1), height: 1.35),
-                        headline2: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w700, color: config.Colors().mainColor(1), height: 1.35),
-                        headline1: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w300, color: config.Colors().mainColor(1), height: 1.5),
-                        subtitle1: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500, color: config.Colors().mainColor(1), height: 1.35),
-                        headline6: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600, color: config.Colors().mainColor(1), height: 1.35),
-                        bodyText2: TextStyle(fontSize: 12.0, color: config.Colors().mainColor(1), height: 1.35),
-                        bodyText1: TextStyle(fontSize: 14.0, color: config.Colors().mainColor(1), height: 1.35),
-                        caption: TextStyle(fontSize: 12.0, color: config.Colors().mainColor(1), height: 1.35),
-                      ),
-                    )
-                  : ThemeData(
-                      fontFamily: 'Tajawal',
-                      primaryColor: Color(0xFF252525),
-                      brightness: Brightness.dark,
-                      scaffoldBackgroundColor: Color(0xFF2C2C2C),
-                      accentColor: config.Colors().mainDarkColor(1),
-                      dividerColor: config.Colors().accentColor(0.1),
-                      hintColor: config.Colors().secondDarkColor(1),
-                      focusColor: config.Colors().accentDarkColor(1),
-                      textTheme: TextTheme(
-                        headline5: TextStyle(fontSize: 20.0, color: config.Colors().secondDarkColor(1), height: 1.35),
-                        headline4: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600, color: config.Colors().secondDarkColor(1), height: 1.35),
-                        headline3: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600, color: config.Colors().secondDarkColor(1), height: 1.35),
-                        headline2: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w700, color: config.Colors().mainDarkColor(1), height: 1.35),
-                        headline1: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w300, color: config.Colors().secondDarkColor(1), height: 1.5),
-                        subtitle1: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500, color: config.Colors().secondDarkColor(1), height: 1.35),
-                        headline6: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600, color: config.Colors().mainDarkColor(1), height: 1.35),
-                        bodyText2: TextStyle(fontSize: 12.0, color: config.Colors().secondDarkColor(1), height: 1.35),
-                        bodyText1: TextStyle(fontSize: 14.0, color: config.Colors().secondDarkColor(1), height: 1.35),
-                        caption: TextStyle(fontSize: 12.0, color: config.Colors().secondDarkColor(0.6), height: 1.35),
-                      ),
-                    ))
-          );});
+    Locale locale;
+    if (Get.find<GetStorage>().hasData('language')) {
+      locale = LocalizationService()
+              .getLocaleFromLanguage(Get.find<GetStorage>().read('language')) ??
+          LocalizationService.locale;
+    } else {
+      LocalizationService().setDefaultLanguage('ar');
+      locale = LocalizationService()
+              .getLocaleFromLanguage(Get.find<GetStorage>().read('language')) ??
+          LocalizationService.locale;
+    }
+    FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+
+    return ScreenUtilInit(
+      designSize: Size(375, 812),
+      builder: () => OverlaySupport.global(
+        child: GetMaterialApp(
+          onInit: () {
+            ///Some problem in initSettings repo
+            SettingRepository.instance.initSettings();
+            AuthRepository.instance.getCurrentUser();
+          },
+          title: "Sabek",
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            fontFamily: 'Tajawal',
+            primaryColor: white,
+            floatingActionButtonTheme: FloatingActionButtonThemeData(elevation: 0, foregroundColor: Colors.white),
+            brightness: Brightness.light,
+            accentColor: primaryColor,
+            dividerColor: accentColor.withOpacity(0.1),
+            focusColor: accentColor,
+            hintColor: secondaryColor,
+            appBarTheme: AppBarTheme(color: primaryColor),
+            scaffoldBackgroundColor: backgroundColor,
+          ),
+          initialRoute: AppPages.INITIAL,
+          getPages: AppPages.routes,
+          locale: locale,
+          fallbackLocale: LocalizationService.fallbackLocale,
+          translations: LocalizationService(),
+          navigatorObservers: [
+            FirebaseAnalyticsObserver(analytics: analytics),
+          ],
+        ),
+      ),
+    );
   }
 }
-
-*/
-
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-
-  Get.locale = const Locale('ar');
-
-  runApp(
-    ResponsiveSizer(
-      builder: (context, orientation, screenType,) {
-        return ValueListenableBuilder(
-          valueListenable: setting,
-          builder: (context, Setting _setting, _) {
-             FirebaseAnalytics analytics = FirebaseAnalytics.instance;
-            return OverlaySupport.global(
-              child: GetMaterialApp(
-                onInit: (){
-                  SettingRepository.instance.initSettings();
-                },
-                debugShowCheckedModeBanner: false,
-                defaultTransition: Transition.topLevel,
-                title: "sabek app",
-                initialRoute: Routes.LOGIN,
-                getPages: AppPages.routes,
-                navigatorObservers: [
-                  FirebaseAnalyticsObserver(analytics: analytics),
-                ],
-                locale: _setting.mobileLanguage!.value,
-                localizationsDelegates: [
-                  S.delegate,
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  FallbackCupertinoLocalisationsDelegate()
-                ],
-                supportedLocales: const [
-                  Locale('ar'),
-                  Locale('en'),
-                ],
-                theme: _setting.brightness!.value == Brightness.light
-                    ? ThemeData(
-                  fontFamily: 'Tajawal',
-                  primaryColor: Colors.white,
-                  floatingActionButtonTheme: FloatingActionButtonThemeData(
-                      elevation: 0, foregroundColor: Colors.white),
-                  brightness: Brightness.light,
-                  accentColor: config.Colors().mainColor(1),
-                  dividerColor: config.Colors().accentColor(0.1),
-                  focusColor: config.Colors().accentColor(1),
-                  hintColor: config.Colors().secondColor(1),
-                  textTheme: TextTheme(
-                    headline5: TextStyle(fontSize: 20.0,
-                        color: config.Colors().mainColor(1),
-                        height: 1.35),
-                    headline4: TextStyle(fontSize: 18.0,
-                        fontWeight: FontWeight.w600,
-                        color: config.Colors().mainColor(1),
-                        height: 1.35),
-                    headline3: TextStyle(fontSize: 20.0,
-                        fontWeight: FontWeight.w600,
-                        color: config.Colors().mainColor(1),
-                        height: 1.35),
-                    headline2: TextStyle(fontSize: 22.0,
-                        fontWeight: FontWeight.w700,
-                        color: config.Colors().mainColor(1),
-                        height: 1.35),
-                    headline1: TextStyle(fontSize: 22.0,
-                        fontWeight: FontWeight.w300,
-                        color: config.Colors().mainColor(1),
-                        height: 1.5),
-                    subtitle1: TextStyle(fontSize: 15.0,
-                        fontWeight: FontWeight.w500,
-                        color: config.Colors().mainColor(1),
-                        height: 1.35),
-                    headline6: TextStyle(fontSize: 16.0,
-                        fontWeight: FontWeight.w600,
-                        color: config.Colors().mainColor(1),
-                        height: 1.35),
-                    bodyText2: TextStyle(fontSize: 12.0,
-                        color: config.Colors().mainColor(1),
-                        height: 1.35),
-                    bodyText1: TextStyle(fontSize: 14.0,
-                        color: config.Colors().mainColor(1),
-                        height: 1.35),
-                    caption: TextStyle(fontSize: 12.0,
-                        color: config.Colors().mainColor(1),
-                        height: 1.35),
-                  ),
-                )
-                    : ThemeData(
-                  fontFamily: 'Tajawal',
-                  primaryColor: Color(0xFF252525),
-                  brightness: Brightness.dark,
-                  scaffoldBackgroundColor: Color(0xFF2C2C2C),
-                  accentColor: config.Colors().mainDarkColor(1),
-                  dividerColor: config.Colors().accentColor(0.1),
-                  hintColor: config.Colors().secondDarkColor(1),
-                  focusColor: config.Colors().accentDarkColor(1),
-                  textTheme: TextTheme(
-                    headline5: TextStyle(fontSize: 20.0,
-                        color: config.Colors().secondDarkColor(1),
-                        height: 1.35),
-                    headline4: TextStyle(fontSize: 18.0,
-                        fontWeight: FontWeight.w600,
-                        color: config.Colors().secondDarkColor(1),
-                        height: 1.35),
-                    headline3: TextStyle(fontSize: 20.0,
-                        fontWeight: FontWeight.w600,
-                        color: config.Colors().secondDarkColor(1),
-                        height: 1.35),
-                    headline2: TextStyle(fontSize: 22.0,
-                        fontWeight: FontWeight.w700,
-                        color: config.Colors().mainDarkColor(1),
-                        height: 1.35),
-                    headline1: TextStyle(fontSize: 22.0,
-                        fontWeight: FontWeight.w300,
-                        color: config.Colors().secondDarkColor(1),
-                        height: 1.5),
-                    subtitle1: TextStyle(fontSize: 15.0,
-                        fontWeight: FontWeight.w500,
-                        color: config.Colors().secondDarkColor(1),
-                        height: 1.35),
-                    headline6: TextStyle(fontSize: 16.0,
-                        fontWeight: FontWeight.w600,
-                        color: config.Colors().mainDarkColor(1),
-                        height: 1.35),
-                    bodyText2: TextStyle(fontSize: 12.0,
-                        color: config.Colors().secondDarkColor(1),
-                        height: 1.35),
-                    bodyText1: TextStyle(fontSize: 14.0,
-                        color: config.Colors().secondDarkColor(1),
-                        height: 1.35),
-                    caption: TextStyle(fontSize: 12.0,
-                        color: config.Colors().secondDarkColor(0.6),
-                        height: 1.35),
-                  ),
-                ),
-
-              ),
-            );
-          }
-        );
-      },
-    ),
-  );
-}
-
