@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:get/route_manager.dart';
+import '../../../core/utils/token_injecter.dart';
 import '../../../routes/app_pages.dart';
 import 'interceptors.dart';
 
@@ -12,7 +13,7 @@ class ApiService {
           BaseOptions(
             baseUrl: 'https://test.sabek.app/api/',
            // connectTimeout: 10000,
-          //  receiveTimeout: 15000,
+           // receiveTimeout: 15000,
             headers: {
               Headers.contentTypeHeader: Headers.jsonContentType,
               'charset': 'utf-8'
@@ -20,6 +21,7 @@ class ApiService {
           ),
         )..interceptors.addAll([
     LogInterceptor(request: true, responseBody: true, requestBody: true),
+    TokenInjecter()
   ]);
 
   factory ApiService.getInstance() {
