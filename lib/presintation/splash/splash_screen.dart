@@ -7,7 +7,33 @@ class SplashScreen extends GetView<SplashController> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return GetBuilder<SplashController>(
+        init: SplashController(),
+    initState: (_) {},
+    builder: (_con) =>Scaffold(
+      body: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).scaffoldBackgroundColor,
+        ),
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(50.0),
+                  child:Image.asset(
+                    'assets/img/logo.png',
+                    width: 150,
+                    fit: BoxFit.cover,
+                  )),
+            ],
+          ),
+        ),
+      ),
+      ),
+    );
 
 
   }

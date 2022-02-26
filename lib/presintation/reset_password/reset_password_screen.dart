@@ -1,14 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
-
+import 'package:get/get.dart';
 import '../../core/utils/helper.dart';
-import '../../generated/l10n.dart';
-import '../../src/elements/BlockButtonWidget.dart';
+import '../widgets/block_button.dart';
 import 'reset_password_controller.dart';
-// import '../../core/values/helpers/app_config.dart' as config;
 import '../../core/values/app_config.dart' as config;
 class LoginScreen extends GetView<ResetPasswordController> {
   const LoginScreen({key}) : super(key: key);
@@ -37,7 +32,7 @@ class LoginScreen extends GetView<ResetPasswordController> {
                 width: config.App(context).appWidth(84),
                 height: config.App(context).appHeight(37),
                 child: Text(
-                  S.of(context)?.reset_new_password ??'',
+                  'reset_new_password'.tr,
                   style: Theme.of(context).textTheme.headline2!.merge(TextStyle(color: Theme.of(context).primaryColor)),
                 ),
               ),
@@ -68,13 +63,13 @@ class LoginScreen extends GetView<ResetPasswordController> {
                         // onSaved: (input) => _con.resetPass.password = input,
                         validator: MultiValidator([
                           RequiredValidator(
-                              errorText: S.of(context)?.please_enter_new_password ?? ''),
+                              errorText: 'please_enter_new_password'.tr),
                           MinLengthValidator(6,
                               errorText:
-                              S.of(context)?.should_be_more_than_6_letters ?? ''),
+                              'should_be_more_than_6_letters'.tr ),
                         ]),                        obscureText: controller.hidePassword.value,
                         decoration: InputDecoration(
-                          labelText: S.of(context)!.password,
+                          labelText: 'password'.tr,
                           labelStyle: TextStyle(color: Theme.of(context).accentColor),
                           contentPadding: EdgeInsets.all(12),
                           hintText: '••••••••••••',
@@ -95,7 +90,7 @@ class LoginScreen extends GetView<ResetPasswordController> {
                       SizedBox(height: 30),
                       BlockButtonWidget(
                         text: Text(
-                          S.of(context)!.save,
+                          'save'.tr,
                           style: TextStyle(color: Theme.of(context).primaryColor),
                         ),
                         color: Theme.of(context).accentColor,

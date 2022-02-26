@@ -4,12 +4,10 @@ import 'package:get/get.dart';
 
 import '../../data/models/chat.dart';
 import '../../data/models/conversation.dart';
+import '../../data/repositories/auth_repository.dart';
 import '../../data/repositories/chat_repository.dart';
-import '../../generated/l10n.dart';
-
 
 import '../../data/repositories/notification_repository.dart';
-import '../../src/repository/user_repository.dart' as userRepo;
 class ChatController extends GetxController {
   Conversation? conversation;
   Stream<QuerySnapshot>? conversations;
@@ -30,14 +28,14 @@ class ChatController extends GetxController {
   }
 
   listenForConversations() async {
-    ChatRepository.instance.getUserConversations(userRepo.currentUser.value.id!).then((snapshots) {
+    ChatRepository.instance.getUserConversations(currentUser.value.id!).then((snapshots) {
         conversations = snapshots;
         update();
     });
   }
 
   listenForChats(Conversation _conversation) async {
-    _conversation.readByUsers!.add(userRepo.currentUser.value.id!);
+    _conversation.readByUsers!.add(currentUser.value.id!);
     ChatRepository.instance.getChats(_conversation).then((snapshots) {
         chats = snapshots;
         update();
@@ -45,18 +43,18 @@ class ChatController extends GetxController {
   }
 
   addMessage(Conversation _conversation, String text) {
-    Chat _chat = new Chat(text, DateTime.now().toUtc().millisecondsSinceEpoch, userRepo.currentUser.value.id);
+    Chat _chat = new Chat(text, DateTime.now().toUtc().millisecondsSinceEpoch, currentUser.value.id);
     if (_conversation.id == null) {
       _conversation.id = UniqueKey().toString();
       createConversation(_conversation);
     }
     _conversation.lastMessage = text;
     _conversation.lastMessageTime = _chat.time;
-    _conversation.readByUsers = [userRepo.currentUser.value.id!];
+    _conversation.readByUsers = [currentUser.value.id!];
     ChatRepository.instance.addMessage(_conversation, _chat).then((value) {
       _conversation.users!.forEach((_user) {
-        if (_user.id != userRepo.currentUser.value.id) {
-          NotificationRepository.instance.sendNotification(text, 'newMessageFrom'.tr + " " + userRepo.currentUser.value.name!, _user);
+        if (_user.id != currentUser.value.id) {
+          NotificationRepository.instance.sendNotification(text, 'newMessageFrom'.tr + " " + currentUser.value.name!, _user);
         }
       });
     });

@@ -25,9 +25,7 @@ class LoginController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-CategoryRepository.instance.getCategories();
-FaqCategoryRepository.instance.getFaqCategories();
-CategoryRepository.instance.getCategory('10');  }
+  }
   void forgetPassword(){
     Get.toNamed(Routes.FORGET_PASSWORD);
   }

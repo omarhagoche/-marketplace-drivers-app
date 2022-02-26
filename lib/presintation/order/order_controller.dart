@@ -28,12 +28,12 @@ class OrderController extends GetxController {
       if (v) {
         Get.toNamed('/OrderDetails',
             arguments: RouteArgument(id: id.toString()));
-        ScaffoldMessenger.of(scaffoldKey!.currentContext!)
+        ScaffoldMessenger.of(scaffoldKey.currentContext!)
             .showSnackBar(SnackBar(
           content: Text("لقد قمت باستلام الطلبية"),
         ));
       } else {
-        ScaffoldMessenger.of(scaffoldKey!.currentContext!)
+        ScaffoldMessenger.of(scaffoldKey.currentContext!)
             .showSnackBar(SnackBar(
           content: Text("للاسف لقد سابقك احد السائقين في قبول الطلبية"),
         ));

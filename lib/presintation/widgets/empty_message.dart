@@ -21,7 +21,7 @@ class EmptyMessagesWidget extends StatelessWidget {
               Opacity(
                 opacity: 0.4,
                 child: Text(
-                  'youDontHaveAnyConversations'.tr,
+                  'you_do_not_have_any_conversations'.tr,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headline3!.merge(TextStyle(fontWeight: FontWeight.w300)),
                 ),

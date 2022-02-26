@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import '../../core/utils/helper.dart';
-import '../../generated/l10n.dart';
-import '../../src/elements/BlockButtonWidget.dart';
+import '../widgets/block_button.dart';
 import 'login_controller.dart';
 import '../../core/values/app_config.dart' as config;
 
@@ -35,7 +34,7 @@ class LoginScreen extends GetView<LoginController> {
                       width: config.App(context).appWidth(84),
                       height: config.App(context).appHeight(37),
                       child: Text(
-                        S.of(context)?.lets_start_with_login ?? '',
+                        'lets_start_with_login'.tr,
                         style: Theme.of(context).textTheme.headline2!.merge(TextStyle(color: Theme.of(context).primaryColor)),
                       ),
                     ),
@@ -71,17 +70,17 @@ class LoginScreen extends GetView<LoginController> {
                                     errorText: "Please enter phone number"),
                                 MinLengthValidator(10,
                                     errorText:
-                                    S.of(context)?.should_be_more_than_10_letters ?? 'empty'),
+                                    'should_be_more_than_10_letters'.tr),
                                 PatternValidator(
                                   r'^(09?(9[0-9]{8}))$',
-                                  errorText: S.of(context)?.not_a_valid_phone ?? '',
+                                  errorText: 'not_a_valid_phone'.tr,
                                 )
                               ]),
                               decoration: InputDecoration(
-                                labelText: S.of(context)?.phone ?? '',
+                                labelText: 'phone'.tr,
                                 labelStyle: TextStyle(color: Theme.of(context).accentColor),
                                 contentPadding: EdgeInsets.all(12),
-                                hintText: S.of(context)?.phone_ex ?? '',
+                                hintText: 'phone_ex'.tr,
                                 hintStyle: TextStyle(color: Theme.of(context).focusColor.withOpacity(0.7)),
                                 prefixIcon: Icon(Icons.phone, color: Theme.of(context).accentColor),
                                 border: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).focusColor.withOpacity(0.2))),
@@ -94,10 +93,10 @@ class LoginScreen extends GetView<LoginController> {
                               controller: controller.passwordController,
                               keyboardType: TextInputType.text,
                               //onSaved: (input) => _con.user.password = input,
-                              validator: (input) => input!.length < 3 ? (S.of(context)?.should_be_more_than_3_characters ?? '') : null,
+                              validator: (input) => input!.length < 3 ? 'should_be_more_than_3_characters'.tr : null,
                               obscureText: controller.hidePassword.value,
                               decoration: InputDecoration(
-                                labelText: S.of(context)?.password ?? '',
+                                labelText: 'password'.tr,
                                 labelStyle: TextStyle(color: Theme.of(context).accentColor),
                                 contentPadding: EdgeInsets.all(12),
                                 hintText: '••••••••••••',
@@ -118,7 +117,7 @@ class LoginScreen extends GetView<LoginController> {
                             SizedBox(height: 30),
                             BlockButtonWidget(
                               text: Text(
-                                S.of(context)?.login ?? '',
+                                'login'.tr,
                                 style: TextStyle(color: Theme.of(context).primaryColor),
                               ),
                               color: Theme.of(context).accentColor,
@@ -139,12 +138,12 @@ class LoginScreen extends GetView<LoginController> {
                         FlatButton(
                           onPressed: ()=> controller.forgetPassword,
                           textColor: Theme.of(context).hintColor,
-                          child: Text(S.of(context)?.i_forgot_password ?? ''),
+                          child: Text('i_forgot_password'.tr),
                         ),
                         FlatButton(
                           onPressed: () => controller.signUp,
                           textColor: Theme.of(context).hintColor,
-                          child: Text(S.of(context)?.i_dont_have_an_account ?? ''),
+                          child: Text('i_dont_have_an_account'.tr ),
                         ),
                       ],
                     ),

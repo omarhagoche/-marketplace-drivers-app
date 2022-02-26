@@ -1,11 +1,7 @@
-
 import 'package:flutter/material.dart';
-
-import '../../generated/l10n.dart';
-import '../../src/elements/CircularLoadingWidget.dart';
-import '../../src/elements/ProfileAvatarWidget.dart';
-import '../../src/elements/ShoppingCartButtonWidget.dart';
-import '../../src/elements/StatisticsCarouselWidget.dart';
+import '../widgets/profile_avatar.dart';
+import '../widgets/statistics_carousel.dart';
+import '../widgets/loading_widget.dart';
 import 'profile_controller.dart';
 import 'package:get/get.dart';
 
@@ -36,7 +32,7 @@ class ProfileScreen extends GetView<ProfileController> {
           elevation: 0,
           centerTitle: true,
           title: Text(
-            S.of(context)!.profile,
+           'profile'.tr,
             style: Theme
                 .of(context)
                 .textTheme
@@ -46,21 +42,13 @@ class ProfileScreen extends GetView<ProfileController> {
                 .of(context)
                 .primaryColor)),
           ),
-          actions: <Widget>[
-            ShoppingCartButtonWidget(
-                iconColor: Theme
-                    .of(context)
-                    .primaryColor,
-                labelColor: Theme
-                    .of(context)
-                    .hintColor),
-          ],
+
         ),
         key: controller.scaffoldKey,
         body: Obx(
               () =>
           controller.user.value?.apiToken == null
-              ? CircularLoadingWidget(height: 500)
+              ? LoadingWidget()
               : SingleChildScrollView(
             child: Column(
               children: <Widget>[

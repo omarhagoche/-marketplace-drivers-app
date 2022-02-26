@@ -9,9 +9,7 @@ class DrawerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: currentUser.value.apiToken == null
-          ? LoadingWidget()
-          : ListView(
+      child: ListView(
               children: <Widget>[
                 GestureDetector(
                   onTap: () {

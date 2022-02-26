@@ -2,12 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../src/repository/user_repository.dart';
-import '../models/address.dart';
 import '../models/order.dart';
 import '../models/order_status.dart';
 import '../models/user.dart';
 import '../services/api/api_service.dart';
+import 'auth_repository.dart';
 
 class OrderRepository extends ApiService {
   static OrderRepository get instance => OrderRepository();

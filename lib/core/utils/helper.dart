@@ -14,12 +14,10 @@ import 'package:html/parser.dart';
 import '../../data/models/food_order.dart';
 import '../../data/models/order.dart';
 import '../../data/repositories/settings_repository.dart';
-import '../../src/elements/CircularLoadingWidget.dart';
+import '../../presintation/widgets/loading_widget.dart';
 import '../values/urls.dart';
 import '../values/app_config.dart' as config;
-
-import '../../generated/l10n.dart';
-
+import 'package:get/get.dart';
 class Helper {
   BuildContext? context;
   DateTime? currentBackPressTime;
@@ -261,7 +259,7 @@ class Helper {
         left: 0,
         child: Material(
           color: Theme.of(context).primaryColor.withOpacity(0.85),
-          child: CircularLoadingWidget(height: 200),
+          child: LoadingWidget(),
         ),
       );
     });
@@ -307,7 +305,7 @@ class Helper {
     DateTime now = DateTime.now();
     if (currentBackPressTime == null || now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
       currentBackPressTime = now;
-      Fluttertoast.showToast(msg: S.of(context!)!.tapAgainToLeave);
+      Fluttertoast.showToast(msg: 'tapAgainToLeave'.tr);
       return Future.value(false);
     }
     SystemChannels.platform.invokeMethod('SystemNavigator.pop');
@@ -316,25 +314,25 @@ class Helper {
   String trans(String text) {
     switch (text) {
       case "App\\Notifications\\StatusChangedOrder":
-        return S.of(context!)!.order_satatus_changed;
+        return 'order_satatus_changed'.tr;
       case "App\\Notifications\\NewOrder":
-        return S.of(context!)!.new_order_from_costumer;
+        return 'new_order_from_costumer'.tr;
       case "App\\Notifications\\AssignedOrder":
-        return S.of(context!)!.your_have_an_order_assigned_to_you;
+        return 'your_have_an_order_assigned_to_you'.tr;
       case "km":
-        return S.of(context!)!.km;
+        return 'km'.tr;
       case "mi":
-        return S.of(context!)!.mi;
+        return 'mi'.tr;
       case "total_earning_after":
-        return S.of(context!)!.totalEarningAfter;
+        return 'totalEarningAfter'.tr;
         case "total_earning_before":
-        return S.of(context!)!.totalEarningBefore;
+        return 'totalEarningBefore'.tr;
       case "total_orders":
-        return S.of(context!)!.totalOrders;
+        return 'totalOrders'.tr;
         case "company_ratio":
-        return S.of(context!)!.company_ratio;
+        return 'company_ratio'.tr;
         case "coupons":
-        return S.of(context!)!.coupons;
+        return 'coupons'.tr;
       default:
         return "";
     }

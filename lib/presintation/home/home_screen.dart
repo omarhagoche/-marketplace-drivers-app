@@ -1,11 +1,6 @@
-
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../core/utils/sabek_icons.dart';
-import '../../src/elements/DrawerWidget.dart';
 import 'home_controller.dart';
 
 class HomeScreen extends StatelessWidget{
@@ -19,7 +14,7 @@ class HomeScreen extends StatelessWidget{
          // drawer: DrawerWidget(),
           body: IndexedStack(
             index: controller.currentTab,
-            children: controller.getScreens1()
+            children: controller.getScreens()
           ),
           bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,

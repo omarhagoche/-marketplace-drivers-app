@@ -1,15 +1,11 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../data/models/conversation.dart';
-
-import '../../generated/l10n.dart';
-import '../../src/elements/EmptyMessagesWidget.dart';
-import '../../src/elements/MessageItemWidget.dart';
-import '../../src/elements/ShoppingCartButtonWidget.dart';
+import '../widgets/drawer.dart';
+import '../widgets/empty_message.dart';
+import '../widgets/message_item.dart';
 import 'messages_controller.dart';
-
+import 'package:get/get.dart';
 class MessagesScreen extends StatelessWidget {
 
   Widget conversationsList(MessagesController controller) {
@@ -49,27 +45,23 @@ class MessagesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final MessagesController controller = Get.put(MessagesController());
     return Scaffold(
-       // key: controller.scaffoldKey,
+        key: controller.scaffoldKey,
+        drawer: DrawerWidget(),
         appBar: AppBar(
           leading: new IconButton(
               icon: new Icon(Icons.sort, color: Theme.of(context).hintColor),
-              onPressed: (){
-                controller.openDrawer();
-              }// => widget.parentScaffoldKey!.currentState!.openDrawer(),
+              onPressed: ()=> controller.scaffoldKey.currentState!.openDrawer(),
           ),
           automaticallyImplyLeading: false,
           backgroundColor: Colors.transparent,
           elevation: 0,
           centerTitle: true,
           title: Text(
-            S.of(context)?.messages ?? '',
+            'messages'.tr,
             overflow: TextOverflow.fade,
             maxLines: 1,
             style: Theme.of(context).textTheme.headline6!.merge(TextStyle(letterSpacing: 1.3)),
           ),
-          actions: <Widget>[
-            new ShoppingCartButtonWidget(iconColor: Theme.of(context).hintColor, labelColor: Theme.of(context).accentColor),
-          ],
         ),
         body: GetBuilder<MessagesController>(
           builder: (c) {

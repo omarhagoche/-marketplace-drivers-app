@@ -1,14 +1,9 @@
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../generated/l10n.dart';
-import '../../src/elements/EmptyOrdersWidget.dart';
-import '../../src/elements/OrderItemWidget.dart';
-import '../../src/elements/ShoppingCartButtonWidget.dart';
+import '../widgets/empty_order.dart';
+import '../widgets/order_item.dart';
 import 'orders_history_controller.dart';
-
+import 'package:get/get.dart';
 class OrdersHistoryScreen extends StatelessWidget{
   const OrdersHistoryScreen({key}) : super(key: key);
 
@@ -24,7 +19,7 @@ class OrdersHistoryScreen extends StatelessWidget{
           leading: new IconButton(
               icon: new Icon(Icons.sort, color: Theme.of(context).hintColor),
               onPressed: (){
-                // => widget.parentScaffoldKey!.currentState!.openDrawer(),
+                controller.scaffoldKey.currentState!.openDrawer();
               }
           ),
           automaticallyImplyLeading: false,
@@ -32,14 +27,12 @@ class OrdersHistoryScreen extends StatelessWidget{
           elevation: 0,
           centerTitle: true,
           title: Text(
-            S.of(context)!.orders_history,
+            'orders_history'.tr,
             style: Theme.of(context).textTheme.headline6!.merge(TextStyle(letterSpacing: 1.3)),
           ),
-          actions: <Widget>[
-            ShoppingCartButtonWidget(iconColor: Theme.of(context).hintColor, labelColor: Theme.of(context).accentColor),
-          ],
+
         ),
-        body:EmptyOrdersWidget() /* RefreshIndicator(
+        body:RefreshIndicator(
             onRefresh: controller.refreshOrdersHistory,
             child: Obx(
                   () => ListView(
@@ -65,7 +58,7 @@ class OrdersHistoryScreen extends StatelessWidget{
                 ],
               ),
             )
-        ),*/
+        ),
       );
     });
 

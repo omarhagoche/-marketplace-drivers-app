@@ -2,11 +2,13 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:overlay_support/overlay_support.dart';
 import '../../core/utils/custom_trace.dart';
 import '../../data/models/route_argument.dart';
 import '../../data/repositories/settings_repository.dart';
-import '../../src/elements/notification_icon.dart';
+import '../../routes/app_pages.dart';
+import '../widgets/notification_icon.dart';
 
 class SplashController extends GetxController {
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
@@ -14,6 +16,13 @@ class SplashController extends GetxController {
  @override
   void onInit() {
     super.onInit();
+    Future.delayed(Duration(seconds: 5), () {
+      if (!Get.find<GetStorage>().hasData('token')) {
+        Get.offAndToNamed(Routes.LOGIN);
+      } else {
+        Get.offAndToNamed(Routes.HOME);
+      }
+    });
     if (Platform.isIOS) {
       firebaseMessaging.requestPermission(
         alert: true,

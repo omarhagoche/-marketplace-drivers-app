@@ -1,14 +1,11 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-
+import 'package:form_field_validator/form_field_validator.dart';
 import '../../core/utils/helper.dart';
-import '../../generated/l10n.dart';
-import '../../src/elements/BlockButtonWidget.dart';
+import '../widgets/block_button.dart';
 import 'signup_controller.dart';
 import 'package:get/get.dart';
 import '../../core/values/app_config.dart' as config;
-
 
 class SignupScreen extends GetView<SignupController> {
   const SignupScreen({key}) : super(key: key);
@@ -38,7 +35,7 @@ class SignupScreen extends GetView<SignupController> {
                   width: config.App(context).appWidth(84),
                   height: config.App(context).appHeight(29.5),
                   child: Text(
-                    S.of(context)!.lets_start_with_register,
+                    'lets_start_with_register'.tr,
                     style: Theme.of(context).textTheme.headline2!.merge(TextStyle(color: Theme.of(context).primaryColor)),
                   ),
                 ),
@@ -131,12 +128,12 @@ class SignupScreen extends GetView<SignupController> {
                           keyboardType: TextInputType.text,
                           controller: controller.nameController,
                           //onSaved: (input) => _con.user.name = input,
-                          validator: (input) => input!.length < 3 ? S.of(context)!.should_be_more_than_3_letters : null,
+                          validator: (input) => input!.length < 3 ? 'should_be_more_than_3_letters'.tr : null,
                           decoration: InputDecoration(
-                            labelText: S.of(context)!.full_name,
+                            labelText: 'full_name'.tr,
                             labelStyle: TextStyle(color: Theme.of(context).accentColor),
                             contentPadding: EdgeInsets.all(12),
-                            hintText: S.of(context)!.john_doe,
+                            hintText: 'john_doe'.tr,
                             hintStyle: TextStyle(color: Theme.of(context).focusColor.withOpacity(0.7)),
                             prefixIcon: Icon(Icons.person_outline, color: Theme.of(context).accentColor),
                             border: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).focusColor.withOpacity(0.2))),
@@ -185,9 +182,9 @@ class SignupScreen extends GetView<SignupController> {
                         TextFormField(
                           keyboardType: TextInputType.emailAddress,
                           controller: controller.emailController,
-                          validator: (input) => !input!.contains('@') ? S.of(context)!.should_be_a_valid_email : null,
+                          validator: EmailValidator(errorText: 'not_a_valid_email'.tr),
                           decoration: InputDecoration(
-                            labelText: S.of(context)!.email,
+                            labelText: 'email'.tr,
                             labelStyle: TextStyle(color: Theme.of(context).accentColor),
                             contentPadding: EdgeInsets.all(12),
                             hintText: 'me@gmail.com',
@@ -203,9 +200,9 @@ class SignupScreen extends GetView<SignupController> {
                           obscureText: controller.hidePassword.value,
                           controller: controller.passwordController,
                          // onSaved: (input) => _con.user.password = input,
-                          validator: (input) => input!.length < 6 ? S.of(context)!.should_be_more_than_6_letters : null,
+                          validator: (input) => input!.length < 6 ? 'should_be_more_than_6_letters'.tr : null,
                           decoration: InputDecoration(
-                            labelText: S.of(context)!.password,
+                            labelText: 'password'.tr,
                             labelStyle: TextStyle(color: Theme.of(context).accentColor),
                             contentPadding: EdgeInsets.all(12),
                             hintText: '••••••••••••',
@@ -224,7 +221,7 @@ class SignupScreen extends GetView<SignupController> {
                         SizedBox(height: 30),
                         BlockButtonWidget(
                           text: Text(
-                            S.of(context)!.register,
+                            'register'.tr,
                             style: TextStyle(color: Theme.of(context).primaryColor),
                           ),
                           color: Theme.of(context).accentColor,

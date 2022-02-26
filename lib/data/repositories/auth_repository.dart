@@ -1,19 +1,16 @@
 import 'dart:convert';
-
-
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../../core/utils/token.dart';
+import '../models/user.dart';
 import '../services/api/api_service.dart';
+ValueNotifier<User> currentUser = new ValueNotifier(User());
 
 class AuthRepository extends ApiService {
   static AuthRepository get instance => AuthRepository();
-
-  static Future<String?> get token async {
-    return await Token.getToken;
-  }
-
+  final box = Get.find<GetStorage>();
 
   Future<dynamic?> logIn({
     required String phoneNumber,
@@ -35,7 +32,7 @@ class AuthRepository extends ApiService {
     ).then((response) async {
 
         print('${response.statusCode}');
-       // print('${response.data}');
+        print('${response.data}');
         if (response.statusCode == 200) {
           token = response.data['data']['token'];
           responseBody = response.data['data'];
@@ -75,14 +72,11 @@ class AuthRepository extends ApiService {
       data: json.encode(requestBody),
       requireAuthorization: false,
     ).then((response) async {
-
         print('${response.statusCode}');
-       // print('${response.data}');
+        print('${response.data}');
         if (response.statusCode == 200) {
           responseBody = response.data['data'];
-        /*  if (token != null) {
-            await Token.persistToken(token!);
-          }*/
+          setCurrentUser(responseBody);
         } else if (response.statusCode == 422) {
           token = '442';
         }
@@ -93,9 +87,8 @@ class AuthRepository extends ApiService {
       responseBody = 'error';
 
     });
-    //
+
     print('token $token');
-  //  print('response body $responseBody');
     return responseBody;
   }
 
@@ -132,17 +125,16 @@ class AuthRepository extends ApiService {
 
 
 
-  void setCurrentUser(jsonString) async {
-    try {
-      if (json.decode(jsonString)['data'] != null) {
-
-      //  SharedPreferences prefs = await SharedPreferences.getInstance();
-       /* await prefs.setString(
-            'current_user', json.encode(json.decode(jsonString)['data']));*/
-      }
-    } catch (e) {
-      throw new Exception(e);
+  void setCurrentUser(user) async {
+    if (user != null) {
+      await box.write('current_user', user);
     }
   }
 
+
+  Future<User> getCurrentUser() async {
+    if (box.hasData('current_user'))
+      currentUser.value = User.fromJSON(box.read('current_user'));
+    return currentUser.value;
+  }
 }

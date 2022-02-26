@@ -18,13 +18,6 @@ class NotificationController extends GetxController {
     super.onInit();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {}
 
   void listenForNotifications({String? message}) async {
     try {

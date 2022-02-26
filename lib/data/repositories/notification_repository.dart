@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
-import '../../src/repository/user_repository.dart';
 import '../services/api/api_service.dart';
+import 'auth_repository.dart';
 import 'settings_repository.dart';
 import '../models/notification.dart';
 import '../models/user.dart';
