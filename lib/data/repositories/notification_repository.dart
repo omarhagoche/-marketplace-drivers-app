@@ -20,7 +20,6 @@ class NotificationRepository extends ApiService {
         ,'orderBy':'created_at',
         'sortedBy':'desc',
         'limit':10},
-      requireAuthorization: false,
     ).then((response) async {
       print('getNotifications:${response.statusCode}');
       if (response.statusCode == 200) {

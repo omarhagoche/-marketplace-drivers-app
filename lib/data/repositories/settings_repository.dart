@@ -30,7 +30,6 @@ class SettingRepository extends ApiService {
     final String url = 'settings';
     await get(
       url,
-      requireAuthorization: false,
     ).then((response) async {
       print('categories:${response.statusCode}');
       print('categories:${response.data['data']}');

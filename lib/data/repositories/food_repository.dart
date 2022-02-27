@@ -2,14 +2,12 @@ import '../models/food.dart';
 import '../services/api/api_service.dart';
 class FoodRepository extends ApiService {
   static FoodRepository get instance => FoodRepository();
-
   Future<List<Food>> getTrendingFoods() async {
     dynamic responseBody;
     final String url = 'foods';
     await get(
       url,
       queryParameters: {'with':'restaurant','limit':6},
-      requireAuthorization: false,
     ).then((response) async {
       print('getTrendingFoods:${response.statusCode}');
       if (response.statusCode == 200) {
@@ -33,7 +31,6 @@ class FoodRepository extends ApiService {
       queryParameters: {'with':'restaurant',
     'search':'category_id:$categoryId',
     'searchFields':'category_id:='},
-      requireAuthorization: false,
     ).then((response) async {
       print('getFoodsByCategory:${response.statusCode}');
       if (response.statusCode == 200) {
@@ -56,7 +53,6 @@ class FoodRepository extends ApiService {
       url,
       queryParameters: {'with':'nutrition;restaurant;category;extras;foodReviews;foodReviews.user',
     },
-      requireAuthorization: false,
     ).then((response) async {
       print('getFoodsByCategory:${response.statusCode}');
       if (response.statusCode == 200) {
@@ -77,7 +73,6 @@ class FoodRepository extends ApiService {
       queryParameters: {'with':'restaurant',
         'search':'restaurant.id:$restaurantId',
         'searchFields':'restaurant.id:='},
-      requireAuthorization: false,
     ).then((response) async {
       print('getFoodsByCategory:${response.statusCode}');
       if (response.statusCode == 200) {

@@ -9,7 +9,6 @@ class CategoryRepository extends ApiService {
     final String url = 'categories';
     await get(
       url,
-      requireAuthorization: false,
     ).then((response) async {
       print('categories:${response.statusCode}');
       if (response.statusCode == 200) {
@@ -31,7 +30,6 @@ class CategoryRepository extends ApiService {
 
     await get(
       url,
-      requireAuthorization: false,
     ).then((response) async {
       print('category:${response.statusCode}');
       if (response.statusCode == 200) {

@@ -12,8 +12,6 @@ class OrderRepository extends ApiService {
   static OrderRepository get instance => OrderRepository();
 
   Future<List<Order>> getOrders() async {
-    print('getOrders:}');
-
     dynamic responseBody;
     final String orderStatusId = "80"; // for delivered status
     User _user = currentUser.value;
@@ -21,31 +19,23 @@ class OrderRepository extends ApiService {
     await get(
       url,
       queryParameters: {
-        'with': 'driver;foodOrders;foodOrders.food;foodOrders.extras;orderStatus;deliveryAddress;payment'
-        ,
-        'search': 'driver.id:${_user
-            .id};order_status_id:$orderStatusId;delivery_address_id:null'
-        ,
-        'searchFields': 'driver.id:=;order_status_id:<>;delivery_address_id:<>'
-        ,
-        'searchJoin': 'and'
-        ,
-        'orderBy': 'id'
-        ,
+        'with':
+            'driver;foodOrders;foodOrders.food;foodOrders.extras;orderStatus;deliveryAddress;payment',
+        'search':
+            'driver.id:${_user.id};order_status_id:$orderStatusId;delivery_address_id:null',
+        'searchFields': 'driver.id:=;order_status_id:<>;delivery_address_id:<>',
+        'searchJoin': 'and',
+        'orderBy': 'id',
         'sortedBy': 'desc'
       },
-      requireAuthorization: true,
     ).then((response) async {
       print('getOrders:${response.data}');
       if (response.statusCode == 200) {
         final data = response.data['data'] as List;
-        responseBody =
-        List<Order>.from(data.map((e) => Order.fromJSON(e)));
+        responseBody = List<Order>.from(data.map((e) => Order.fromJSON(e)));
       }
     }).catchError((onError) async {
-      print('error : ${onError} ${onError
-          .toString()
-          .isEmpty}');
+      print('error : ${onError} ${onError.toString().isEmpty}');
 
       responseBody = <Order>[];
     });
@@ -60,31 +50,23 @@ class OrderRepository extends ApiService {
     await get(
       url,
       queryParameters: {
-        'with': 'driver;foodOrders;foodOrders.food;foodOrders.extras;orderStatus;deliveryAddress;payment'
-        ,
-        'search': 'driver.id:${_user
-            .id};order_status_id:$orderStatusId;delivery_address_id:null'
-        ,
-        'searchFields': 'driver.id:=;order_status_id:=;delivery_address_id:<>'
-        ,
-        'searchJoin': 'and'
-        ,
-        'orderBy': 'id'
-        ,
+        'with':
+            'driver;foodOrders;foodOrders.food;foodOrders.extras;orderStatus;deliveryAddress;payment',
+        'search':
+            'driver.id:${_user.id};order_status_id:$orderStatusId;delivery_address_id:null',
+        'searchFields': 'driver.id:=;order_status_id:=;delivery_address_id:<>',
+        'searchJoin': 'and',
+        'orderBy': 'id',
         'sortedBy': 'desc'
       },
-      requireAuthorization: true,
     ).then((response) async {
       print('getOrdersHistory:${response.statusCode}');
       if (response.statusCode == 200) {
         final data = response.data['data'] as List;
-        responseBody =
-        List<Order>.from(data.map((e) => Order.fromJSON(e)));
+        responseBody = List<Order>.from(data.map((e) => Order.fromJSON(e)));
       }
     }).catchError((onError) async {
-      print('error : ${onError} ${onError
-          .toString()
-          .isEmpty}');
+      print('error : ${onError} ${onError.toString().isEmpty}');
 
       responseBody = <Order>[];
     });
@@ -97,19 +79,17 @@ class OrderRepository extends ApiService {
     await get(
       url,
       queryParameters: {
-        'with': 'user;foodOrders;foodOrders.food;foodOrders.extras;orderStatus;deliveryAddress;payment'
+        'with':
+            'user;foodOrders;foodOrders.food;foodOrders.extras;orderStatus;deliveryAddress;payment'
       },
       requireAuthorization: true,
     ).then((response) async {
       print('getOrder:${response.statusCode}');
       if (response.statusCode == 200) {
-        responseBody =
-            Order.fromJSON(response.data['data']);
+        responseBody = Order.fromJSON(response.data['data']);
       }
     }).catchError((onError) async {
-      print('error : ${onError} ${onError
-          .toString()
-          .isEmpty}');
+      print('error : ${onError} ${onError.toString().isEmpty}');
 
       responseBody = new Order();
     });
@@ -122,20 +102,18 @@ class OrderRepository extends ApiService {
     await get(
       url,
       queryParameters: {
-        'with': 'user;foodOrders;foodOrders.food;foodOrders.extras;orderStatus;deliveryAddress;payment'
+        'with':
+            'user;foodOrders;foodOrders.food;foodOrders.extras;orderStatus;deliveryAddress;payment'
       },
       requireAuthorization: true,
     ).then((response) async {
       print('getOrderWorkOn:${response.statusCode}');
       if (response.statusCode == 200) {
         final data = response.data['data'] as List;
-        responseBody =
-        List<Order>.from(data.map((e) => Order.fromJSON(e)));
+        responseBody = List<Order>.from(data.map((e) => Order.fromJSON(e)));
       }
     }).catchError((onError) async {
-      print('error : ${onError} ${onError
-          .toString()
-          .isEmpty}');
+      print('error : ${onError} ${onError.toString().isEmpty}');
 
       responseBody = <Order>[];
     });
@@ -149,18 +127,13 @@ class OrderRepository extends ApiService {
     await get(
       url,
       queryParameters: {
-        'with': 'driver;foodOrders;foodOrders.food;foodOrders.extras;orderStatus;deliveryAddress;payment'
-        ,
-        'search': 'driver.id:${_user.id};delivery_address_id:null'
-        ,
-        'searchFields': 'driver.id:=;delivery_address_id:<>'
-        ,
-        'searchJoin': 'and'
-        ,
-        'limit': '4'
-        ,
-        'orderBy': 'id'
-        ,
+        'with':
+            'driver;foodOrders;foodOrders.food;foodOrders.extras;orderStatus;deliveryAddress;payment',
+        'search': 'driver.id:${_user.id};delivery_address_id:null',
+        'searchFields': 'driver.id:=;delivery_address_id:<>',
+        'searchJoin': 'and',
+        'limit': '4',
+        'orderBy': 'id',
         'sortedBy': 'desc'
       },
       requireAuthorization: true,
@@ -168,13 +141,10 @@ class OrderRepository extends ApiService {
       print('getRecentOrders:${response.statusCode}');
       if (response.statusCode == 200) {
         final data = response.data['data'] as List;
-        responseBody =
-        List<Order>.from(data.map((e) => Order.fromJSON(e)));
+        responseBody = List<Order>.from(data.map((e) => Order.fromJSON(e)));
       }
     }).catchError((onError) async {
-      print('error : ${onError} ${onError
-          .toString()
-          .isEmpty}');
+      print('error : ${onError} ${onError.toString().isEmpty}');
 
       responseBody = <Order>[];
     });
@@ -192,36 +162,30 @@ class OrderRepository extends ApiService {
       if (response.statusCode == 200) {
         final data = response.data['data'] as List;
         responseBody =
-        List<OrderStatus>.from(data.map((e) => OrderStatus.fromJSON(e)));
+            List<OrderStatus>.from(data.map((e) => OrderStatus.fromJSON(e)));
       }
     }).catchError((onError) async {
-      print('error : ${onError} ${onError
-          .toString()
-          .isEmpty}');
+      print('error : ${onError} ${onError.toString().isEmpty}');
 
       responseBody = <OrderStatus>[];
     });
     return responseBody;
   }
 
-
   Future<bool> deliveredOrder(Order order) async {
     dynamic responseBody;
     final String url = 'orders/${order.id}';
-    await put(
-        url,
-        extraHeaders: {HttpHeaders.contentTypeHeader: 'application/json'},
-        data: json.encode(order.deliveredMap()),
-        requireAuthorization: true
-    ).then((response) async {
+    await put(url,
+            extraHeaders: {HttpHeaders.contentTypeHeader: 'application/json'},
+            data: json.encode(order.deliveredMap()),
+            requireAuthorization: true)
+        .then((response) async {
       print('deliveredOrder:${response.statusCode}');
       if (response.statusCode == 200) {
         responseBody = true;
       }
     }).catchError((onError) async {
-      print('error : ${onError} ${onError
-          .toString()
-          .isEmpty}');
+      print('error : ${onError} ${onError.toString().isEmpty}');
 
       responseBody = false;
     });
@@ -231,20 +195,16 @@ class OrderRepository extends ApiService {
   Future<bool> acceptanceOrder(Id) async {
     dynamic responseBody;
     final String url = 'orders/delivery/$Id';
-    await post(
-        url,
-        extraHeaders: {HttpHeaders.contentTypeHeader: 'application/json'},
-        requireAuthorization: true
-
-    ).then((response) async {
+    await post(url,
+            extraHeaders: {HttpHeaders.contentTypeHeader: 'application/json'},
+            requireAuthorization: true)
+        .then((response) async {
       print('acceptanceOrder:${response.statusCode}');
       if (response.statusCode == 200) {
         responseBody = true;
       }
     }).catchError((onError) async {
-      print('error : ${onError} ${onError
-          .toString()
-          .isEmpty}');
+      print('error : ${onError} ${onError.toString().isEmpty}');
 
       responseBody = false;
     });
@@ -254,19 +214,16 @@ class OrderRepository extends ApiService {
   Future<bool> cancelOrder(Id) async {
     dynamic responseBody;
     final String url = 'orders/cancel/$Id';
-    await post(
-        url,
-        extraHeaders: {HttpHeaders.contentTypeHeader: 'application/json'},
-        requireAuthorization: true
-    ).then((response) async {
+    await post(url,
+            extraHeaders: {HttpHeaders.contentTypeHeader: 'application/json'},
+            requireAuthorization: true)
+        .then((response) async {
       print('acceptanceOrder:${response.statusCode}');
       if (response.statusCode == 200) {
         responseBody = true;
       }
     }).catchError((onError) async {
-      print('error : ${onError} ${onError
-          .toString()
-          .isEmpty}');
+      print('error : ${onError} ${onError.toString().isEmpty}');
 
       responseBody = false;
     });
@@ -280,4 +237,3 @@ class OrderRepository extends ApiService {
         .snapshots();
   }
 }
-
