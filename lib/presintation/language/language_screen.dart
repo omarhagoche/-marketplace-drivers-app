@@ -16,7 +16,7 @@ class LanguageScreen extends GetView<LanguageController> {
     }
     return Scaffold(
         appBar: AppBar(
-          title: Text('Languages'.tr),
+          title: Text('languages'.tr),
         ),
         body: Column(
           children: [

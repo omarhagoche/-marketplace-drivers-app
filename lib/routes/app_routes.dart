@@ -13,6 +13,9 @@ abstract class Routes {
   static const MESSAGES = '/MESSAGES';
   static const FORGET_PASSWORD = '/FORGET_PASSWORD';
   static const LANGUAGE = '/LANGUAGE';
+  static const HELP = '/HELP';
+  static const SETTING = '/SETTING';
+  static const NOTIFICATION = '/NOTIFICATION';
 
 }
 

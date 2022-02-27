@@ -10,7 +10,6 @@ import '../../data/models/user.dart';
 import '../../data/repositories/user_repository.dart';
 
 class ProfileController extends GetxController {
-
   Rxn<User> user = Rxn();
   RxList<Order> recentOrders = <Order>[].obs;
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -19,60 +18,8 @@ class ProfileController extends GetxController {
   final ImagePicker picker = ImagePicker();
   File? image;
 
-  void updateDriverState(driverState) {
-    try {
-
-
-    } catch (e) {
-      ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
-        content: Text('حدث خطأ ما !'),
-      ));
-    }
-  }
-
-  void getUserInfo() async {
-
-        UserRepository.instance
-            .userProfile().then((value) async {
-          if(value != null) {
-            user.value = User.fromJSON(value);
-            print('user .. : ${user.value}');
-           // CurrentUser.saveUser(value.toString());
-            //goHome();
-            if(value == 'error') {
-              //  goHome();
-
-            }
-          }
-        });
-
-
-
-  }
-
-  void driverStatistics() async {
-    UserRepository.instance
-        .driverStatistics().then((value) async {
-          print('driverStatistics ... . $value}');
-      if(value != null) {
-        statistics.value = Statistics.fromJson(value);
-        print('statistics .. ${statistics}');
-        //print('user .. : ${user.value}');
-        // CurrentUser.saveUser(value.toString());
-        //goHome();
-        if(value == 'error') {
-          //  goHome();
-
-        }
-      }
-    });
-  }
-
   @override
   void onInit() {
-    // listenForUser();
-    // listenForStatistics();
-    //listenForRecentOrders();
     getUserInfo();
     driverStatistics();
     super.onInit();
@@ -82,22 +29,17 @@ class ProfileController extends GetxController {
     try {
       final pickedFile = await picker.pickImage(
         source: ImageSource.gallery,
-
       );
       if (pickedFile != null) {
         image = File(pickedFile.path);
       }
-    } catch (e) {
-      // _pickImageError = e;
-
-    }
+    } catch (e) {}
   }
 
   void imgFromGallery() async {
     try {
       final pickedFile = await picker.pickImage(
         source: ImageSource.camera,
-
       );
       if (pickedFile != null) {
         image = File(pickedFile.path);
@@ -107,4 +49,30 @@ class ProfileController extends GetxController {
 
     }
   }
+  void updateDriverState(driverState) {
+    try {
+      UserRepository.instance.updateDriverAvailable(driverState).then((v) {
+        update();
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
+        content: Text('حدث خطأ ما !'),
+      ));
+    }
+  }
+
+  void getUserInfo() async {
+    UserRepository.instance.userProfile().then((value) async {
+      user.value = value;
+    });
+  }
+
+  void driverStatistics() async {
+    UserRepository.instance.driverStatistics().then((value) async {
+      print('driverStatistics ... . $value}');
+      statistics.value = value;
+      print('statistics .. ${statistics}');
+    });
+  }
+
 }

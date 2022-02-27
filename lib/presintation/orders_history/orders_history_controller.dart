@@ -8,11 +8,6 @@ class OrderHistoryController extends GetxController {
   RxList<Order> orders = <Order>[].obs;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-
-  Future<void> refreshOrdersHistory() async {
-    orders.clear();
-   // listenForOrdersHistory(message: S.of(state!.context)!.order_refreshed_successfuly);
-  }
   @override
   void onInit() {
     getOrders();
@@ -21,14 +16,14 @@ class OrderHistoryController extends GetxController {
 
   void getOrders() async {
     OrderRepository.instance
-        .getOrders().then((value) async {
+        .getOrdersHistory().then((value) async {
           orders.value = value;
     });
   }
-
-  Future<void> refreshOrders() async {
+  Future<void> refreshOrdersHistory() async {
     orders.clear();
-   // listenForOrders(message: S.of(state!.context)!.order_refreshed_successfuly);
+    getOrders();
   }
+
 
 }

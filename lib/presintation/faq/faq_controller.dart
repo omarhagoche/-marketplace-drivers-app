@@ -5,6 +5,8 @@ import '../../data/models/faq_category.dart';
 import '../../data/repositories/faq_repository.dart';
 class FaqController extends GetxController {
   final faqs = <FaqCategory>[].obs;
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void onInit() {
     listenForFaqs();

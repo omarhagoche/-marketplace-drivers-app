@@ -9,7 +9,6 @@ class GalleryRepository extends ApiService {
     await get(
       url,
       queryParameters: {'search':'restaurant_id:$idRestaurant'},
-      requireAuthorization: false,
     ).then((response) async {
       print('getGalleries:${response.statusCode}');
       if (response.statusCode == 200) {

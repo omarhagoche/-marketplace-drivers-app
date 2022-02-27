@@ -12,7 +12,6 @@ import 'package:overlay_support/overlay_support.dart';
 import 'routes/app_pages.dart';
 import 'translation/lang_service.dart';
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();

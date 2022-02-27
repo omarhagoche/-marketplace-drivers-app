@@ -61,11 +61,11 @@ class _ProfileSettingsDialogState extends State<ProfileSettingsDialog> {
                           keyboardType: TextInputType.text,
                           decoration: getInputDecoration(hintText: '919000000', labelText: 'phone'.tr),
                           initialValue: widget.user!.phone,
-                          maxLength: 10,
+                          maxLength: 9,
                           validator: MultiValidator([
                             RequiredValidator(
                                 errorText: 'please_enter_phone_number'.tr),
-                            MinLengthValidator(10,
+                            MinLengthValidator(9,
                                 errorText:
                                 'not_a_valid_phone'.tr),
                             PatternValidator(

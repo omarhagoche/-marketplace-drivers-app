@@ -35,6 +35,9 @@ const Map<String, String> ar = {
   'total': 'الإجمالي',
   'viewDetails': 'عرض',
   'canceled': 'ملغي',
+  'faq': 'التعليمات',
+  'help_supports': 'المساعدة والدعم',
+  'application_preferences': 'تفضيلات التطبيق',
   'you_do_not_have_any_order_assigned_to_you': 'ليست لديك أي طلبيات حاليا!',
   'do_not_have_any_item_in_the_notification_list': 'لا يوجد أي عنصر في قائمة الإشعارات',
   'you_do_not_have_any_conversations': 'ليس لديك أي محادثات',
@@ -80,5 +83,12 @@ const Map<String, String> ar = {
   "delivered": "تم التسليم",
   "order_refreshed_successfully": "تم تحديث الطلب بنجاح",
   "tracking_refreshed_successfully": "تم تحديث التتبع بنجاح",
+  "profile_settings_updated_successfully": "تم تحديث بياناتك بنجاح",
+  "change_password": "تغير كلمة السر",
+  "change_password_successfully": "تم تغير كلمة السر بنجاح",
+  "the_current_password_error": "كلمة السر الحالية خطأ",
+  "notification": "الاشعارات",
+  "swip_left_the_notification_to_delete_or_read__unread": "اسحب لليسار لحذف الاشعار",
+
 
 };

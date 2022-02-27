@@ -10,7 +10,6 @@ class HomeController extends GetxController {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   Rxn<Widget> currentScreen = Rxn();
   var currentTab = 0;
-
   getScreens() {
     return [
       ProfileScreen(),
@@ -19,13 +18,9 @@ class HomeController extends GetxController {
       OrdersHistoryScreen(),
     ];
   }
-
   void selectTab(int tabItem) {
-
       currentTab = tabItem;
       update();
-      print(currentTab);
-
   }
 
 }

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get_storage/get_storage.dart';
 
 import '../../core/utils/sabek_icons.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../data/repositories/auth_repository.dart';
 import '../../data/repositories/settings_repository.dart';
+import '../../routes/app_pages.dart';
 import 'loading_widget.dart';
 class DrawerWidget extends StatelessWidget {
   @override
@@ -17,14 +19,14 @@ class DrawerWidget extends StatelessWidget {
               children: <Widget>[
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).pushNamed('/Pages', arguments: 0);
+                    Get.toNamed(Routes.HOME, arguments: 0);
                   },
                   child: UserAccountsDrawerHeader(
                     decoration: BoxDecoration(
                       color: Theme.of(context).hintColor.withOpacity(0.1),
                     ),
                     accountName: Text(
-                      box.read('name') ?? '',
+                      currentUser.value.name ?? '',
                       style: Theme.of(context).textTheme.headline6,
                     ),
                     accountEmail: Text(
@@ -40,7 +42,20 @@ class DrawerWidget extends StatelessWidget {
                 ),
                 ListTile(
                   onTap: () {
-                    Navigator.of(context).pushNamed('/Pages', arguments: 2);
+                    Get.toNamed(Routes.NOTIFICATION);
+                  },
+                  leading: Icon(
+                    SabekIcons.bell1,
+                    color: Theme.of(context).focusColor.withOpacity(1),
+                  ),
+                  title: Text(
+                    'notification'.tr,
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                ),
+                ListTile(
+                  onTap: () {
+                    Get.toNamed(Routes.HOME, arguments: 2);
                   },
                   leading: Icon(
                     SabekIcons.home,
@@ -53,7 +68,7 @@ class DrawerWidget extends StatelessWidget {
                 ),
                 ListTile(
                   onTap: () {
-                    Navigator.of(context).pushNamed('/Pages', arguments: 1);
+                    Get.toNamed(Routes.HOME, arguments: 1);
                   },
                   leading: Icon(
                     SabekIcons.messenger,
@@ -66,7 +81,7 @@ class DrawerWidget extends StatelessWidget {
                 ),
                 ListTile(
                   onTap: () {
-                    Navigator.of(context).pushNamed('/Pages', arguments: 3);
+                    Get.toNamed(Routes.HOME, arguments: 3);
                   },
                   leading: Icon(
                     SabekIcons.list,
@@ -90,7 +105,7 @@ class DrawerWidget extends StatelessWidget {
                 ),
                 ListTile(
                   onTap: () {
-                    Navigator.of(context).pushNamed('/Help');
+                   Get.toNamed(Routes.HELP);
                   },
                   leading: Icon(
                     SabekIcons.about,
@@ -103,7 +118,7 @@ class DrawerWidget extends StatelessWidget {
                 ),
                 ListTile(
                   onTap: () {
-                    Navigator.of(context).pushNamed('/Settings');
+                    Get.toNamed(Routes.SETTING);
                   },
                   leading: Icon(
                     SabekIcons.settings,
@@ -116,7 +131,7 @@ class DrawerWidget extends StatelessWidget {
                 ),
                 ListTile(
                   onTap: () {
-                    Navigator.of(context).pushNamed('/Languages');
+                    Get.toNamed(Routes.LANGUAGE);
                   },
                   leading: Icon(
                     SabekIcons.translate,
@@ -130,14 +145,13 @@ class DrawerWidget extends StatelessWidget {
 
                 ListTile(
                   onTap: () {
-                    // FirebaseMessaging.instance.getToken().then((_deviceToken) {
-                    //   logout(_deviceToken).then((value) {
-                    //     Navigator.of(context).pushNamedAndRemoveUntil(
-                    //         '/Login', (Route<dynamic> route) => false);
-                    //   });
-                    // }).catchError((e) {
-                    //   print('Notification not configured');
-                    // });
+                    FirebaseMessaging.instance.getToken().then((_deviceToken) {
+                      AuthRepository.instance.logout(_deviceToken).then((value) {
+                        Get.offAndToNamed(Routes.LOGIN);
+                      });
+                    }).catchError((e) {
+                      print('Notification not configured');
+                    });
 
                   },
                   leading: Icon(

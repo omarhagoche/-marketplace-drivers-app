@@ -3,17 +3,13 @@ import 'package:get/get.dart';
 import '../widgets/empty_order.dart';
 import '../widgets/order_item.dart';
 import 'orders_history_controller.dart';
-import 'package:get/get.dart';
-class OrdersHistoryScreen extends StatelessWidget{
+class OrdersHistoryScreen extends GetView<OrderHistoryController>{
   const OrdersHistoryScreen({key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    final OrderHistoryController controller = Get.put(OrderHistoryController());
     return GetBuilder<OrderHistoryController>(
-        builder: (controller)
-    {
-      return Scaffold(
+      init: OrderHistoryController(),
+        builder: (controller)=> Scaffold(
         key: controller.scaffoldKey,
         appBar: AppBar(
           leading: new IconButton(
@@ -40,14 +36,13 @@ class OrdersHistoryScreen extends StatelessWidget{
                 primary: true,
                 padding: EdgeInsets.symmetric(vertical: 10),
                 children: <Widget>[
-                  controller.orders.isEmpty
-                      ? EmptyOrdersWidget()
-                      : ListView.separated(
+                   ListView.separated(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     primary: false,
                     itemCount: controller.orders.length,
                     itemBuilder: (context, index) {
+                      print(controller.orders.length);
                       var _order = controller.orders.elementAt(index);
                       return OrderItemWidget(expanded: index == 0 ? true : false, order: _order);
                     },
@@ -58,9 +53,10 @@ class OrdersHistoryScreen extends StatelessWidget{
                 ],
               ),
             )
-        ),
-      );
-    });
+
+      ),
+      ),
+    );
 
 
 

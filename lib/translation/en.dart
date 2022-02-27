@@ -67,8 +67,11 @@ const Map<String, String> en = {
   'totalOrders': 'Total Orders',
   'company_ratio': 'Company ratio',
   'coupons': 'coupons',
+  'application_preferences': 'Application Preferences',
   "en_US": "English",
   "ar": "Arabic",
+  'faq': 'Faq',
+  'help_supports': 'Help Supports',
   "Notifications_refreshed_successfully": "Notifications refreshed successfully",
   "This_notification_was_removed": "This notification was removed",
   "this_notification_has_marked_AsRead": "This notification has marked AsRead",
@@ -80,4 +83,10 @@ const Map<String, String> en = {
   "delivered": "delivered",
   "order_refreshed_successfully": "order refreshed successfully",
   "tracking_refreshed_successfully": "tracking refreshed successfully",
- };
+  "profile_settings_updated_successfully": "profile settings updated successfully",
+  "change_password": "Change password",
+  "change_password_successfully": "Change password successfully",
+  "the_current_password_error": "The current password error",
+  "notification": "Notifications",
+
+};
