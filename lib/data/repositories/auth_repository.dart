@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -12,7 +13,7 @@ class AuthRepository extends ApiService {
   static AuthRepository get instance => AuthRepository();
   final box = Get.find<GetStorage>();
 
-  Future<dynamic?> logIn({
+  Future<User> logIn({
     required String phoneNumber,
     required String password,
   }) async {
@@ -20,50 +21,30 @@ class AuthRepository extends ApiService {
       'phone_number': phoneNumber,
       'password': password,
     };
-    String? token;
-    String? name;
-    String? email;
-    dynamic responseBody;
-
     String loginUrl = 'driver/login';
 
     await post(
       loginUrl,
       data: json.encode(requestBody),
-      requireAuthorization: false,
     ).then((response) async {
 
         print('${response.statusCode}');
         print('${response.data}');
         if (response.statusCode == 200) {
-          token = response.data['data']['token'];
-          var user = response.data['data']['user'];
-          name = user['name'];
-          email = user['email'];
-          responseBody = response.data['data'];
-          if (token != null) {
-            //await Token.persistToken(token!);
-           await box.write('token', token);
-           await box.write('name', name);
-           await box.write('email', email);
-          }
+          setCurrentUser(response.data['data']['user']);
+          currentUser.value=User.fromJSON(response.data['data']['user']);
+          // ignore: invalid_use_of_visible_for_testing_member
+          currentUser.notifyListeners();
         } else if (response.statusCode == 422) {
-          token = '442';
+          print(response.statusCode);
         }
 
     }).catchError((onError) async{
       print('error : ${onError} ${onError.toString().isEmpty}');
 
-      responseBody = 'error';
-
     });
-    //
-    var boxToken = await box.read('token');
-   // print('token $token');
-    print('tokennn $boxToken');
-    print('tokennn $name');
-  //  print('response body $responseBody');
-    return responseBody;
+
+    return currentUser.value;
   }
 
 
@@ -87,7 +68,6 @@ class AuthRepository extends ApiService {
         print('${response.data}');
         if (response.statusCode == 200) {
           responseBody = response.data['data'];
-          setCurrentUser(responseBody);
         } else if (response.statusCode == 422) {
           token = '442';
         }
@@ -132,6 +112,27 @@ class AuthRepository extends ApiService {
     });
     print(token);
     return token;
+  }
+  Future<void> logout(deviceToken) async {
+    final String url =
+        'logout';
+    await post(
+        url,
+        extraHeaders: {HttpHeaders.contentTypeHeader: 'application/json',
+          HttpHeaders.acceptHeader: 'application/json'},
+        data: {
+          'device_token': deviceToken,
+        }
+    ).then((response) async {
+      print(response.data);
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        currentUser.value = new User();
+        await box.remove('current_user');
+      }
+    }).catchError((onError) async{
+      print('error : ${onError} ${onError.toString().isEmpty}');
+    });
   }
 
 
