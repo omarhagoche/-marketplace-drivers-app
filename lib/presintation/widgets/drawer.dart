@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:get_storage/get_storage.dart';
+
 import '../../core/utils/sabek_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,6 +10,8 @@ import 'loading_widget.dart';
 class DrawerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final box = Get.find<GetStorage>();
+
     return Drawer(
       child: ListView(
               children: <Widget>[
@@ -20,17 +24,17 @@ class DrawerWidget extends StatelessWidget {
                       color: Theme.of(context).hintColor.withOpacity(0.1),
                     ),
                     accountName: Text(
-                      currentUser.value.name!,
+                      box.read('name') ?? '',
                       style: Theme.of(context).textTheme.headline6,
                     ),
                     accountEmail: Text(
-                      currentUser.value.email!,
+                      currentUser.value.email ?? '',
                       style: Theme.of(context).textTheme.caption,
                     ),
                     currentAccountPicture: CircleAvatar(
                       backgroundColor: Theme.of(context).accentColor,
                       backgroundImage:
-                          NetworkImage(currentUser.value.image!.thumb!),
+                          NetworkImage(currentUser.value.image?.thumb ?? ''),
                     ),
                   ),
                 ),
@@ -145,7 +149,7 @@ class DrawerWidget extends StatelessWidget {
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
                 ),
-                setting.value.enableVersion!
+              /*  setting.value.enableVersion!
                     ? ListTile(
                         dense: true,
                         title: Text(
@@ -163,7 +167,7 @@ class DrawerWidget extends StatelessWidget {
                           color: Theme.of(context).focusColor.withOpacity(0.3),
                         ),
                       )
-                    : SizedBox(),
+                    : SizedBox(),*/
               ],
             ),
     );

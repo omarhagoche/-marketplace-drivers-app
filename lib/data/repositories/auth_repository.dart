@@ -21,6 +21,8 @@ class AuthRepository extends ApiService {
       'password': password,
     };
     String? token;
+    String? name;
+    String? email;
     dynamic responseBody;
 
     String loginUrl = 'driver/login';
@@ -35,10 +37,16 @@ class AuthRepository extends ApiService {
         print('${response.data}');
         if (response.statusCode == 200) {
           token = response.data['data']['token'];
+          var user = response.data['data']['user'];
+          name = user['name'];
+          email = user['email'];
           responseBody = response.data['data'];
-        /*  if (token != null) {
-            await Token.persistToken(token!);
-          }*/
+          if (token != null) {
+            //await Token.persistToken(token!);
+           await box.write('token', token);
+           await box.write('name', name);
+           await box.write('email', email);
+          }
         } else if (response.statusCode == 422) {
           token = '442';
         }
@@ -50,7 +58,10 @@ class AuthRepository extends ApiService {
 
     });
     //
-    print('token $token');
+    var boxToken = await box.read('token');
+   // print('token $token');
+    print('tokennn $boxToken');
+    print('tokennn $name');
   //  print('response body $responseBody');
     return responseBody;
   }

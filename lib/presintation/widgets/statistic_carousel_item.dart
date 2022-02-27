@@ -32,18 +32,19 @@ class StatisticCarouselItemWidget extends StatelessWidget {
             Helper.of(context).trans(title!),
             textAlign: TextAlign.center,
             maxLines: 3,
+
             style: Theme.of(context).textTheme.subtitle1,
           ),
           SizedBox(height: 8),
           title != 'total_orders'
               ? Text('${amount?.toStringAsFixed(2)} دل',
                   style: Theme.of(context).textTheme.headline2!.merge(
-                        TextStyle(height: 1),
+                        TextStyle(height: 1,fontSize: 30),
                       ))
               : Text('${amount?.toStringAsFixed(0)}',
                   style: Theme.of(context).textTheme.headline2!.merge(
-                        TextStyle(height: 1),
-                      )),
+                        TextStyle(height: 1,fontSize: 30),
+                      ),),
         ],
       ),
     );

@@ -48,7 +48,7 @@ class LoginController extends GetxController {
             CurrentUser.saveUser(value.toString());
             goHome();
             if(value == 'error') {
-              goHome();
+            //  goHome();
               ScaffoldMessenger.of(formKey.currentContext!).showSnackBar(SnackBar(
                 content: Text('رقم الهاتف او كلمة المرور خاظئ'),
               ));

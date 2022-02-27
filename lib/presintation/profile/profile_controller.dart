@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../data/models/order.dart';
 import '../../data/models/statistic.dart';
 import '../../data/models/user.dart';
+import '../../data/repositories/user_repository.dart';
 
 class ProfileController extends GetxController {
 
@@ -29,11 +30,51 @@ class ProfileController extends GetxController {
     }
   }
 
+  void getUserInfo() async {
+
+        UserRepository.instance
+            .userProfile().then((value) async {
+          if(value != null) {
+            user.value = User.fromJSON(value);
+            print('user .. : ${user.value}');
+           // CurrentUser.saveUser(value.toString());
+            //goHome();
+            if(value == 'error') {
+              //  goHome();
+
+            }
+          }
+        });
+
+
+
+  }
+
+  void driverStatistics() async {
+    UserRepository.instance
+        .driverStatistics().then((value) async {
+          print('driverStatistics ... . $value}');
+      if(value != null) {
+        statistics.value = Statistics.fromJson(value);
+        print('statistics .. ${statistics}');
+        //print('user .. : ${user.value}');
+        // CurrentUser.saveUser(value.toString());
+        //goHome();
+        if(value == 'error') {
+          //  goHome();
+
+        }
+      }
+    });
+  }
+
   @override
   void onInit() {
     // listenForUser();
     // listenForStatistics();
     //listenForRecentOrders();
+    getUserInfo();
+    driverStatistics();
     super.onInit();
   }
 

@@ -2,12 +2,15 @@ import 'dart:async';
 
 
 import 'package:dio/dio.dart';
+import 'package:get/get_instance/get_instance.dart';
 import 'package:get/route_manager.dart';
+import 'package:get_storage/get_storage.dart';
 import '../../../core/utils/token_injecter.dart';
 import '../../../routes/app_pages.dart';
 import 'interceptors.dart';
 
 class ApiService {
+
   ApiService()
       : dio = Dio(
           BaseOptions(
@@ -29,6 +32,7 @@ class ApiService {
   }
 
   Dio dio;
+  final box = Get.find<GetStorage>();
 
   Options options = Options();
 
@@ -41,11 +45,10 @@ class ApiService {
 
     headers.addAll(extraHeaders);
     options = Options(headers: headers);
-
     dio.interceptors.add(AppInterceptors());
 
     if (requireAuthorization) {
-      String? token = '';//await Token.getToken;
+      String? token = await box.read('token');//await Token.getToken;
 
       if (token != null) {
         options.headers!.addAll({

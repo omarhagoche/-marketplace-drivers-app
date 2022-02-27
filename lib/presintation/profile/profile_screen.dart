@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/drawer.dart';
 import '../widgets/profile_avatar.dart';
 import '../widgets/statistics_carousel.dart';
 import '../widgets/loading_widget.dart';
@@ -14,16 +15,14 @@ class ProfileScreen extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     final ProfileController controller = Get.put(ProfileController());
     return Scaffold(
-
+        key: controller.scaffoldKey,
+        drawer: DrawerWidget(),
         appBar: AppBar(
           leading: new IconButton(
               icon: new Icon(Icons.sort, color: Theme
                   .of(context)
                   .primaryColor),
-              onPressed: () {
-                // widget.parentScaffoldKey?.currentState?.openDrawer();
-                // TODO :: open drawer
-              }
+            onPressed: ()=> controller.scaffoldKey.currentState!.openDrawer(),
           ),
           automaticallyImplyLeading: false,
           backgroundColor: Theme
@@ -44,10 +43,9 @@ class ProfileScreen extends GetView<ProfileController> {
           ),
 
         ),
-        key: controller.scaffoldKey,
         body: Obx(
               () =>
-          controller.user.value?.apiToken == null
+          controller.user.value == null
               ? LoadingWidget()
               : SingleChildScrollView(
             child: Column(
@@ -84,6 +82,7 @@ class ProfileScreen extends GetView<ProfileController> {
                 ),
                 Obx(
                       () =>
+                      controller.statistics.value == null ? Center(child: LoadingWidget(),) :
                       StatisticsCarouselWidget(
                           statistics: controller.statistics.value!),
                 )

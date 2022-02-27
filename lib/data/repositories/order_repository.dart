@@ -12,10 +12,12 @@ class OrderRepository extends ApiService {
   static OrderRepository get instance => OrderRepository();
 
   Future<List<Order>> getOrders() async {
+    print('getOrders:}');
+
     dynamic responseBody;
     final String orderStatusId = "80"; // for delivered status
     User _user = currentUser.value;
-    final String url = 'orders';
+    final String url = 'driver/orders';
     await get(
       url,
       queryParameters: {
@@ -34,7 +36,7 @@ class OrderRepository extends ApiService {
       },
       requireAuthorization: true,
     ).then((response) async {
-      print('getOrders:${response.statusCode}');
+      print('getOrders:${response.data}');
       if (response.statusCode == 200) {
         final data = response.data['data'] as List;
         responseBody =
