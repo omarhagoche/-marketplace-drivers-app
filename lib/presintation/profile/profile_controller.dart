@@ -12,6 +12,7 @@ import '../../data/repositories/user_repository.dart';
 class ProfileController extends GetxController {
   Rxn<User> user = Rxn();
   RxList<Order> recentOrders = <Order>[].obs;
+  var driverState = false.obs;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   Rxn<Statistics> statistics = Rxn();
   Rxn<OverlayEntry?> loader = Rxn();
@@ -50,9 +51,14 @@ class ProfileController extends GetxController {
     }
   }
   void updateDriverState(driverState) {
+
     try {
-      UserRepository.instance.updateDriverAvailable(driverState).then((v) {
+      toggleState();
+      UserRepository.instance.updateDriverAvailable(driverState).then((value) {
         update();
+        if(!value){
+          driverState.value = false;
+        }
       });
     } catch (e) {
       ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
@@ -64,7 +70,12 @@ class ProfileController extends GetxController {
   void getUserInfo() async {
     UserRepository.instance.userProfile().then((value) async {
       user.value = value;
+      driverState.value = user.value?.driver?.available ?? false;
     });
+  }
+
+  void toggleState(){
+    driverState.value = !driverState.value;
   }
 
   void driverStatistics() async {

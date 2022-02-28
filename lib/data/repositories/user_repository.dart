@@ -53,8 +53,9 @@ class UserRepository extends ApiService {
     return responseBody;
   }
 
-  Future<void> updateDriverAvailable(driverState) async {
+  Future<bool> updateDriverAvailable(driverState) async {
     final String url = 'driver/update-status';
+    bool state = false;
     await post(
       url,
       extraHeaders: {HttpHeaders.contentTypeHeader: 'application/json'},
@@ -62,9 +63,12 @@ class UserRepository extends ApiService {
     ).then((response) async {
       print('${response.statusCode}');
       print('${response.data}');
+      state = await response.statusCode == 200;
     }).catchError((onError) async {
       print('error : ${onError} ${onError.toString().isEmpty}');
+      state = await false;
     });
+    return state;
   }
 
   Future<User> update(User user) async {

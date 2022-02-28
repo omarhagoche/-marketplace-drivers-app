@@ -50,7 +50,7 @@ class ProfileScreen extends GetView<ProfileController> {
                           child: Card(
                             child: SwitchListTile(
                               title: const Text('متوفر'),
-                              value: controller.user.value!.driver!.available!,
+                              value: controller.driverState.value,
                               onChanged: (value) {
                                 controller.user.value!.driver!.available =
                                     value;
