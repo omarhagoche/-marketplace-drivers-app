@@ -4,6 +4,7 @@ import 'package:intl/intl.dart' show DateFormat;
 import '../../core/utils/helper.dart';
 import '../../data/models/order.dart';
 import '../../data/models/route_argument.dart';
+import '../../routes/app_pages.dart';
 import 'food_order_item.dart';
 
 class OrderItemWidget extends StatelessWidget {
@@ -148,12 +149,11 @@ class OrderItemWidget extends StatelessWidget {
                   FlatButton(
                     onPressed: () {
                       //
-                      Get.toNamed('ORDER_DETAILS', arguments: {"id":"${order?.id}"});
-                      //Navigator.of(context).pushNamed('/OrderDetails', arguments: RouteArgument(id: order!.id));
+                      Get.toNamed(Routes.ORDER_DETAILS, arguments: {"id":"${order!.id}"});
                     },
                     textColor: Theme.of(context).hintColor,
                     child: Wrap(
-                      children: <Widget>[Text('show')],
+                      children: <Widget>[Text('viewDetails'.tr)],
                     ),
                     padding: EdgeInsets.symmetric(horizontal: 20),
                   ),

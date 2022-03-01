@@ -11,7 +11,7 @@ import '../../routes/app_pages.dart';
 
 
 class LoginController extends GetxController {
-  final formKey = GlobalKey<FormBuilderState>();
+  final formKey = GlobalKey<FormState>();
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
   var hidePassword = true.obs;

@@ -9,6 +9,7 @@ abstract class Routes {
   static const PROFILE = '/PROFILE';
   static const ORDERS = '/ORDERS';
   static const ORDERS_HISTORY = '/ORDERS_HISTORY';
+  static const ORDER_DETAILS = '/ORDER_DETAILS';
   static const VERYFIY_CODE = '/VERYFIY_CODE';
   static const MESSAGES = '/MESSAGES';
   static const FORGET_PASSWORD = '/FORGET_PASSWORD';
@@ -16,7 +17,7 @@ abstract class Routes {
   static const HELP = '/HELP';
   static const SETTING = '/SETTING';
   static const NOTIFICATION = '/NOTIFICATION';
-  static const ORDER_DETAILS = '/ORDER_DETAILS';
+
 
 }
 

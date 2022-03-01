@@ -4,16 +4,29 @@ import '../../data/models/order.dart';
 import '../../data/models/route_argument.dart';
 import '../../data/repositories/order_repository.dart';
 
-class OrderDetailsController extends GetxController {
+class OrderDetailsController extends GetxController with GetTickerProviderStateMixin {
   final order = Rxn<Order>();
   late GlobalKey<ScaffoldState> scaffoldKey;
   final orderStatus =''.obs;
-  String id = Get.arguments['id'];
+  TabController? tabController;
+  final tabIndex = 0.obs;
   @override
   void onInit() {
     super.onInit();
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
-  //  listenForOrder(id);
+    listenForOrder(id: Get.arguments['id']);
+    tabController =
+        TabController(length: 3, initialIndex: tabIndex.value, vsync: this);
+    tabController!.addListener(_handleTabSelection);
+
+  }
+
+  _handleTabSelection() {
+    if (tabController!.indexIsChanging) {
+
+        tabIndex.value = tabController!.index;
+      }
+
   }
 
   void acceptanceOrderByDriver(id) async {
@@ -21,11 +34,11 @@ class OrderDetailsController extends GetxController {
     OrderRepository.instance.acceptanceOrder(id).then((v) {
       if(v) {
         Get.toNamed('/OrderDetails', arguments: RouteArgument(id: id.toString()));
-        ScaffoldMessenger.of(scaffoldKey!.currentContext!).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
           content: Text("لقد قمت باستلام الطلبية"),
         ));
       }else {
-        ScaffoldMessenger.of(scaffoldKey!.currentContext!).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
           content: Text("للاسف لقد سابقك احد السائقين في قبول الطلبية"),
         ));}
     });

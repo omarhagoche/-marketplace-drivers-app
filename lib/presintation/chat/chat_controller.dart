@@ -13,9 +13,15 @@ class ChatController extends GetxController {
   Stream<QuerySnapshot>? conversations;
   Stream<QuerySnapshot>? chats;
   GlobalKey<ScaffoldState>? scaffoldKey;
+  final myListKey = GlobalKey<AnimatedListState>();
+  final myController = TextEditingController();
   @override
   void onInit() {
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
+    conversation =Get.arguments as Conversation;
+    if (conversation!.id != null) {
+      listenForChats(conversation!);
+    }
     super.onInit();
 
   }
