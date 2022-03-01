@@ -50,7 +50,7 @@ class OrderItemWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Helper.getPrice(Helper.getTotalOrdersPrice(order: order), context, style: Theme.of(context).textTheme.headline4),
+                      Helper.getPrice(Helper.getTotalOrdersPrice(order: order), context, style: Theme.of(context).textTheme.headline5),
                       Text(
                         'cash_on_delivery'.tr,
                         style: Theme.of(context).textTheme.caption,
@@ -131,7 +131,7 @@ class OrderItemWidget extends StatelessWidget {
                                   context,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .headline4)
+                                      .headline5)
                             ],
                           ),
                         ],
@@ -147,11 +147,13 @@ class OrderItemWidget extends StatelessWidget {
                 children: <Widget>[
                   FlatButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/OrderDetails', arguments: RouteArgument(id: order!.id));
+                      //
+                      Get.toNamed('ORDER_DETAILS', arguments: {"id":"${order?.id}"});
+                      //Navigator.of(context).pushNamed('/OrderDetails', arguments: RouteArgument(id: order!.id));
                     },
                     textColor: Theme.of(context).hintColor,
                     child: Wrap(
-                      children: <Widget>[Text('viewDetails'.tr)],
+                      children: <Widget>[Text('show')],
                     ),
                     padding: EdgeInsets.symmetric(horizontal: 20),
                   ),

@@ -8,10 +8,12 @@ class OrderDetailsController extends GetxController {
   final order = Rxn<Order>();
   late GlobalKey<ScaffoldState> scaffoldKey;
   final orderStatus =''.obs;
+  String id = Get.arguments['id'];
   @override
   void onInit() {
     super.onInit();
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
+  //  listenForOrder(id);
   }
 
   void acceptanceOrderByDriver(id) async {

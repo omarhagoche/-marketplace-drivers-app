@@ -16,6 +16,7 @@ abstract class Routes {
   static const HELP = '/HELP';
   static const SETTING = '/SETTING';
   static const NOTIFICATION = '/NOTIFICATION';
+  static const ORDER_DETAILS = '/ORDER_DETAILS';
 
 }
 

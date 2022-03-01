@@ -9,6 +9,8 @@ import '../presintation/login/login_binding.dart';
 import '../presintation/login/login_screen.dart';
 import '../presintation/notification/notification_binding.dart';
 import '../presintation/notification/notification_screen.dart';
+import '../presintation/order_details/order_details_binding.dart';
+import '../presintation/order_details/order_details_screen.dart';
 import '../presintation/orders/orders_binding.dart';
 import '../presintation/orders/orders_screen.dart';
 import '../presintation/orders_history/orders_history_binding.dart';
@@ -34,6 +36,11 @@ class AppPages {
        name: Routes.LOGIN,
        page: () =>  LoginScreen(),
        binding: LoginBinding()
+     ),
+    GetPage(
+       name: Routes.ORDER_DETAILS,
+       page: () =>  OrderDetailsScreen(),
+       binding: OrderDetailsBinding()
      ),
     GetPage(
         name: Routes.HOME,
