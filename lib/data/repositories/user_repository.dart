@@ -90,16 +90,12 @@ class UserRepository extends ApiService {
       extraHeaders: {HttpHeaders.contentTypeHeader: 'application/json'},
       data: formData,
     ).then((value) {
-      print('sssssssss s ; ${value.statusCode}');
-      print('sssssssss s ; ${value.data}');
       if(value.statusCode == 201 || value.statusCode == 200){
         state = true;
-        Get.snackbar('success','s s s s s');
 
       }
     }).catchError((e) async {
       state = false;
-      print('sssssssss s ; ${e}');
       if (e is DioError) {
         if (e.type == DioErrorType.response) {
           Get.snackbar('حدث خطأ','فشل دفع الصورة حاول مجددا');
