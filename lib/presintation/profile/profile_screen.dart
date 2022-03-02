@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import '../widgets/drawer.dart';
 import '../widgets/profile_avatar.dart';
@@ -36,6 +38,7 @@ class ProfileScreen extends GetView<ProfileController> {
               : SingleChildScrollView(
                   child: Column(
                     children: <Widget>[
+
                       Obx(
                         () => ProfileAvatarWidget(
                           user: controller.user.value,

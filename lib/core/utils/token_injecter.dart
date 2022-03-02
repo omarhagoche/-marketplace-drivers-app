@@ -49,6 +49,9 @@ class TokenInjecter extends Interceptor {
 
   @override
   Future<void> onResponse(Response response, ResponseInterceptorHandler handler) async {
+    print('ddddddddd : ${response.statusCode}');
+    print('ddddddddd : ${response.data}');
+    try{
     if (response.data['data'] is Map<String, dynamic>) {
       Map<String, dynamic> data = response.data['data'];
       print(data.containsKey('token'));
@@ -58,6 +61,11 @@ class TokenInjecter extends Interceptor {
         Get.offAllNamed(Routes.HOME);
 
       }
+    }else{
+
+    }
+    }catch(e){
+
     }
     super.onResponse(response, handler);
   }

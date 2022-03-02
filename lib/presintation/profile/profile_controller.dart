@@ -29,35 +29,49 @@ class ProfileController extends GetxController {
     super.onInit();
   }
 
+  uploadProfileImage(){
+    if (profilePhoto.value != null) {
+      UserRepository.instance.updateImage(image: profilePhoto.value!).then((value) {
+        if(value) {
+          ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
+            content: Text('تم تحميل الصورة بنجاح'),
+          ));
+        }
+      });
+
+    } else {
+      print('No image selected.');
+    }
+  }
+
   void imgFromCamera() async {
     try {
       final pickedFile = await picker.pickImage(
         source: ImageSource.camera,
       );
+
       if (pickedFile != null) {
         image.value = File(pickedFile.path);
         imagePath.value = pickedFile.path;
-        print('image path : $imagePath');
+        profilePhoto.value = pickedFile;
+        uploadProfileImage();
       }
     } catch (e) {}
   }
 
   void imgFromGallery() async {
     try {
-      print('image path : $imagePath');
-
       final pickedFile = await picker.pickImage(
         source: ImageSource.gallery,
         maxWidth: 1800,
         maxHeight: 1800,
       );
-      if (pickedFile != null) {
-        print('image path : ${pickedFile.path}');
 
+      if (pickedFile != null) {
+        profilePhoto.value = pickedFile;
         image.value = File(pickedFile.path);
         imagePath.value = pickedFile.path;
-        print('image path : $imagePath');
-
+        uploadProfileImage();
       }else{
         print('image path : $imagePath');
 

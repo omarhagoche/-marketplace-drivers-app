@@ -1,7 +1,12 @@
 import 'dart:io';
 
-import 'package:get/get.dart';
+import 'package:dio/dio.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/get_instance.dart';
+import 'package:get/route_manager.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 
 import '../models/statistic.dart';
 import '../models/user.dart';
@@ -53,6 +58,7 @@ class UserRepository extends ApiService {
     return responseBody;
   }
 
+
   Future<bool> updateDriverAvailable(driverState) async {
     final String url = 'driver/update-status';
     bool state = false;
@@ -69,6 +75,40 @@ class UserRepository extends ApiService {
       state = await false;
     });
     return state;
+  }
+
+  Future<bool> updateImage({required XFile image}) async {
+
+    bool? state = null;
+    FormData formData = FormData.fromMap({
+      'image': await MultipartFile.fromFile(
+        image.path,
+        filename: basename(image.path),
+      )
+    });
+    await post('update-profile-image',
+      extraHeaders: {HttpHeaders.contentTypeHeader: 'application/json'},
+      data: formData,
+    ).then((value) {
+      print('sssssssss s ; ${value.statusCode}');
+      print('sssssssss s ; ${value.data}');
+      if(value.statusCode == 201 || value.statusCode == 200){
+        state = true;
+        Get.snackbar('success','s s s s s');
+
+      }
+    }).catchError((e) async {
+      state = false;
+      print('sssssssss s ; ${e}');
+      if (e is DioError) {
+        if (e.type == DioErrorType.response) {
+          Get.snackbar('حدث خطأ','فشل دفع الصورة حاول مجددا');
+        }
+      } else {
+        throw e;
+      }
+    });
+    return state ?? false;
   }
 
   Future<User> update(User user) async {
