@@ -128,7 +128,8 @@ class AuthRepository extends ApiService {
       print(response.statusCode);
       if (response.statusCode == 200) {
         currentUser.value = new User();
-        await box.erase();
+        await box.remove('current_user');
+        await box.remove('token');
       }
     }).catchError((onError) async{
       print('error : ${onError} ${onError.toString().isEmpty}');

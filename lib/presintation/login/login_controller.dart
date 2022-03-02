@@ -36,6 +36,7 @@ class LoginController extends GetxController {
           password: passwordController.text,
         ).then((value) async {
           print("response 44: $value");
+          if(value.id!=null)goHome();
 
         }).onError((error, stackTrace) {
           print("response eeeeee 44: $error");
@@ -48,6 +49,6 @@ class LoginController extends GetxController {
 
 
   void goHome() {
-   // Get.offAllNamed(Routes.HOME);
+    Get.offAllNamed(Routes.HOME);
   }
 }

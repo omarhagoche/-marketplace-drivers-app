@@ -36,6 +36,14 @@ class TokenInjecter extends Interceptor {
 
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
+    if (err.type == DioErrorType.response) {
+      if(err.response?.statusCode == 422) {
+        Get.snackbar('error', err.message);
+      }else if(err.response?.statusCode == 401){
+        Get.snackbar('error', err.message);
+        // logout
+      }
+      }
     super.onError(err, handler);
   }
 
@@ -43,9 +51,12 @@ class TokenInjecter extends Interceptor {
   Future<void> onResponse(Response response, ResponseInterceptorHandler handler) async {
     if (response.data['data'] is Map<String, dynamic>) {
       Map<String, dynamic> data = response.data['data'];
+      print(data.containsKey('token'));
+      print(data);
       if (data.containsKey('token')) {
         await Get.find<GetStorage>().write("token", data['token']);
         Get.offAllNamed(Routes.HOME);
+
       }
     }
     super.onResponse(response, handler);

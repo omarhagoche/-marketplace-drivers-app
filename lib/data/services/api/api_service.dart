@@ -45,19 +45,17 @@ class ApiService {
 
     headers.addAll(extraHeaders);
     options = Options(headers: headers);
-    dio.interceptors.add(AppInterceptors());
-
-    if (requireAuthorization) {
-      String? token = await box.read('token');//await Token.getToken;
-
-      if (token != null) {
-        options.headers!.addAll({
-          'Authorization': 'Bearer $token',
-        });
-      } else {
-        Get.toNamed(Routes.HOME);
-      }
-    }
+    // if (requireAuthorization) {
+    //   String? token = await box.read('token');//await Token.getToken;
+    //
+    //   if (token != null) {
+    //     options.headers!.addAll({
+    //       'Authorization': 'Bearer $token',
+    //     });
+    //   } else {
+    //     Get.toNamed(Routes.HOME);
+    //   }
+    // }
   }
 
   Future<Response> get(
