@@ -31,10 +31,10 @@ class AuthRepository extends ApiService {
         print('${response.statusCode}');
         print('${response.data}');
         if (response.statusCode == 200) {
-          setCurrentUser(response.data['data']['user']);
+          //setCurrentUser(response.data['data']['user']);
           currentUser.value=User.fromJSON(response.data['data']['user']);
           // ignore: invalid_use_of_visible_for_testing_member
-          currentUser.notifyListeners();
+         // currentUser.notifyListeners();
         } else if (response.statusCode == 422) {
           print(response.statusCode);
         }

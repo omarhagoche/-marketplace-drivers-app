@@ -17,7 +17,10 @@ class ProfileController extends GetxController {
   Rxn<Statistics> statistics = Rxn();
   Rxn<OverlayEntry?> loader = Rxn();
   final ImagePicker picker = ImagePicker();
-  File? image;
+  Rxn<File> image = Rxn();
+  var imagePath = ''.obs;
+  late Rxn<XFile> profilePhoto = Rxn();
+
 
   @override
   void onInit() {
@@ -29,24 +32,39 @@ class ProfileController extends GetxController {
   void imgFromCamera() async {
     try {
       final pickedFile = await picker.pickImage(
-        source: ImageSource.gallery,
+        source: ImageSource.camera,
       );
       if (pickedFile != null) {
-        image = File(pickedFile.path);
+        image.value = File(pickedFile.path);
+        imagePath.value = pickedFile.path;
+        print('image path : $imagePath');
       }
     } catch (e) {}
   }
 
   void imgFromGallery() async {
     try {
+      print('image path : $imagePath');
+
       final pickedFile = await picker.pickImage(
-        source: ImageSource.camera,
+        source: ImageSource.gallery,
+        maxWidth: 1800,
+        maxHeight: 1800,
       );
       if (pickedFile != null) {
-        image = File(pickedFile.path);
+        print('image path : ${pickedFile.path}');
+
+        image.value = File(pickedFile.path);
+        imagePath.value = pickedFile.path;
+        print('image path : $imagePath');
+
+      }else{
+        print('image path : $imagePath');
+
       }
     } catch (e) {
       // _pickImageError = e;
+      print('image path : $e');
 
     }
   }

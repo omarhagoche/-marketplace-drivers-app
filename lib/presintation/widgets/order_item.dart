@@ -51,7 +51,8 @@ class OrderItemWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Helper.getPrice(Helper.getTotalOrdersPrice(order: order), context, style: Theme.of(context).textTheme.headline5),
+                      Helper.getPrice(Helper.getTotalOrdersPrice(order: order),
+                          context, style: Theme.of(context).textTheme.headline6),
                       Text(
                         'cash_on_delivery'.tr,
                         style: Theme.of(context).textTheme.caption,
@@ -104,7 +105,7 @@ class OrderItemWidget extends StatelessWidget {
                                   Helper.getDeliveryOrdersPrice(order: order),
                                   context,
                                   style:
-                                  Theme.of(context).textTheme.headline4)
+                                  Theme.of(context).textTheme.headline6)
                             ],
                           ),
                           order!.restaurantCouponId!=null?
@@ -132,7 +133,7 @@ class OrderItemWidget extends StatelessWidget {
                                   context,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .headline5)
+                                      .headline6)
                             ],
                           ),
                         ],

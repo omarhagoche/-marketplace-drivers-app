@@ -17,7 +17,7 @@ class OrderDetailsScreen extends GetView<OrderDetailsController> {
         builder: (_con) => Scaffold(
             key: _con.scaffoldKey,
             drawer: DrawerWidget(),
-            bottomNavigationBar: Obx(()=>_con.order.value == null
+            bottomNavigationBar: Obx  (()=>_con.order.value == null
                 ? Container(
                     height: 193,
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
@@ -297,7 +297,7 @@ class OrderDetailsScreen extends GetView<OrderDetailsController> {
                                               maxLines: 2,
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .headline4,
+                                                  .headline5,
                                             ),
                                             Text(
                                               _con.order.value!.orderStatus!
@@ -324,7 +324,7 @@ class OrderDetailsScreen extends GetView<OrderDetailsController> {
                                               context,
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .headline4),
+                                                  .headline5),
                                           Text(
                                             'cash_on_delivery'.tr,
                                             overflow: TextOverflow.ellipsis,
@@ -454,7 +454,7 @@ class OrderDetailsScreen extends GetView<OrderDetailsController> {
                                                   .food!.restaurant!.name!,
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .bodyText1,
+                                                  .bodySmall,
                                             ),
                                           ],
                                         ),

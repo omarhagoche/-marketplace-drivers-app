@@ -8,7 +8,7 @@ class ProfileAvatarWidget extends StatelessWidget {
   final User? user;
   final VoidCallback? onGallery;
   final VoidCallback? onCamera;
-  final File? image;
+  final String? image;
 
   ProfileAvatarWidget({
     Key? key,
@@ -37,12 +37,12 @@ class ProfileAvatarWidget extends StatelessWidget {
               children: <Widget>[
                 Stack(
                   children: <Widget>[
-                    image != null
+                    image.toString().isNotEmpty
                         ? ClipRRect(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(300)),
                             child: Image.file(
-                              image!,
+                              File(image ?? ''),
                               width: 135,
                               height: 135,
                               fit: BoxFit.cover,

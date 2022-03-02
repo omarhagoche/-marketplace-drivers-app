@@ -41,7 +41,7 @@ class ProfileScreen extends GetView<ProfileController> {
                           user: controller.user.value,
                           onCamera: () => controller.imgFromCamera(),
                           onGallery: () => controller.imgFromGallery(),
-                          image: controller.image,
+                          image: controller.imagePath.value,
                         ),
                       ),
                       Padding(
