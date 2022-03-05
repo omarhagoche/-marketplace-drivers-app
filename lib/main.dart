@@ -46,8 +46,10 @@ class MyApp extends StatelessWidget {
             ///Some problem in initSettings repo
             SettingRepository.instance.initSettings();
             AuthRepository.instance.getCurrentUser();
+            if(Get.find<GetStorage>().hasData('permission'))
+              SettingRepository.instance.listenCurrentLocation();
           },
-          title: "Sabek",
+          title: "Sabek: Partner",
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             fontFamily: 'Tajawal',

@@ -1,10 +1,12 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import '../presintation/faq/faq_binding.dart';
 import '../presintation/faq/faq_screen.dart';
+import '../presintation/force_update/force_update.dart';
 import '../presintation/home/home_binding.dart';
 import '../presintation/home/home_screen.dart';
 import '../presintation/language/language_binding.dart';
 import '../presintation/language/language_screen.dart';
+import '../presintation/location_permission/permission.dart';
 import '../presintation/login/login_binding.dart';
 import '../presintation/login/login_screen.dart';
 import '../presintation/notification/notification_binding.dart';
@@ -81,6 +83,14 @@ class AppPages {
         name: Routes.SETTING,
         page: () =>  SettingScreen(),
         binding: SettingBinding()
+    ),
+  GetPage(
+        name: Routes.FORCEUPDATE,
+        page: () =>  ForceUpdateScreen(),
+    ),
+    GetPage(
+        name: Routes.PERMISSION,
+        page: () =>  PermissionScreen(),
     ),
 
   ];

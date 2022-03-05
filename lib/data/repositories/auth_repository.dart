@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-
-import '../../core/utils/token.dart';
 import '../models/user.dart';
 import '../services/api/api_service.dart';
 ValueNotifier<User> currentUser = new ValueNotifier(User());
@@ -31,7 +29,7 @@ class AuthRepository extends ApiService {
         print('${response.statusCode}');
         print('${response.data}');
         if (response.statusCode == 200) {
-          //setCurrentUser(response.data['data']['user']);
+          setCurrentUser(response.data['data']['user']);
           currentUser.value=User.fromJSON(response.data['data']['user']);
           // ignore: invalid_use_of_visible_for_testing_member
          // currentUser.notifyListeners();
@@ -104,10 +102,7 @@ class AuthRepository extends ApiService {
     ).then((response) async {
       if (response.statusCode == 200 || response.statusCode == 201) {
         print(response.data);
-        token = response.data['token'];
-        if (token != null) {
-          await Token.persistToken(token!);
-        }
+
       }
     });
     print(token);

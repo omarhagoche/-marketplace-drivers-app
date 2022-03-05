@@ -16,12 +16,17 @@ class SplashController extends GetxController {
  @override
   void onInit() {
     super.onInit();
-    Future.delayed(Duration(seconds: 5), () {
-      if (!Get.find<GetStorage>().hasData('token')) {
-        Get.offAndToNamed(Routes.LOGIN);
-      } else {
-        Get.offAndToNamed(Routes.HOME);
-      }
+    Future.delayed(Duration(seconds: 10), () {
+        if (Get.find<GetStorage>().hasData('permission')) {
+          if (!Get.find<GetStorage>().hasData('token')) {
+            Get.offAndToNamed(Routes.LOGIN);
+          } else {
+            SettingRepository.instance.versionCheck(Get.context);
+          }
+        } else {
+          Get.offAndToNamed(Routes.PERMISSION);
+        }
+
     });
     if (Platform.isIOS) {
       firebaseMessaging.requestPermission(
@@ -59,8 +64,8 @@ class SplashController extends GetxController {
               arguments: RouteArgument(id: message.data['id'].toString()));
       });
 
-      FirebaseMessaging.onBackgroundMessage(
-          _firebaseMessagingBackgroundHandler);
+      // FirebaseMessaging.onBackgroundMessage(
+      //     _firebaseMessagingBackgroundHandler);
     } catch (e) {
       print(CustomTrace(StackTrace.current, message: e.toString()));
     }

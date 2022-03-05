@@ -1,22 +1,28 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-
+import 'package:location/location.dart';
+import '../../routes/app_pages.dart';
 import '../models/route_argument.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:location/location.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:package_info/package_info.dart';
 import '../models/address.dart';
 import '../models/setting.dart';
+import '../models/user.dart';
 import '../services/api/api_service.dart';
+import 'auth_repository.dart';
+import 'user_repository.dart';
 
 ValueNotifier<Setting> setting = new ValueNotifier(new Setting());
+ValueNotifier<bool> workingOnOrder = new ValueNotifier(false);
 ValueNotifier<Address> myAddress = new ValueNotifier(new Address());
 final navigatorKey = GlobalKey<NavigatorState>();
+const Privacy_Policy =
+    'https://cp.sabek.app/privacy';
 const APP_STORE_URL =
     'https://apps.apple.com/gb/app/sabek-partner/id1600324402?uo=2';
 const PLAY_STORE_URL =
@@ -31,22 +37,12 @@ class SettingRepository extends ApiService {
     await get(
       url,
     ).then((response) async {
-      print('categories:${response.statusCode}');
-      print('categories:${response.data['data']}');
       if (response.statusCode == 200) {
-        if (json.decode(response.data)['data'] != null) {
-          // box.write('settings', json.encode(response.data['data']));
-          responseBody = Setting.fromJSON(json.decode(response.data)['data'] as Map<String,dynamic>);
-          // if (box.read('language')) {
-          //   _setting.mobileLanguage = new ValueNotifier(Locale(box.read('language'), ''));
-          // }
-         // _setting.brightness!.value =
-          // box.read('isDark') ?? false ? Brightness.dark : Brightness.light;
+          responseBody = Setting.fromJSON(response.data['data'] );
           setting.value = responseBody;
           // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
           setting.notifyListeners();
         }
-      }
     }).catchError((onError) async {
       print('error : ${onError} ${onError
           .toString()
@@ -55,12 +51,83 @@ class SettingRepository extends ApiService {
     });
     return responseBody;
   }
+  listenCurrentLocation() async {
+    if(!Get.find<GetStorage>().hasData('permission'))setValue('acceptPermission');
+    User user = new User();
+    String? driverId;
+    Location location = new Location();
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
 
-
-  Future<void> setDefaultLanguage(String language) async {
-    if (language != null) {
-      await box.write('language', language);
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
     }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+    if (Get.find<GetStorage>().hasData('token'))
+    UserRepository.instance.userProfile().then(
+            (value) => location.onLocationChanged.listen((LocationData current) {
+            try {
+              FirebaseFirestore.instance
+                  .collection("drivers")
+                  .doc(currentUser.value.id)
+                  .get()
+                  .then((driver) {
+                driverId = driver['id'].toString();
+                workingOnOrder.value = driver['working_on_order'];
+                print(driverId);
+                if (driverId == null)
+                  FirebaseFirestore.instance
+                      .collection("drivers")
+                      .doc(currentUser.value.id)
+                      .set({
+                    'id': currentUser.value.id,
+                    'available': false,
+                    'working_on_order': false,
+                    'latitude': current.latitude,
+                    'longitude': current.longitude,
+                    'last_access': DateTime.now().millisecondsSinceEpoch
+                  }).catchError((e) {
+                    print(e);
+                  });
+                else
+                  FirebaseFirestore.instance
+                      .collection("drivers")
+                      .doc(currentUser.value.id)
+                      .update({
+                    'id': currentUser.value.id,
+                    'latitude': current.latitude,
+                    'longitude': current.longitude,
+                    'last_access': DateTime.now().millisecondsSinceEpoch
+                  }).catchError((e) {
+                    print(e);
+                  });
+              });
+            } catch (e) {
+              print("Error in cloud firebase $e");
+            }
+          }
+        ));
+    location.enableBackgroundMode(enable: true);
+  }
+
+  Future<void> setValue(value) async {
+    if (value != null) {
+      await box.write('permission', value);
+    }
+  }
+  Future<void> setDefaultLanguage(String language) async {
+    await box.write('language', language);
   }
 
   Future<String> getDefaultLanguage(String defaultLanguage) async {
@@ -71,9 +138,7 @@ class SettingRepository extends ApiService {
   }
 
   Future<void> saveMessageId(String messageId) async {
-    if (messageId != null) {
-      await box.write('google.message_id', messageId);
-    }
+    await box.write('google.message_id', messageId);
   }
 
   Future<String> getMessageId() async {
@@ -89,16 +154,16 @@ class SettingRepository extends ApiService {
           currentVersion)
         {
           if (setting.value.forceUpdateIOS!)
-            Navigator.of(context).pushReplacementNamed('/ForceUpdate',
+            Get.offAndToNamed(Routes.FORCEUPDATE,
                 arguments: RouteArgument(id: ''))
           else
             {
-              Navigator.of(context).pushReplacementNamed('/ForceUpdate',
+              Get.offAndToNamed(Routes.FORCEUPDATE,
                   arguments: RouteArgument(id: '0'))
             }
         }
       else
-        Navigator.of(context).pushReplacementNamed('/Pages', arguments: 0)
+        Get.offAndToNamed(Routes.HOME, arguments: 0)
     }
         : {
       if (double.tryParse(
@@ -106,16 +171,16 @@ class SettingRepository extends ApiService {
           currentVersion)
         {
           if (setting.value.forceUpdateAndroid!)
-            Navigator.of(context).pushReplacementNamed('/ForceUpdate',
+            Get.offAndToNamed(Routes.FORCEUPDATE,
                 arguments: RouteArgument(id: ''))
           else
             {
-              Navigator.of(context).pushReplacementNamed('/ForceUpdate',
+              Get.offAndToNamed(Routes.FORCEUPDATE,
                   arguments: RouteArgument(id: '0'))
             }
         }
       else
-        Navigator.of(context).pushReplacementNamed('/Pages', arguments: 0)
+        Get.offAndToNamed(Routes.HOME, arguments: 0)
     };
   }
 
