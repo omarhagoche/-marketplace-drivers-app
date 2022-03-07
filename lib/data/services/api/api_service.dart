@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
+import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:get/route_manager.dart';
 import 'package:get_storage/get_storage.dart';
+import '../../../core/values/urls.dart';
 import 'interceptors.dart';
 
 class ApiService {
@@ -10,7 +12,7 @@ class ApiService {
   ApiService()
       : dio = Dio(
           BaseOptions(
-            baseUrl: 'https://test.sabek.app/api/',
+            baseUrl: apiBaseUrl,
            // connectTimeout: 10000,
            // receiveTimeout: 15000,
             headers: {
@@ -20,6 +22,9 @@ class ApiService {
           ),
         )..interceptors.addAll([
     LogInterceptor(request: true, responseBody: true, requestBody: true),
+    DioCacheManager(CacheConfig(
+      baseUrl: apiBaseUrl,
+    )).interceptor,
     AppInterceptors()
   ]);
 
