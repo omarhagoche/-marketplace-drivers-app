@@ -349,12 +349,14 @@ class OrderDetailsScreen extends GetView<OrderDetailsController> {
                             labelPadding: EdgeInsets.symmetric(horizontal: 10),
                             unselectedLabelColor: Theme.of(context).accentColor,
                             labelColor: Theme.of(context).primaryColor,
+
                             indicator: BoxDecoration(
                                 borderRadius: BorderRadius.circular(50),
                                 color: Theme.of(context).accentColor),
                             tabs: [
                               Tab(
                                 child: Container(
+                                  height: 42,
                                   padding: EdgeInsets.symmetric(horizontal: 5),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(50),
@@ -363,14 +365,17 @@ class OrderDetailsScreen extends GetView<OrderDetailsController> {
                                               .accentColor
                                               .withOpacity(0.2),
                                           width: 1)),
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text('ordered_foods'.tr),
+                                  child: Center(
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text('ordered_foods'.tr,style: TextStyle(fontSize: 16),),
+                                    ),
                                   ),
                                 ),
                               ),
                               Tab(
                                 child: Container(
+                                  height: 42,
                                   padding: EdgeInsets.symmetric(horizontal: 5),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(50),
@@ -381,12 +386,13 @@ class OrderDetailsScreen extends GetView<OrderDetailsController> {
                                           width: 1)),
                                   child: Align(
                                     alignment: Alignment.center,
-                                    child: Text('restaurant'.tr),
+                                    child: Text('restaurant'.tr,style: TextStyle(fontSize: 16),),
                                   ),
                                 ),
                               ),
                               Tab(
                                 child: Container(
+                                  height: 40,
                                   padding: EdgeInsets.symmetric(horizontal: 5),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(50),
@@ -397,7 +403,7 @@ class OrderDetailsScreen extends GetView<OrderDetailsController> {
                                           width: 1)),
                                   child: Align(
                                     alignment: Alignment.center,
-                                    child: Text('customer'.tr),
+                                    child: Text('customer'.tr,style: TextStyle(fontSize: 16),),
                                   ),
                                 ),
                               ),

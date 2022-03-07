@@ -112,6 +112,23 @@ class Helper {
     return list;
   }
 
+  static String handleError(int statusCode, dynamic error) {
+    switch (statusCode) {
+      case 400:
+        return 'Bad request';
+      case 422:
+        return 'خطآ في البيانات المدخلة';
+      case 404:
+        return error["message"];
+      case 401:
+        return 'Unauthenticated';
+      case 500:
+        return 'Internal server error';
+      default:
+        return 'something went wrong';
+    }
+  }
+
   static Widget getPrice(double myPrice, BuildContext context, {TextStyle? style}) {
     if (style != null) {
       style = style.merge(TextStyle(fontSize: style.fontSize! + 2));

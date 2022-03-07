@@ -3,6 +3,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import '../../core/utils/helper.dart';
 import '../widgets/block_button.dart';
+import '../widgets/loading_widget.dart';
 import 'login_controller.dart';
 import '../../core/values/app_config.dart' as config;
 
@@ -17,7 +18,7 @@ class LoginScreen extends GetView<LoginController> {
             child: Scaffold(
               //key: controller.scaffoldKey,
               resizeToAvoidBottomInset: false,
-              body: Stack(
+              body: (controller.loading.value == true) ? Center(child: LoadingWidget(),) :Stack(
                 alignment: AlignmentDirectional.topCenter,
                 children: <Widget>[
                   Positioned(
@@ -126,6 +127,8 @@ class LoginScreen extends GetView<LoginController> {
                               },
                             ),
                             SizedBox(height: 15),
+                            controller.error.value.isNotEmpty ? Center(child: Text(controller.error.value,
+                              style: TextStyle(color: Colors.red,fontSize: 16),)) :SizedBox()
                           ],
                         ),
                       ),

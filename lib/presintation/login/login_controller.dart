@@ -12,7 +12,8 @@ class LoginController extends GetxController {
   final passwordController = TextEditingController();
   var hidePassword = true.obs;
   final currentUser = Rxn<User?>();
-
+  var loading = false.obs;
+  var error = ''.obs;
   void passwordToggle(){
     hidePassword.value = !hidePassword.value;
   }
@@ -29,16 +30,20 @@ class LoginController extends GetxController {
       if(phoneController.text.startsWith('0')) {
           phoneController.text = phoneController.text.substring(1);
        }
+        loading.value = true;
+        error.value = '';
         AuthRepository.instance
             .logIn(
           phoneNumber: phoneController.text,
           password: passwordController.text,
         ).then((value) async {
-          print("response 44: $value");
-          if(value.id!=null)goHome();
+          if(value is User) {
+            if(value.id!=null)goHome();
+          }
+          error.value = value;
+          print("response data : $value");
+          loading.value = false;
 
-        }).onError((error, stackTrace) {
-          print("response eeeeee 44: $error");
 
         });
 
