@@ -1,6 +1,4 @@
-
 import '../../core/utils/custom_trace.dart';
-
 class Discountable {
   String? id;
   String? discountableType;

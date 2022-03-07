@@ -1,6 +1,4 @@
-
 import 'driver_type.dart';
-
 class Driver {
   int? id;
   int? userId;

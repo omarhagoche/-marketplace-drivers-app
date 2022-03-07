@@ -1,13 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 
 import '../../data/repositories/auth_repository.dart';
 import '../../routes/app_pages.dart';
 
 class ForgetPasswordController extends GetxController {
-  final formKey = GlobalKey<FormBuilderState>();
+  final formKey = GlobalKey<FormState>();
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
   var hidePassword = true.obs;

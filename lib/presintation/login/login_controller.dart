@@ -4,8 +4,6 @@ import '../../data/models/user.dart';
 import '../../data/repositories/auth_repository.dart';
 import '../../routes/app_pages.dart';
 
-
-
 class LoginController extends GetxController {
   final formKey = GlobalKey<FormState>();
   final phoneController = TextEditingController();

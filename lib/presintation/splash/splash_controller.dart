@@ -6,28 +6,29 @@ import 'package:get_storage/get_storage.dart';
 import 'package:overlay_support/overlay_support.dart';
 import '../../core/utils/custom_trace.dart';
 import '../../data/models/route_argument.dart';
+import '../../data/repositories/auth_repository.dart';
 import '../../data/repositories/settings_repository.dart';
 import '../../routes/app_pages.dart';
 import '../widgets/notification_icon.dart';
 
 class SplashController extends GetxController {
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-
  @override
   void onInit() {
     super.onInit();
-    Future.delayed(Duration(seconds: 10), () {
-        if (Get.find<GetStorage>().hasData('permission')) {
-          if (!Get.find<GetStorage>().hasData('token')) {
-            Get.offAndToNamed(Routes.LOGIN);
-          } else {
-            SettingRepository.instance.versionCheck(Get.context);
-          }
+    SettingRepository.instance.initSettings().then((value) {
+      if (Get.find<GetStorage>().hasData('permission')) {
+        if (!Get.find<GetStorage>().hasData('token')) {
+          Get.offAndToNamed(Routes.LOGIN);
         } else {
-          Get.offAndToNamed(Routes.PERMISSION);
+          SettingRepository.instance.versionCheck(Get.context);
         }
+      } else {
+        Get.offAndToNamed(Routes.PERMISSION);
+      }
+    }
+    );
 
-    });
     if (Platform.isIOS) {
       firebaseMessaging.requestPermission(
         alert: true,

@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -9,7 +8,7 @@ import '../../data/models/driver_type.dart';
 
 class SignupController extends GetxController {
 
-  final formKey = GlobalKey<FormBuilderState>();
+  final formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final passwordController = TextEditingController();
   final emailController = TextEditingController();

@@ -1,6 +1,5 @@
 import '../../core/utils/custom_trace.dart';
 import '../models/media.dart';
-
 class Category {
   String? id;
   String? name;

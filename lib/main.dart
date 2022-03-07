@@ -43,8 +43,6 @@ class MyApp extends StatelessWidget {
       builder: () => OverlaySupport.global(
         child: GetMaterialApp(
           onInit: () {
-            ///Some problem in initSettings repo
-            SettingRepository.instance.initSettings();
             AuthRepository.instance.getCurrentUser();
             if(Get.find<GetStorage>().hasData('permission'))
               SettingRepository.instance.listenCurrentLocation();

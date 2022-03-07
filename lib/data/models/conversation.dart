@@ -1,5 +1,4 @@
 import 'user.dart';
-
 class Conversation {
   String? id;
   String? name;

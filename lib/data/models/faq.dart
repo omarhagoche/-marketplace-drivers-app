@@ -1,5 +1,4 @@
 import '../../core/utils/custom_trace.dart';
-
 class Faq {
   String? id;
   String? question;

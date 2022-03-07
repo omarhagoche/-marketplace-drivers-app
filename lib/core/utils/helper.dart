@@ -1,22 +1,13 @@
 import 'dart:async';
 import 'dart:math';
-import 'dart:typed_data';
-import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_html/style.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:html/parser.dart';
 import '../../data/models/food_order.dart';
 import '../../data/models/order.dart';
 import '../../data/repositories/settings_repository.dart';
-import '../../presintation/widgets/loading_widget.dart';
-import '../values/urls.dart';
-import '../values/app_config.dart' as config;
 import 'package:get/get.dart';
 class Helper {
   BuildContext? context;
@@ -25,92 +16,8 @@ class Helper {
     this.context = _context;
   }
 
-  // for mapping data retrieved form json array
-  static getData(var data) {
-    return data['data'] ?? [];
-  }
 
-  static int getIntData(Map<String, dynamic> data) {
-    return (data['data'] as int);
-  }
 
-  static bool getBoolData(Map<String, dynamic> data) {
-    return (data['data'] as bool) ;
-  }
-
-  static getObjectData(var data) {
-    return data['data'] ?? new Map<String, dynamic>();
-  }
-
-  static Future<Uint8List> getBytesFromAsset(String path, int width) async {
-    ByteData data = await rootBundle.load(path);
-    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(), targetWidth: width);
-    ui.FrameInfo fi = await codec.getNextFrame();
-    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!.buffer.asUint8List();
-  }
-
-  static Future<Marker> getMarker(Map<String, dynamic> res) async {
-    final Uint8List markerIcon = await getBytesFromAsset('assets/img/marker.png', 120);
-    final Marker marker = Marker(
-        markerId: MarkerId(res['id']),
-        icon: BitmapDescriptor.fromBytes(markerIcon),
-//        onTap: () {
-//          //print(res.name);
-//        },
-        anchor: Offset(0.5, 0.5),
-        infoWindow: InfoWindow(
-            title: res['name'],
-            snippet: res['distance'].toStringAsFixed(2) + ' mi',
-            onTap: () {
-              print('infowi tap');
-            }),
-        position: LatLng(double.parse(res['latitude']), double.parse(res['longitude'])));
-
-    return marker;
-  }
-
-  static Future<Marker> getOrderMarker(var res) async {
-    final Uint8List markerIcon = await getBytesFromAsset('assets/img/marker.png', 120);
-    final Marker marker = Marker(
-        markerId: MarkerId(res['id']),
-        icon: BitmapDescriptor.fromBytes(markerIcon),
-
-        anchor: Offset(0.5, 0.5),
-        infoWindow: InfoWindow(
-            title: res['address'],
-            snippet: '',
-            onTap: () {
-              print('infowi tap');
-            }),
-        position: LatLng(res['latitude'], res['longitude']));
-
-    return marker;
-  }
-
-  static Future<Marker> getMyPositionMarker(double latitude, double longitude) async {
-    final Uint8List markerIcon = await getBytesFromAsset('assets/img/my_marker.png', 120);
-    final Marker marker = Marker(
-        markerId: MarkerId(Random().nextInt(100).toString()),
-        icon: BitmapDescriptor.fromBytes(markerIcon),
-        anchor: Offset(0.5, 0.5),
-        position: LatLng(latitude, longitude));
-
-    return marker;
-  }
-
-  static List<Icon> getStarsList(double rate, {double size = 18}) {
-    var list = <Icon>[];
-    list = List.generate(rate.floor(), (index) {
-      return Icon(Icons.star, size: size, color: Color(0xFFFFB24D));
-    });
-    if (rate - rate.floor() > 0) {
-      list.add(Icon(Icons.star_half, size: size, color: Color(0xFFFFB24D)));
-    }
-    list.addAll(List.generate(5 - rate.floor() - (rate - rate.floor()).ceil(), (index) {
-      return Icon(Icons.star_border, size: size, color: Color(0xFFFFB24D));
-    }));
-    return list;
-  }
 
   static String handleError(int statusCode, dynamic error) {
     switch (statusCode) {
@@ -191,14 +98,6 @@ class Helper {
     return order.tax! * total / 100;
   }
 
-  static String getDistance(double distance, String unit) {
-    String _unit = setting.value.distanceUnit!;
-    if (_unit == 'km') {
-      distance *= 1.60934;
-    }
-    return distance != null ? distance.toStringAsFixed(2) + " " + unit : "";
-  }
-
   static String skipHtml(String htmlString) {
     try {
       var document = parse(htmlString);
@@ -209,33 +108,6 @@ class Helper {
     }
   }
 
-  static Html applyHtml(context, String html, {TextStyle? style}) {
-    return Html(
-      data: html ,
-      style: {
-        "*": Style(
-          padding: EdgeInsets.all(0),
-          margin: EdgeInsets.all(0),
-          color: Theme.of(context).hintColor,
-          fontSize: FontSize(16.0),
-          display: Display.INLINE_BLOCK,
-          width: config.App(context).appWidth(100),
-        ),
-        "h4,h5,h6": Style(
-          fontSize: FontSize(18.0),
-        ),
-        "h1,h2,h3": Style(
-          fontSize: FontSize.xLarge,
-        ),
-        "br": Style(
-          height: 0,
-        ),
-        "p": Style(
-          fontSize: FontSize(16.0),
-        )
-      },
-    );
-  }
   static double getSubTotalOrdersPrice({Order? order}) {
     double subtotal = 0;
     order!.foodOrders!.forEach((foodOrder) {
@@ -266,58 +138,12 @@ class Helper {
       total -= order.deliveryCouponValue!;
     return total;
   }
-  static OverlayEntry overlayLoader(context) {
-    OverlayEntry loader = OverlayEntry(builder: (context) {
-      final size = MediaQuery.of(context).size;
-      return Positioned(
-        height: size.height,
-        width: size.width,
-        top: 0,
-        left: 0,
-        child: Material(
-          color: Theme.of(context).primaryColor.withOpacity(0.85),
-          child: LoadingWidget(),
-        ),
-      );
-    });
-    return loader;
-  }
 
-  static hideLoader(OverlayEntry loader) {
-    Timer(Duration(milliseconds: 500), () {
-      try {
-        loader.remove();
-      } catch (e) {}
-    });
-  }
 
   static String limitString(String? text, {int limit = 24, String hiddenText = "..."}) {
     return text!.substring(0, min<int>(limit, text.length)) + (text.length > limit ? hiddenText : '');
   }
 
-  static String getCreditCardNumber(String number) {
-    String result = '';
-    if (number != null && number.isNotEmpty && number.length == 16) {
-      result = number.substring(0, 4);
-      result += ' ' + number.substring(4, 8);
-      result += ' ' + number.substring(8, 12);
-      result += ' ' + number.substring(12, 16);
-    }
-    return result;
-  }
-
-  static Uri getUri(String path) {
-    String _path = Uri.parse(baseURL).path;
-    if (!_path.endsWith('/')) {
-      _path += '/';
-    }
-    Uri uri = Uri(
-        scheme: Uri.parse(baseURL).scheme,
-        host: Uri.parse(baseURL).host,
-        port: Uri.parse(baseURL).port,
-        path: _path + path);
-    return uri;
-  }
   Future<bool> onWillPop() {
     DateTime now = DateTime.now();
     if (currentBackPressTime == null || now.difference(currentBackPressTime!) > Duration(seconds: 2)) {

@@ -5,7 +5,6 @@ import 'package:get/get_core/get_core.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get_storage/get_storage.dart';
-
 import '../../../core/values/colors.dart';
 import '../../../routes/app_pages.dart';
 

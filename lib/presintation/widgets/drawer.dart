@@ -1,14 +1,10 @@
-import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get_storage/get_storage.dart';
-
 import '../../core/utils/sabek_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../data/repositories/auth_repository.dart';
-import '../../data/repositories/settings_repository.dart';
 import '../../routes/app_pages.dart';
-import 'loading_widget.dart';
 class DrawerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -19,7 +15,7 @@ class DrawerWidget extends StatelessWidget {
               children: <Widget>[
                 GestureDetector(
                   onTap: () {
-                    Get.toNamed(Routes.HOME, arguments: 0);
+                    Get.toNamed(Routes.HOME,);
                   },
                   child: UserAccountsDrawerHeader(
                     decoration: BoxDecoration(
@@ -53,56 +49,7 @@ class DrawerWidget extends StatelessWidget {
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
                 ),
-                ListTile(
-                  onTap: () {
-                    Get.toNamed(Routes.HOME, arguments: 2);
-                  },
-                  leading: Icon(
-                    SabekIcons.home,
-                    color: Theme.of(context).focusColor.withOpacity(1),
-                  ),
-                  title: Text(
-                    'orders'.tr,
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
-                ),
-                ListTile(
-                  onTap: () {
-                    Get.toNamed(Routes.HOME, arguments: 1);
-                  },
-                  leading: Icon(
-                    SabekIcons.messenger,
-                    color: Theme.of(context).focusColor.withOpacity(1),
-                  ),
-                  title: Text(
-                    'messages'.tr,
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
-                ),
-                ListTile(
-                  onTap: () {
-                    Get.toNamed(Routes.HOME, arguments: 3);
-                  },
-                  leading: Icon(
-                    SabekIcons.list,
-                    color: Theme.of(context).focusColor.withOpacity(1),
-                  ),
-                  title: Text(
-                   'history'.tr,
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
-                ),
-                ListTile(
-                  dense: true,
-                  title: Text(
-                    'application_preferences'.tr,
-                    style: Theme.of(context).textTheme.bodyText2,
-                  ),
-                  trailing: Icon(
-                    Icons.remove,
-                    color: Theme.of(context).focusColor.withOpacity(0.3),
-                  ),
-                ),
+
                 ListTile(
                   onTap: () {
                    Get.toNamed(Routes.HELP);

@@ -1,5 +1,4 @@
 import 'discountable.dart';
-
 class Coupon {
   String? id;
   String? code;

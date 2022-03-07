@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import 'user.dart';
-
 class Chat {
   String? id = UniqueKey().toString();
   String? text;

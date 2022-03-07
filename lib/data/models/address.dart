@@ -1,8 +1,5 @@
 import 'package:location/location.dart';
-
 import '../../core/utils/custom_trace.dart';
-
-
 class Address {
   String? id;
   String? description;

@@ -1,6 +1,4 @@
-
 import '../../core/utils/custom_trace.dart';
-
 class ConfirmResetCode {
   String? phone_number;
   String? code;
