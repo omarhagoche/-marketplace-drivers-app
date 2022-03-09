@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../widgets/drawer.dart';
 import '../widgets/empty_order.dart';
 import '../widgets/order_item.dart';
 import 'orders_history_controller.dart';
@@ -9,14 +10,13 @@ class OrdersHistoryScreen extends GetView<OrderHistoryController>{
   Widget build(BuildContext context) {
     return GetBuilder<OrderHistoryController>(
       init: OrderHistoryController(),
+
         builder: (controller)=> Scaffold(
         key: controller.scaffoldKey,
         appBar: AppBar(
           leading: new IconButton(
               icon: new Icon(Icons.sort, color: Theme.of(context).hintColor),
-              onPressed: (){
-                controller.scaffoldKey.currentState!.openDrawer();
-              }
+            onPressed: () => controller.scaffoldKey.currentState!.openDrawer(),
           ),
           automaticallyImplyLeading: false,
           backgroundColor: Colors.transparent,
@@ -28,6 +28,7 @@ class OrdersHistoryScreen extends GetView<OrderHistoryController>{
           ),
 
         ),
+          drawer: DrawerWidget(),
         body:RefreshIndicator(
             onRefresh: controller.refreshOrdersHistory,
             child: Obx(

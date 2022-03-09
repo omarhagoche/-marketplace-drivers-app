@@ -36,7 +36,7 @@ class OrdersScreen extends StatelessWidget {
       appBar: AppBar(
         leading: new IconButton(
           icon: new Icon(Icons.sort, color: Theme.of(context).hintColor),
-          onPressed: (){}//widget.parentScaffoldKey!.currentState!.openDrawer(),
+          onPressed: () => controller.scaffoldKey.currentState!.openDrawer(),
         ),
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
@@ -50,6 +50,7 @@ class OrdersScreen extends StatelessWidget {
           //new ShoppingCartButtonWidget(iconColor: Theme.of(context).hintColor, labelColor: Theme.of(context).accentColor),
         ],
       ),
+      drawer: DrawerWidget(),
       body: RefreshIndicator(
         onRefresh: controller.refreshOrders,
         child: Obx(
