@@ -144,7 +144,9 @@ class LoginScreen extends GetView<LoginController> {
                           child: Text('i_forgot_password'.tr),
                         ),
                         FlatButton(
-                          onPressed: () => controller.signUp,
+                          onPressed: (){
+                            controller.signUp();
+                           }  ,
                           textColor: Theme.of(context).hintColor,
                           child: Text('i_dont_have_an_account'.tr ),
                         ),

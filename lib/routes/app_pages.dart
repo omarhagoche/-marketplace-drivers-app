@@ -1,3 +1,4 @@
+import 'package:deliveryboy/presintation/register/signup_screen.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import '../presintation/faq/faq_binding.dart';
 import '../presintation/faq/faq_screen.dart';
@@ -19,6 +20,7 @@ import '../presintation/orders_history/orders_history_binding.dart';
 import '../presintation/orders_history/orders_history_screen.dart';
 import '../presintation/profile/profile_binding.dart';
 import '../presintation/profile/profile_screen.dart';
+import '../presintation/register/signup_binding.dart';
 import '../presintation/setting/setting_binding.dart';
 import '../presintation/setting/setting_screen.dart';
 import '../presintation/splash/splash_binding.dart';
@@ -91,6 +93,11 @@ class AppPages {
     GetPage(
         name: Routes.PERMISSION,
         page: () =>  PermissionScreen(),
+    ),
+    GetPage(
+        name: Routes.SIGNUP,
+        page: () =>  SignupScreen(),
+        binding: SignupBinding()
     ),
 
   ];
