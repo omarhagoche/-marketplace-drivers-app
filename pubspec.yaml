@@ -14,7 +14,7 @@ description: deliveryboy
 version: 1.0.7+22
 code: 2
 environment:
-  sdk: ">=2.16.1 <3.0.0"
+  sdk: ">=2.15.1 <3.0.0"
 module:
   androidX: true
 dependencies:
