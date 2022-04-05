@@ -99,6 +99,12 @@ const Map<String, String> ar = {
   "customer": "الزبون",
   "restaurantAddress": "عنوان المطعم",
   "phoneNumber": "رقم الهاتف",
+  "phoneNumber_forget": "أدخل رقم الهاتف",
+  "send": "أرسال",
+  "confirmOtp": "تأكيــد",
+  "inputOtpCode": "أدخل رمـز التـأكـيد",
+  "reSend": "أعــادة الأرسال",
+
   "fullName": "الاسم بالكامل",
   "deliveryAddress": "عنوان التسليم",
   "swip_left_the_notification_to_delete_or_read__unread": "اسحب لليسار لحذف الاشعار",

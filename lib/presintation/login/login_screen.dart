@@ -35,13 +35,13 @@ class LoginScreen extends GetView<LoginController> {
                       ),
                     ),
                     Positioned(
-                      top: config.App(context).appHeight(37) - 120,
+                      top: config.App(context).appHeight(37) - 100,
                       child: Container(
                         width: config.App(context).appWidth(84),
                         height: config.App(context).appHeight(37),
                         child: Text(
                           'lets_start_with_login'.tr,
-                          style: Theme.of(context).textTheme.headline2!.merge(
+                          style: Theme.of(context).textTheme.headline4!.merge(
                               TextStyle(color: Theme.of(context).primaryColor)),
                         ),
                       ),

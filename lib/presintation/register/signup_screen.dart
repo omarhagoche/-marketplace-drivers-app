@@ -28,13 +28,13 @@ class SignupScreen extends GetView<SignupController> {
                 ),
               ),
               Positioned(
-                top: config.App(context).appHeight(29.5) - 120,
+                top: config.App(context).appHeight(29.5) - 100,
                 child: Container(
                   width: config.App(context).appWidth(84),
                   height: config.App(context).appHeight(29.5),
                   child: Text(
                     'lets_start_with_register'.tr,
-                    style: Theme.of(context).textTheme.headline2!.merge(TextStyle(color: Theme.of(context).primaryColor)),
+                    style: Theme.of(context).textTheme.headline4!.merge(TextStyle(color: Theme.of(context).primaryColor)),
                   ),
                 ),
               ),
@@ -231,6 +231,21 @@ class SignupScreen extends GetView<SignupController> {
                   ),
                 ),
               ),
+              Positioned(
+                bottom: 10,
+                child: Column(
+                  children: <Widget>[
+
+                    FlatButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      textColor: Theme.of(context).hintColor,
+                      child: Text('login'.tr),
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
         ),

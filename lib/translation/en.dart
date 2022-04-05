@@ -99,6 +99,12 @@ const Map<String, String> en = {
   "customer": "الزبون",
   "restaurantAddress": "عنوان المطعم",
   "phoneNumber": "رقم الهاتف",
+  "phoneNumber_forget": "Input Phone Number",
+  "send": "Send",
+  "confirmOtp": "Confirm",
+  "inputOtpCode": "Input Confirm Code",
+  "reSend": "ReSend Code",
+
   "fullName": "الاسم بالكامل",
   "deliveryAddress": "عنوان التسليم",
 

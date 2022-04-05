@@ -15,8 +15,8 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
+    // TODO : Remove (This Data For Test)
     phoneController.text = "0944024437";
     passwordController.text = "123456";
   }
