@@ -1,40 +1,32 @@
 {
-  "project_info": {
-    "project_number": "1010913744111",
-    "firebase_url": "https://sabek-test-303f7-default-rtdb.europe-west1.firebasedatabase.app",
-    "project_id": "sabek-test-303f7",
-    "storage_bucket": "sabek-test-303f7.appspot.com"
-  },
-  "client": [
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1010913744111:android:5b4cd8b3e1428604dbf71a",
-        "android_client_info": {
-          "package_name": "ly.sabek.customer"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1010913744111-5ou9vb0j7emtof0dq9uimmo3gek777gh.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCxppbKfLxadtFTWLc3CbHcoAEWKzHWTss"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1010913744111-5ou9vb0j7emtof0dq9uimmo3gek777gh.apps.googleusercontent.com",
-              "client_type": 3
+    "project_info": {
+        "project_number": "1010913744111",
+        "firebase_url": "https://sabek-test-303f7-default-rtdb.europe-west1.firebasedatabase.app",
+        "project_id": "sabek-test-303f7",
+        "storage_bucket": "sabek-test-303f7.appspot.com"
+    },
+    "client": [{
+        "client_info": {
+            "mobilesdk_app_id": "1:1010913744111:android:5b4cd8b3e1428604dbf71a",
+            "android_client_info": {
+                "package_name": "ly.sabek.delivery"
             }
-          ]
+        },
+        "oauth_client": [{
+            "client_id": "1010913744111-5ou9vb0j7emtof0dq9uimmo3gek777gh.apps.googleusercontent.com",
+            "client_type": 3
+        }],
+        "api_key": [{
+            "current_key": "AIzaSyCxppbKfLxadtFTWLc3CbHcoAEWKzHWTss"
+        }],
+        "services": {
+            "appinvite_service": {
+                "other_platform_oauth_client": [{
+                    "client_id": "1010913744111-5ou9vb0j7emtof0dq9uimmo3gek777gh.apps.googleusercontent.com",
+                    "client_type": 3
+                }]
+            }
         }
-      }
-    }
-  ],
-  "configuration_version": "1"
+    }],
+    "configuration_version": "1"
 }

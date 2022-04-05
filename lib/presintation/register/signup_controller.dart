@@ -7,7 +7,6 @@ import 'package:image_picker/image_picker.dart';
 import '../../data/models/driver_type.dart';
 
 class SignupController extends GetxController {
-
   final formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final passwordController = TextEditingController();
@@ -25,36 +24,22 @@ class SignupController extends GetxController {
     selectedType?.value = type;
   }
 
-  void passwordToggle(){
+  void passwordToggle() {
     hidePassword.value = !hidePassword.value;
   }
 
-
-  register() async {
-
-  }
+  register() async {}
 
   getImageFromGallery() async {
     try {
-      final pickedFile = await _picker.pickImage(
-        source: ImageSource.gallery,
-
-      );
-      if(pickedFile != null) {
-        print("dataaaa : start");
-
-        imagePath = pickedFile.path;
+      final pickedFile = await _picker.pickImage(source: ImageSource.gallery,);
+      if (pickedFile != null) {
         imageFile = File(pickedFile.path);
-        print("image path  : ${imagePath}");
-
-
+        update();
       }
-
     } catch (e) {
       // _pickImageError = e;
 
     }
-
   }
-
 }

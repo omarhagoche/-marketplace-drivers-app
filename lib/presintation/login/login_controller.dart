@@ -12,43 +12,49 @@ class LoginController extends GetxController {
   final currentUser = Rxn<User?>();
   var loading = false.obs;
   var error = ''.obs;
-  void passwordToggle(){
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    phoneController.text = "0944024437";
+    passwordController.text = "123456";
+  }
+
+  void passwordToggle() {
     hidePassword.value = !hidePassword.value;
   }
 
-  void forgetPassword(){
+  void forgetPassword() {
     Get.toNamed(Routes.FORGET_PASSWORD);
   }
-  void signUp(){
+
+  void signUp() {
     Get.toNamed(Routes.SIGNUP);
   }
 
   void login() async {
-    if (phoneController.text.isNotEmpty && passwordController.text.isNotEmpty ) {
-      if(phoneController.text.startsWith('0')) {
-          phoneController.text = phoneController.text.substring(1);
-       }
-        loading.value = true;
-        error.value = '';
-        AuthRepository.instance
-            .logIn(
-          phoneNumber: phoneController.text,
-          password: passwordController.text,
-        ).then((value) async {
-          if(value is User) {
-            if(value.id!=null)goHome();
-          }
-          error.value = value;
-          print("response data : $value");
-          loading.value = false;
-
-
-        });
-
+    if (phoneController.text.isNotEmpty && passwordController.text.isNotEmpty) {
+      if (phoneController.text.startsWith('0')) {
+        phoneController.text = phoneController.text.substring(1);
+      }
+      loading.value = true;
+      error.value = '';
+      AuthRepository.instance
+          .logIn(
+        phoneNumber: phoneController.text,
+        password: passwordController.text,
+      )
+          .then((value) async {
+        if (value is User) {
+          if (value.id != null) goHome();
+        }
+        error.value = value;
+        print("response data : $value");
+        loading.value = false;
+      });
     }
   }
-
-
 
   void goHome() {
     Get.offAllNamed(Routes.HOME);

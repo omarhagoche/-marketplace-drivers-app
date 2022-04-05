@@ -12,9 +12,7 @@ class SignupScreen extends GetView<SignupController> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: Helper.of(context).onWillPop,
-      child: Scaffold(
+    return  Scaffold(
        // key: _con.scaffoldKey,
         body: SingleChildScrollView(
           child: Stack(
@@ -68,36 +66,34 @@ class SignupScreen extends GetView<SignupController> {
                             children: <Widget>[
                               Stack(
                                 children: <Widget>[
-                                  Obx(
-                                          () => controller.imageFile != null
-                                              ? ClipRRect(
-                                            borderRadius:
-                                            BorderRadius.all(Radius.circular(300)),
-                                            child: Image.file(
-                                              controller.imageFile!,
-                                              width: 120,
-                                              height: 120,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          )
-                                              : ClipRRect(
-                                            borderRadius:
-                                            BorderRadius.all(Radius.circular(300)),
-                                            child: CachedNetworkImage(
-                                              height: 120,
-                                              width: 120,
-                                              fit: BoxFit.cover,
-                                              imageUrl: 'https://cp.sabek.app/images/image_default.png',
-                                              placeholder: (context, url) => Image.asset(
-                                                'assets/img/loading.gif',
-                                                fit: BoxFit.cover,
-                                                height: 120,
-                                                width: 120,
-                                              ),
-                                              errorWidget: (context, url, error) =>
-                                                  Icon(Icons.error),
-                                            ),
-                                          ),
+                                  controller.imageFile != null
+                                      ? ClipRRect(
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(300)),
+                                    child: Image.file(
+                                      controller.imageFile!,
+                                      width: 120,
+                                      height: 120,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  )
+                                      : ClipRRect(
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(300)),
+                                    child: CachedNetworkImage(
+                                      height: 120,
+                                      width: 120,
+                                      fit: BoxFit.cover,
+                                      imageUrl: 'https://cp.sabek.app/images/image_default.png',
+                                      placeholder: (context, url) => Image.asset(
+                                        'assets/img/loading.gif',
+                                        fit: BoxFit.cover,
+                                        height: 120,
+                                        width: 120,
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons.error),
+                                    ),
                                   ),
 
                                   Positioned(
@@ -238,7 +234,6 @@ class SignupScreen extends GetView<SignupController> {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }

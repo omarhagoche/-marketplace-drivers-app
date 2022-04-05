@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
         child: GetMaterialApp(
           onInit: () {
             AuthRepository.instance.getCurrentUser();
-            if(Get.find<GetStorage>().hasData('permission'))
+            if (Get.find<GetStorage>().hasData('permission'))
               SettingRepository.instance.listenCurrentLocation();
           },
           title: "Sabek: Partner",
@@ -52,7 +52,8 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             fontFamily: 'Tajawal',
             primaryColor: white,
-            floatingActionButtonTheme: FloatingActionButtonThemeData(elevation: 0, foregroundColor: Colors.white),
+            floatingActionButtonTheme: FloatingActionButtonThemeData(
+                elevation: 0, foregroundColor: Colors.white),
             brightness: Brightness.light,
             accentColor: primaryColor,
             dividerColor: accentColor.withOpacity(0.1),
