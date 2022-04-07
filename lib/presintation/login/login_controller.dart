@@ -17,7 +17,8 @@ class LoginController extends GetxController {
   void onInit() {
     super.onInit();
     // TODO : Remove (This Data For Test)
-    phoneController.text = "0944024437";
+    // phoneController.text = "0944024437";
+    phoneController.text = "919423843";
     passwordController.text = "123456";
   }
 

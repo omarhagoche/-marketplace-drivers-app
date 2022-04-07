@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../core/utils/helper.dart';
 import '../../data/repositories/auth_repository.dart';
-import '../widgets/loading_widget.dart';
 import '../widgets/profile_settings.dart';
 import 'setting_controller.dart';
 
@@ -248,13 +247,9 @@ class SettingScreen extends GetView<SettingController> {
                                           ),
                                           new FlatButton(
                                             onPressed: () {
-                                              currentUser.value.password =
-                                                  _con.passwordController.text;
-                                              currentUser.value.newPassword =
-                                                  _con.newPasswordController
-                                                      .text;
-                                              _con.updatePass(
-                                                  currentUser.value);
+                                              currentUser.value.password =   _con.passwordController.text;
+                                              currentUser.value.newPassword =_con.newPasswordController.text;
+                                              _con.updatePass(currentUser.value);
                                               Get.back();
                                               _con.passwordController.clear();
                                               _con.newPasswordController
@@ -287,7 +282,7 @@ class SettingScreen extends GetView<SettingController> {
                           ),
                           ListTile(
                             onTap: () {
-                              Navigator.of(context).pushNamed('/Languages');
+                              Get.toNamed('/LANGUAGE');
                             },
                             dense: true,
                             title: Row(
@@ -311,7 +306,7 @@ class SettingScreen extends GetView<SettingController> {
                           ),
                           ListTile(
                             onTap: () {
-                              Navigator.of(context).pushNamed('/Help');
+                              Get.toNamed('/HELP');
                             },
                             dense: true,
                             title: Row(

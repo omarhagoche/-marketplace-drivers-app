@@ -69,8 +69,8 @@ class _ProfileSettingsDialogState extends State<ProfileSettingsDialog> {
                                 errorText:
                                 'not_a_valid_phone'.tr),
                             PatternValidator(
-                              r'^(09?(9[0-9]{8}))$',
-                              errorText: 'not_a_valid_phone'.tr,
+                              r'^(9?(9[0-9]{8}))$',
+                              errorText: 'not_a_valid_phone',
                             )
                           ]),
                           onSaved: (input) => widget.user!.phone = input,

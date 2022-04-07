@@ -64,7 +64,10 @@ class AppPages {
         name: Routes.ORDERS_HISTORY,
         page: () => OrdersHistoryScreen(),
         binding: OrderHistoryBinding()),
-    GetPage(name: Routes.HELP, page: () => FaqScreen(), binding: FaqBinding()),
+    GetPage(
+        name: Routes.HELP,
+        page: () => FaqScreen(),
+        binding: FaqBinding()),
     GetPage(
         name: Routes.NOTIFICATION,
         page: () => NotificationScreen(),

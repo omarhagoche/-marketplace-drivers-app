@@ -85,11 +85,12 @@ class ProfileController extends GetxController {
   void updateDriverState(driverState) {
 
     try {
-      toggleState();
+      // toggleState();
       UserRepository.instance.updateDriverAvailable(driverState).then((value) {
-        update();
         if(!value){
           driverState.value = false;
+          update();
+
         }
       });
     } catch (e) {

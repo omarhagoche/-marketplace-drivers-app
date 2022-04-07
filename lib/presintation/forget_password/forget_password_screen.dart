@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
-import 'package:otp_text_field/otp_field.dart';
-import 'package:otp_text_field/style.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import '../widgets/block_button.dart';
 import '../widgets/loading_widget.dart';
@@ -14,84 +12,79 @@ class ForgetPasswordScreen extends GetView<ForgetPasswordController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: (controller.loading.value == true)
-          ? Center(
-              child: LoadingWidget(),
-            )
-          : Stack(
-              alignment: AlignmentDirectional.topCenter,
-              children: <Widget>[
-                Positioned(
-                  top: 0,
-                  child: Container(
-                    width: config.App(context).appWidth(100),
-                    height: config.App(context).appHeight(37),
-                    decoration:
-                        BoxDecoration(color: Theme.of(context).accentColor),
-                  ),
-                ),
-                Positioned(
-                  top: config.App(context).appHeight(37) - 100,
-                  child: Container(
-                    width: config.App(context).appWidth(84),
-                    height: config.App(context).appHeight(37),
-                    child: Obx(
-                        ()=>Text(
-                            !controller.otpSent.value&& !controller.loading.value
-                                ? 'phoneNumber_forget'.tr + "!"
-                                : "inputOtpCode".tr
-                            ,
-                        style: Theme.of(context).textTheme.headline4!.merge(
-                            TextStyle(color: Theme.of(context).primaryColor)),
-                      ),
+    return Obx(()=>Scaffold(
+        body: Stack(
+                alignment: AlignmentDirectional.topCenter,
+                children: <Widget>[
+                  Positioned(
+                    top: 0,
+                    child: Container(
+                      width: config.App(context).appWidth(100),
+                      height: config.App(context).appHeight(37),
+                      decoration:
+                          BoxDecoration(color: Theme.of(context).accentColor),
                     ),
                   ),
-                ),
-                Positioned(
-                    top: config.App(context).appHeight(37) - 50,
+                  Positioned(
+                    top: config.App(context).appHeight(37) - 100,
                     child: Container(
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 50,
-                              color:
-                                  Theme.of(context).hintColor.withOpacity(0.2),
-                            )
-                          ]),
-                      margin: EdgeInsets.symmetric(
-                        horizontal: 20,
-                      ),
-                      padding: EdgeInsets.only(
-                          top: 50, right: 27, left: 27, bottom: 20),
-                      width: config.App(context).appWidth(88),
-//              height: config.App(context).appHeight(55),
-                      child: Form(
-                          key: controller.formKey,
-                          child: Obx(()=>
-                          controller.otpSent.value&& !controller.loading.value
-                              ? inputOtpWidget(context)
-                              : inputPhoneNumberWidget(context))
-                              ),
-                    )),
-                Positioned(
-                  bottom: 10,
-                  child: Column(
-                    children: <Widget>[
-                      FlatButton(
-                        onPressed: () {
-                          Get.back();
-                        },
-                        textColor: Theme.of(context).hintColor,
-                        child: Text('login'.tr),
-                      ),
-                    ],
+                      width: config.App(context).appWidth(84),
+                      height: config.App(context).appHeight(37),
+                      child: Text(
+                              controller.currentDisplay.value=="inputPhone"
+                                  ? 'phoneNumber_forget'.tr + "!"
+                                  : "inputOtpCode".tr
+                        ,
+                          style: Theme.of(context).textTheme.headline4!.merge(
+                              TextStyle(color: Theme.of(context).primaryColor)),
+                        ),
+                    ),
                   ),
-                )
-              ],
-            ),
+                  Positioned(
+                      top: config.App(context).appHeight(37) - 50,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 50,
+                                color:
+                                    Theme.of(context).hintColor.withOpacity(0.2),
+                              )
+                            ]),
+                        margin: EdgeInsets.symmetric(
+                          horizontal: 20,
+                        ),
+                        padding: EdgeInsets.only(
+                            top: 50, right: 27, left: 27, bottom: 20),
+                        width: config.App(context).appWidth(88),
+//              height: config.App(context).appHeight(55),
+                        child: Form(
+                            key: controller.formKey,
+                            child:Obx(()=>
+                            controller.currentDisplay.value=="otpSending"
+                                ? inputOtpWidget(context)
+                                : inputPhoneNumberWidget(context)
+                            )),
+                      )),
+                  Positioned(
+                    bottom: 10,
+                    child: Column(
+                      children: <Widget>[
+                        FlatButton(
+                          onPressed: () {
+                            Get.back();
+                          },
+                          textColor: Theme.of(context).hintColor,
+                          child: Text('login'.tr),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+      ),
     );
   }
 
@@ -135,7 +128,9 @@ class ForgetPasswordScreen extends GetView<ForgetPasswordController> {
           ),
         ),
         SizedBox(height: 30),
-        BlockButtonWidget(
+        controller.currentDisplay.value=="otpSending"
+        ? CircularProgressIndicator()
+        : BlockButtonWidget(
             text: Text(
               'send'.tr,
               style: TextStyle(color: Theme.of(context).primaryColor),
