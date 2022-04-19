@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../data/models/driver_type.dart';
+import '../../data/repositories/auth_repository.dart';
 
 class SignupController extends GetxController {
   final formKey = GlobalKey<FormState>();
@@ -15,13 +16,20 @@ class SignupController extends GetxController {
   final ImagePicker _picker = ImagePicker();
   File? imageFile;
   String? imagePath;
-  RxList<DriverType> types = <DriverType>[].obs;
+  List<DriverType> types = <DriverType>[].obs;
 
   late Rxn<XFile> image = Rxn();
-  Rxn<DriverType>? selectedType = Rxn();
+  DriverType? selectedType;
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    getDriverTypes();
+  }
 
   onChangeDropdownTypeItem(DriverType type) {
-    selectedType?.value = type;
+    selectedType = type;
   }
 
   void passwordToggle() {
@@ -32,7 +40,9 @@ class SignupController extends GetxController {
 
   getImageFromGallery() async {
     try {
-      final pickedFile = await _picker.pickImage(source: ImageSource.gallery,);
+      final pickedFile = await _picker.pickImage(
+        source: ImageSource.gallery,
+      );
       if (pickedFile != null) {
         imageFile = File(pickedFile.path);
         update();
@@ -41,5 +51,12 @@ class SignupController extends GetxController {
       // _pickImageError = e;
 
     }
+  }
+
+  getDriverTypes() async {
+    types = await AuthRepository.instance.getDriverTypes();
+    selectedType = types[0];
+    print('$types types gotten in controller');
+    update();
   }
 }

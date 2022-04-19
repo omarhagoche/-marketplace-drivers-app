@@ -21,7 +21,6 @@ class ProfileController extends GetxController {
   var imagePath = ''.obs;
   late Rxn<XFile> profilePhoto = Rxn();
 
-
   @override
   void onInit() {
     getUserInfo();
@@ -29,16 +28,18 @@ class ProfileController extends GetxController {
     super.onInit();
   }
 
-  uploadProfileImage(){
+  uploadProfileImage() {
     if (profilePhoto.value != null) {
-      UserRepository.instance.updateImage(image: profilePhoto.value!).then((value) {
-        if(value) {
-          ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
+      UserRepository.instance
+          .updateImage(image: profilePhoto.value!)
+          .then((value) {
+        if (value) {
+          ScaffoldMessenger.of(scaffoldKey.currentContext!)
+              .showSnackBar(SnackBar(
             content: Text('تم تحميل الصورة بنجاح'),
           ));
         }
       });
-
     } else {
       print('No image selected.');
     }
@@ -72,26 +73,21 @@ class ProfileController extends GetxController {
         image.value = File(pickedFile.path);
         imagePath.value = pickedFile.path;
         uploadProfileImage();
-      }else{
+      } else {
         print('image path : $imagePath');
-
       }
     } catch (e) {
       // _pickImageError = e;
       print('image path : $e');
-
     }
   }
-  void updateDriverState(driverState) {
 
+  void updateDriverState(driverState) {
     try {
       // toggleState();
       UserRepository.instance.updateDriverAvailable(driverState).then((value) {
-        if(!value){
-          driverState.value = false;
-          update();
-
-        }
+        this.driverState.value = value;
+        update();
       });
     } catch (e) {
       ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
@@ -107,7 +103,7 @@ class ProfileController extends GetxController {
     });
   }
 
-  void toggleState(){
+  void toggleState() {
     driverState.value = !driverState.value;
   }
 
@@ -118,5 +114,4 @@ class ProfileController extends GetxController {
       print('statistics .. ${statistics}');
     });
   }
-
 }

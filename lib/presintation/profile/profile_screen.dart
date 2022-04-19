@@ -38,7 +38,6 @@ class ProfileScreen extends GetView<ProfileController> {
               : SingleChildScrollView(
                   child: Column(
                     children: <Widget>[
-
                       Obx(
                         () => ProfileAvatarWidget(
                           user: controller.user.value,
@@ -48,21 +47,20 @@ class ProfileScreen extends GetView<ProfileController> {
                         ),
                       ),
                       Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
-                          child: Card(
-                            child: SwitchListTile(
-                              title: const Text('متوفر'),
-                              value: controller.driverState.value,
-                              onChanged: (value) {
-                                controller.user.value!.driver!.available =
-                                    value;
-                                controller.updateDriverState(
-                                    controller.user.value!.driver!.available);
-                              },
-                              secondary: const Icon(Icons.lightbulb_outline),
-                            ),
-                          )),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        child: Card(
+                          child: SwitchListTile(
+                            title: const Text('متوفر'),
+                            value: controller.driverState.value,
+                            onChanged: (value) {
+                              controller.user.value!.driver!.available = value;
+                              controller.updateDriverState(value);
+                            },
+                            secondary: const Icon(Icons.lightbulb_outline),
+                          ),
+                        ),
+                      ),
                       Obx(
                         () => controller.statistics.value == null
                             ? Center(

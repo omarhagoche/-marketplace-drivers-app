@@ -16,6 +16,11 @@ class SettingScreen extends GetView<SettingController> {
         builder: (_con) => Scaffold(
               key: _con.scaffoldKey,
               appBar: AppBar(
+                leading: IconButton(
+                  icon: Icon(Icons.arrow_back,
+                      color: Theme.of(context).hintColor),
+                  onPressed: () => Get.back(),
+                ),
                 backgroundColor: Colors.transparent,
                 elevation: 0,
                 centerTitle: true,
@@ -40,7 +45,7 @@ class SettingScreen extends GetView<SettingController> {
                             child: Column(
                               children: <Widget>[
                                 Text(
-                                  currentUser.value.name??'',
+                                  currentUser.value.name ?? '',
                                   textAlign: TextAlign.left,
                                   style: Theme.of(context).textTheme.headline3,
                                 ),
@@ -153,7 +158,8 @@ class SettingScreen extends GetView<SettingController> {
                               style: Theme.of(context).textTheme.bodyText2,
                             ),
                             trailing: Text(
-                              Helper.limitString(currentUser.value.address??''),
+                              Helper.limitString(
+                                  currentUser.value.address ?? ''),
                               overflow: TextOverflow.fade,
                               softWrap: false,
                               style: TextStyle(
@@ -247,9 +253,13 @@ class SettingScreen extends GetView<SettingController> {
                                           ),
                                           new FlatButton(
                                             onPressed: () {
-                                              currentUser.value.password =   _con.passwordController.text;
-                                              currentUser.value.newPassword =_con.newPasswordController.text;
-                                              _con.updatePass(currentUser.value);
+                                              currentUser.value.password =
+                                                  _con.passwordController.text;
+                                              currentUser.value.newPassword =
+                                                  _con.newPasswordController
+                                                      .text;
+                                              _con.updatePass(
+                                                  currentUser.value);
                                               Get.back();
                                               _con.passwordController.clear();
                                               _con.newPasswordController
