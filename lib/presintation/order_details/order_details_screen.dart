@@ -203,6 +203,17 @@ class OrderDetailsScreen extends GetView<OrderDetailsController> {
                                                       _con.doDeliveredOrder(
                                                           _con.order.value!);
                                                     }
+                                                    else if (_con.order.value!
+                                                        .orderStatus!.key ==
+                                                        'waiting_for_drivers') {
+                                                      _con
+                                                          .order
+                                                          .value!
+                                                          .orderStatus!
+                                                          .id = "10";
+                                                      _con.doDeliveredOrder(
+                                                          _con.order.value!);
+                                                    }
                                                   },
                                                 ),
                                                 FlatButton(
