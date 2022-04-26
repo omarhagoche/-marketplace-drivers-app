@@ -13,6 +13,7 @@ class ProfileController extends GetxController {
   Rxn<User> user = Rxn();
   RxList<Order> recentOrders = <Order>[].obs;
   var driverState = false.obs;
+  var loading = false.obs;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   Rxn<Statistics> statistics = Rxn();
   Rxn<OverlayEntry?> loader = Rxn();
@@ -82,11 +83,17 @@ class ProfileController extends GetxController {
     }
   }
 
+  void toggleloadingwiget() {
+    loading.value = !loading.value;
+    update();
+  }
+
   void updateDriverState(driverState) {
     try {
-      // toggleState();
       UserRepository.instance.updateDriverAvailable(driverState).then((value) {
-        this.driverState.value = value;
+        // this.driverState.value = value;
+        toggleState();
+        toggleloadingwiget();
         update();
       });
     } catch (e) {
