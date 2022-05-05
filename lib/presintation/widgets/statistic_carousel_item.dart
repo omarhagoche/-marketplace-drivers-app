@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../core/utils/helper.dart';
 
@@ -32,19 +33,20 @@ class StatisticCarouselItemWidget extends StatelessWidget {
             Helper.of(context).trans(title!),
             textAlign: TextAlign.center,
             maxLines: 3,
-
             style: Theme.of(context).textTheme.subtitle1,
           ),
-          SizedBox(height: 8),
+          SizedBox(height: 10),
           title != 'total_orders'
               ? Text('${amount?.toStringAsFixed(2)} دل',
                   style: Theme.of(context).textTheme.headline2!.merge(
-                        TextStyle(height: 1,fontSize: 30),
+                        TextStyle(height: 1, fontSize: Get.width * 0.06),
                       ))
-              : Text('${amount?.toStringAsFixed(0)}',
+              : Text(
+                  '${amount?.toStringAsFixed(0)}',
                   style: Theme.of(context).textTheme.headline2!.merge(
-                        TextStyle(height: 1,fontSize: 30),
-                      ),),
+                        TextStyle(height: 1, fontSize: Get.width * 0.06),
+                      ),
+                ),
         ],
       ),
     );
