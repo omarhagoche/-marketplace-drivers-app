@@ -49,17 +49,34 @@ class ProfileScreen extends GetView<ProfileController> {
                       Padding(
                         padding:
                             EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                        child: Card(
-                          child: SwitchListTile(
-                            title: const Text('متوفر'),
-                            value: controller.driverState.value,
-                            onChanged: (value) {
-                              controller.user.value!.driver!.available = value;
-                              controller.updateDriverState(value);
-                            },
-                            secondary: const Icon(Icons.lightbulb_outline),
-                          ),
-                        ),
+                        child: controller.loading.value
+                            ? Container(
+                                child:
+                                    Center(child: CircularProgressIndicator()),
+                              )
+                            : Card(
+                                child: SwitchListTile(
+                                    title: controller
+                                            .user.value!.driver!.available!
+                                        ? Text('متوفر')
+                                        : Text('غير متوفر'),
+                                    value: controller.driverState.value,
+                                    onChanged: (value) {
+                                      controller.toggleloadingwiget();
+                                      controller.user.value!.driver!.available =
+                                          value;
+                                      controller.updateDriverState(value);
+                                    },
+                                    secondary: controller
+                                            .user.value!.driver!.available!
+                                        ? Icon(
+                                            Icons.lightbulb_outline,
+                                            color: Colors.green,
+                                          )
+                                        : Icon(
+                                            Icons.lightbulb_outline,
+                                          )),
+                              ),
                       ),
                       Obx(
                         () => controller.statistics.value == null

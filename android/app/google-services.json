@@ -1,32 +1,143 @@
 {
     "project_info": {
-        "project_number": "1010913744111",
-        "firebase_url": "https://sabek-test-303f7-default-rtdb.europe-west1.firebasedatabase.app",
-        "project_id": "sabek-test-303f7",
-        "storage_bucket": "sabek-test-303f7.appspot.com"
+        "project_number": "1092944715077",
+        "firebase_url": "https://sabek-6fd3f-default-rtdb.firebaseio.com",
+        "project_id": "sabek-6fd3f",
+        "storage_bucket": "sabek-6fd3f.appspot.com"
     },
-    "client": [{
-        "client_info": {
-            "mobilesdk_app_id": "1:1010913744111:android:5b4cd8b3e1428604dbf71a",
-            "android_client_info": {
-                "package_name": "ly.sabek.delivery"
+    "client": [
+        {
+            "client_info": {
+                "mobilesdk_app_id": "1:1092944715077:android:fbecb6f64f08f598fab22c",
+                "android_client_info": {
+                    "package_name": "ly.sabek.customer"
+                }
+            },
+            "oauth_client": [
+                {
+                    "client_id": "1092944715077-dm5h8t0qprjqdpd8euoq9v06lqjuqnbh.apps.googleusercontent.com",
+                    "client_type": 1,
+                    "android_info": {
+                        "package_name": "ly.sabek.customer",
+                        "certificate_hash": "0515aded24542a8ced430e92364c97dc540607b9"
+                    }
+                },
+                {
+                    "client_id": "1092944715077-j3a080k78r1vapl8vfj7r197qopp625o.apps.googleusercontent.com",
+                    "client_type": 3
+                }
+            ],
+            "api_key": [
+                {
+                    "current_key": "AIzaSyDvK4HrCk1kxiiA2ExBFQzlcadmDZa6viw"
+                }
+            ],
+            "services": {
+                "appinvite_service": {
+                    "other_platform_oauth_client": [
+                        {
+                            "client_id": "1092944715077-j3a080k78r1vapl8vfj7r197qopp625o.apps.googleusercontent.com",
+                            "client_type": 3
+                        },
+                        {
+                            "client_id": "1092944715077-25m1mdalujbnfab12hsr73oetjgmmdeh.apps.googleusercontent.com",
+                            "client_type": 2,
+                            "ios_info": {
+                                "bundle_id": "ly.sabek.delivery"
+                            }
+                        }
+                    ]
+                }
             }
         },
-        "oauth_client": [{
-            "client_id": "1010913744111-5ou9vb0j7emtof0dq9uimmo3gek777gh.apps.googleusercontent.com",
-            "client_type": 3
-        }],
-        "api_key": [{
-            "current_key": "AIzaSyCxppbKfLxadtFTWLc3CbHcoAEWKzHWTss"
-        }],
-        "services": {
-            "appinvite_service": {
-                "other_platform_oauth_client": [{
-                    "client_id": "1010913744111-5ou9vb0j7emtof0dq9uimmo3gek777gh.apps.googleusercontent.com",
+        {
+            "client_info": {
+                "mobilesdk_app_id": "1:1092944715077:android:7b826ed3fea59ef2fab22c",
+                "android_client_info": {
+                    "package_name": "ly.sabek.delivery"
+                }
+            },
+            "oauth_client": [
+                {
+                    "client_id": "1092944715077-gk297qgg9rluth08i7st7brbu7hpdr3a.apps.googleusercontent.com",
+                    "client_type": 1,
+                    "android_info": {
+                        "package_name": "ly.sabek.delivery",
+                        "certificate_hash": "3b004295bc58097a8e5be1386f623718d854ac30"
+                    }
+                },
+                {
+                    "client_id": "1092944715077-j3a080k78r1vapl8vfj7r197qopp625o.apps.googleusercontent.com",
                     "client_type": 3
-                }]
+                }
+            ],
+            "api_key": [
+                {
+                    "current_key": "AIzaSyDvK4HrCk1kxiiA2ExBFQzlcadmDZa6viw"
+                }
+            ],
+            "services": {
+                "appinvite_service": {
+                    "other_platform_oauth_client": [
+                        {
+                            "client_id": "1092944715077-j3a080k78r1vapl8vfj7r197qopp625o.apps.googleusercontent.com",
+                            "client_type": 3
+                        },
+                        {
+                            "client_id": "1092944715077-25m1mdalujbnfab12hsr73oetjgmmdeh.apps.googleusercontent.com",
+                            "client_type": 2,
+                            "ios_info": {
+                                "bundle_id": "ly.sabek.delivery"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "client_info": {
+                "mobilesdk_app_id": "1:1092944715077:android:dee048292a55e0f1fab22c",
+                "android_client_info": {
+                    "package_name": "ly.sabek.owner"
+                }
+            },
+            "oauth_client": [
+                {
+                    "client_id": "1092944715077-kv6dbrc0p268hl12vt7j7j7sum7sk2cf.apps.googleusercontent.com",
+                    "client_type": 1,
+                    "android_info": {
+                        "package_name": "ly.sabek.owner",
+                        "certificate_hash": "059f0073321618b7c86baf0f4c9281123543063e"
+                    }
+                },
+                {
+                    "client_id": "1092944715077-j3a080k78r1vapl8vfj7r197qopp625o.apps.googleusercontent.com",
+                    "client_type": 3
+                }
+            ],
+            "api_key": [
+                {
+                    "current_key": "AIzaSyDvK4HrCk1kxiiA2ExBFQzlcadmDZa6viw"
+                }
+            ],
+            "services": {
+                "appinvite_service": {
+                    "other_platform_oauth_client": [
+                        {
+                            "client_id": "1092944715077-j3a080k78r1vapl8vfj7r197qopp625o.apps.googleusercontent.com",
+                            "client_type": 3
+                        },
+                        {
+                            "client_id": "1092944715077-25m1mdalujbnfab12hsr73oetjgmmdeh.apps.googleusercontent.com",
+                            "client_type": 2,
+                            "ios_info": {
+                                "bundle_id": "ly.sabek.delivery"
+                            }
+                        }
+                    ]
+                }
             }
         }
-    }],
+    ],
     "configuration_version": "1"
 }
