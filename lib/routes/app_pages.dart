@@ -22,6 +22,7 @@ import '../presintation/orders_history/orders_history_binding.dart';
 import '../presintation/orders_history/orders_history_screen.dart';
 import '../presintation/profile/profile_binding.dart';
 import '../presintation/profile/profile_screen.dart';
+import '../presintation/register/otp_screen.dart';
 import '../presintation/register/signup_binding.dart';
 import '../presintation/setting/setting_binding.dart';
 import '../presintation/setting/setting_screen.dart';
@@ -64,10 +65,7 @@ class AppPages {
         name: Routes.ORDERS_HISTORY,
         page: () => OrdersHistoryScreen(),
         binding: OrderHistoryBinding()),
-    GetPage(
-        name: Routes.HELP,
-        page: () => FaqScreen(),
-        binding: FaqBinding()),
+    GetPage(name: Routes.HELP, page: () => FaqScreen(), binding: FaqBinding()),
     GetPage(
         name: Routes.NOTIFICATION,
         page: () => NotificationScreen(),
@@ -92,5 +90,10 @@ class AppPages {
         name: Routes.FORGET_PASSWORD,
         page: () => ForgetPasswordScreen(),
         binding: ForgetPasswordBinding()),
+    GetPage(
+      name: Routes.SIGNUPOTP,
+      page: () => SignupOtpScreen(),
+      binding: SignupBinding(),
+    ),
   ];
 }

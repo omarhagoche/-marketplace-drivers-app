@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../../data/models/user.dart';
 import 'package:get/get.dart';
+
 class ProfileAvatarWidget extends StatelessWidget {
   final User? user;
   final VoidCallback? onGallery;
@@ -37,7 +38,7 @@ class ProfileAvatarWidget extends StatelessWidget {
               children: <Widget>[
                 Stack(
                   children: <Widget>[
-                    image.toString().isNotEmpty
+                    image.toString().isEmpty
                         ? ClipRRect(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(300)),
@@ -93,13 +94,14 @@ class ProfileAvatarWidget extends StatelessWidget {
             user!.name!,
             style: Theme.of(context)
                 .textTheme
-                .headline5
-                !.merge(TextStyle(color: Theme.of(context).primaryColor)),
+                .headline5!
+                .merge(TextStyle(color: Theme.of(context).primaryColor)),
           ),
         ],
       ),
     );
   }
+
   void _showPicker(context) {
     showModalBottomSheet(
         context: context,
@@ -110,14 +112,18 @@ class ProfileAvatarWidget extends StatelessWidget {
                 children: <Widget>[
                   new ListTile(
                       leading: new Icon(Icons.photo_library),
-                      title: new Text('gallery'.tr,),
+                      title: new Text(
+                        'gallery'.tr,
+                      ),
                       onTap: () {
                         onGallery!();
                         Navigator.of(context).pop();
                       }),
                   new ListTile(
                     leading: new Icon(Icons.photo_camera),
-                    title: new Text('camera'.tr,),
+                    title: new Text(
+                      'camera'.tr,
+                    ),
                     onTap: () {
                       onCamera!();
                       Navigator.of(context).pop();
@@ -127,7 +133,6 @@ class ProfileAvatarWidget extends StatelessWidget {
               ),
             ),
           );
-        }
-    );
+        });
   }
 }

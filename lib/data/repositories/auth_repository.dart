@@ -90,30 +90,90 @@ class AuthRepository extends ApiService {
     return responseBody;
   }
 
-  Future<String?> signUp({
-    required String phoneNumber,
+  Future<dynamic> signUp({
+    required String email,
+    required String name,
+    required String token,
+    required int driverTypeId,
     required String password,
+    File? image,
   }) async {
     final requestBody = {
-      'phone_number': phoneNumber,
+      'token': token,
+      'name': name,
+      'email': email,
       'password': password,
-      'password_confirmation': password,
+      'driver_type_id': driverTypeId,
+      // 'image': image,
     };
-    String? token;
 
-    String signupUrl = '';
+    // String signupUrl = 'driver/register';
+    String signupUrl = "https://tests.sabek.ly/api/driver/register";
+
+    String? error;
 
     await post(
       signupUrl,
       data: json.encode(requestBody),
-      requireAuthorization: false,
-    ).then((response) async {
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        print(response.data);
-      }
+      // requireAuthorization: false,
+    ).then(
+      (response) async {
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          setCurrentUser(response.data['data']);
+          currentUser.value = User.fromJSON(response.data['data']);
+        } else {
+          print('code : ${response.statusCode}');
+          error = Helper.handleError(422, '');
+        }
+      },
+    ).catchError((onError) async {
+      print('error : ${onError} ${onError.toString().isEmpty}');
     });
-    print(token);
-    return token;
+    return currentUser.value;
+  }
+
+  Future<String?> requestRegister(String phoneNumber) async {
+    String url = 'driver/register';
+    // String url = "https://tests.sabek.ly/api/driver/register";
+
+    await get(
+      url,
+      queryParameters: {
+        'phone_number': phoneNumber,
+      },
+    ).then((value) {
+      if (value.statusCode == 200) {}
+    }).catchError((onError) async {
+      print('error : ${onError} ${onError.toString().isEmpty}');
+    });
+  }
+
+  Future<String> confirmRegisterVerification({
+    required String phoneNumber,
+    required String otp,
+  }) async {
+    String url = 'driver/confirm_register';
+    // String url = "https://tests.sabek.ly/api/driver/confirm_register";
+
+    final requestBody = {
+      'phone_number': phoneNumber,
+      'code': otp,
+    };
+
+    dynamic responseBody;
+
+    await post(
+      url,
+      data: json.encode(requestBody),
+    ).then((response) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        responseBody = response.data['token'];
+      }
+    }).catchError((onError) async {
+      print('error : ${onError}');
+    });
+
+    return responseBody;
   }
 
   Future<void> logout(deviceToken) async {
@@ -150,7 +210,8 @@ class AuthRepository extends ApiService {
 
   Future<List<DriverType>> getDriverTypes() async {
     late List<DriverType> responseBody;
-    final String url = 'https://test.sabek.app/api/driver/driverTypes';
+    //https://test.sabek.app/api/
+    final String url = 'driver/driverTypes';
 
     await get(url).then(
       (response) async {

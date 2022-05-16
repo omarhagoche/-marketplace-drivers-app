@@ -58,7 +58,6 @@ class UserRepository extends ApiService {
     return responseBody;
   }
 
-
   Future<bool> updateDriverAvailable(driverState) async {
     final String url = 'driver/update-status';
     bool state = false;
@@ -78,7 +77,6 @@ class UserRepository extends ApiService {
   }
 
   Future<bool> updateImage({required XFile image}) async {
-
     bool? state = null;
     FormData formData = FormData.fromMap({
       'image': await MultipartFile.fromFile(
@@ -86,19 +84,19 @@ class UserRepository extends ApiService {
         filename: basename(image.path),
       )
     });
-    await post('update-profile-image',
+    await post(
+      'update-profile-image',
       extraHeaders: {HttpHeaders.contentTypeHeader: 'application/json'},
       data: formData,
     ).then((value) {
-      if(value.statusCode == 201 || value.statusCode == 200){
+      if (value.statusCode == 201 || value.statusCode == 200) {
         state = true;
-
       }
     }).catchError((e) async {
       state = false;
       if (e is DioError) {
         if (e.type == DioErrorType.response) {
-          Get.snackbar('حدث خطأ','فشل دفع الصورة حاول مجددا');
+          Get.snackbar('حدث خطأ', 'فشل دفع الصورة حاول مجددا');
         }
       } else {
         throw e;

@@ -78,17 +78,20 @@ class LoginScreen extends GetView<LoginController> {
                                 keyboardType: TextInputType.number,
                                 // onSaved: (input) => _con.user.phone = input!.substring(1),
                                 maxLength: 10,
-                                validator: MultiValidator([
-                                  RequiredValidator(
-                                      errorText: "Please enter phone number"),
-                                  MinLengthValidator(10,
-                                      errorText:
-                                          'should_be_more_than_10_letters'.tr),
-                                  PatternValidator(
-                                    r'^(09?(9[0-9]{8}))$',
-                                    errorText: 'not_a_valid_phone'.tr,
-                                  )
-                                ]),
+                                validator: MultiValidator(
+                                  [
+                                    RequiredValidator(
+                                        errorText: "Please enter phone number"),
+                                    MinLengthValidator(10,
+                                        errorText:
+                                            'should_be_more_than_10_letters'
+                                                .tr),
+                                    PatternValidator(
+                                      r'^(09?(9[0-9]{8}))$',
+                                      errorText: 'not_a_valid_phone'.tr,
+                                    )
+                                  ],
+                                ),
                                 decoration: InputDecoration(
                                   labelText: 'phone'.tr,
                                   labelStyle: TextStyle(
@@ -201,7 +204,7 @@ class LoginScreen extends GetView<LoginController> {
                             child: Text('i_forgot_password'.tr),
                           ),
                           FlatButton(
-                            onPressed: () =>controller.signUp(),
+                            onPressed: () => controller.signUp(),
                             textColor: Theme.of(context).hintColor,
                             child: Text('i_dont_have_an_account'.tr),
                           ),

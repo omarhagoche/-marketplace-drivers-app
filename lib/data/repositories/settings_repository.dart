@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:location/location.dart';
@@ -21,12 +22,12 @@ ValueNotifier<Setting> setting = new ValueNotifier(new Setting());
 ValueNotifier<bool> workingOnOrder = new ValueNotifier(false);
 ValueNotifier<Address> myAddress = new ValueNotifier(new Address());
 final navigatorKey = GlobalKey<NavigatorState>();
-const Privacy_Policy =
-    'https://cp.sabek.app/privacy';
+const Privacy_Policy = 'https://cp.sabek.app/privacy';
 const APP_STORE_URL =
     'https://apps.apple.com/gb/app/sabek-partner/id1600324402?uo=2';
 const PLAY_STORE_URL =
     'https://play.google.com/store/apps/details?id=ly.sabek.delivery';
+
 class SettingRepository extends ApiService {
   static SettingRepository get instance => SettingRepository();
   final box = Get.find<GetStorage>();
@@ -38,26 +39,29 @@ class SettingRepository extends ApiService {
       url,
     ).then((response) async {
       if (response.statusCode == 200) {
-          responseBody = Setting.fromJSON(response.data['data'] );
-          setting.value = responseBody;
-          // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
-          setting.notifyListeners();
-        }
+        responseBody = Setting.fromJSON(response.data['data']);
+        setting.value = responseBody;
+        // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
+        setting.notifyListeners();
+      }
     }).catchError((onError) async {
-      print('error : ${onError} ${onError
-          .toString()
-          .isEmpty}');
-      responseBody=new Setting();
+      print('error : ${onError} ${onError.toString().isEmpty}');
+      responseBody = new Setting();
     });
     return responseBody;
   }
+
   listenCurrentLocation() async {
-    if(!Get.find<GetStorage>().hasData('permission'))setValue('acceptPermission');
+    if (!Get.find<GetStorage>().hasData('permission'))
+      setValue('acceptPermission');
     User user = new User();
     String? driverId;
     Location location = new Location();
     bool _serviceEnabled;
     PermissionStatus _permissionGranted;
+    double startLatitude = 0;
+    double startLongitude = 0;
+    double distanceInMeters;
 
     _serviceEnabled = await location.serviceEnabled();
     if (!_serviceEnabled) {
@@ -75,49 +79,75 @@ class SettingRepository extends ApiService {
       }
     }
     if (Get.find<GetStorage>().hasData('token'))
-    UserRepository.instance.userProfile().then(
-            (value) => location.onLocationChanged.listen((LocationData current) {
-            try {
-              FirebaseFirestore.instance
-                  .collection("drivers")
-                  .doc(currentUser.value.id)
-                  .get()
-                  .then((driver) {
-                driverId = driver['id'].toString();
-                workingOnOrder.value = driver['working_on_order'];
-                print(driverId);
-                if (driverId == null)
-                  FirebaseFirestore.instance
-                      .collection("drivers")
-                      .doc(currentUser.value.id)
-                      .set({
-                    'id': currentUser.value.id,
-                    'available': false,
-                    'working_on_order': false,
-                    'latitude': current.latitude,
-                    'longitude': current.longitude,
-                    'last_access': DateTime.now().millisecondsSinceEpoch
-                  }).catchError((e) {
-                    print(e);
-                  });
-                else
-                  FirebaseFirestore.instance
-                      .collection("drivers")
-                      .doc(currentUser.value.id)
-                      .update({
-                    'id': currentUser.value.id,
-                    'latitude': current.latitude,
-                    'longitude': current.longitude,
-                    'last_access': DateTime.now().millisecondsSinceEpoch
-                  }).catchError((e) {
-                    print(e);
-                  });
-              });
-            } catch (e) {
-              print("Error in cloud firebase $e");
-            }
-          }
-        ));
+      UserRepository.instance.userProfile().then(
+            (value) => location.onLocationChanged.listen(
+              (LocationData current) {
+                try {
+                  if (driverId == null) {
+                    FirebaseFirestore.instance
+                        .collection("drivers")
+                        .doc(currentUser.value.id)
+                        .get()
+                        .then(
+                      (driver) {
+                        driverId = driver['id'].toString();
+                        workingOnOrder.value = driver['working_on_order'];
+
+                        FirebaseFirestore.instance
+                            .collection("drivers")
+                            .doc(currentUser.value.id)
+                            .set(
+                          {
+                            'id': currentUser.value.id,
+                            'available': false,
+                            'working_on_order': false,
+                            'latitude': current.latitude,
+                            'longitude': current.longitude,
+                            'last_access': DateTime.now().millisecondsSinceEpoch
+                          },
+                        ).catchError(
+                          (e) {
+                            print(e);
+                          },
+                        );
+                        startLatitude = current.latitude!;
+                        startLongitude = current.longitude!;
+                      },
+                    );
+                  } else {
+                    distanceInMeters = Geolocator.distanceBetween(
+                      startLatitude,
+                      startLongitude,
+                      current.latitude!,
+                      current.longitude!,
+                    );
+
+                    if (distanceInMeters >= 100) {
+                      FirebaseFirestore.instance
+                          .collection("drivers")
+                          .doc(currentUser.value.id)
+                          .update(
+                        {
+                          'id': currentUser.value.id,
+                          'latitude': current.latitude,
+                          'longitude': current.longitude,
+                          'last_access': DateTime.now().millisecondsSinceEpoch
+                        },
+                      ).catchError(
+                        (e) {
+                          print(e);
+                        },
+                      );
+                      startLatitude = current.latitude!;
+                      startLongitude = current.longitude!;
+                    }
+                  }
+                } catch (e) {
+                  print("Error in cloud firebase $e");
+                }
+              },
+            ),
+          );
     location.enableBackgroundMode(enable: true);
   }
 
@@ -126,6 +156,7 @@ class SettingRepository extends ApiService {
       await box.write('permission', value);
     }
   }
+
   Future<void> setDefaultLanguage(String language) async {
     await box.write('language', language);
   }
@@ -144,44 +175,46 @@ class SettingRepository extends ApiService {
   Future<String> getMessageId() async {
     return await box.read('google.message_id');
   }
+
   versionCheck(context) async {
     final PackageInfo info = await PackageInfo.fromPlatform();
-    double currentVersion = double.parse(
-        info.version.trim().replaceAll(".", ""));
+    double currentVersion =
+        double.parse(info.version.trim().replaceAll(".", ""));
     Platform.isIOS
         ? {
-      if (double.tryParse(setting.value.appVersionIOS!.replaceAll(".", ""))! >
-          currentVersion)
-        {
-          if (setting.value.forceUpdateIOS!)
-            Get.offAndToNamed(Routes.FORCEUPDATE,
-                arguments: RouteArgument(id: ''))
-          else
-            {
-              Get.offAndToNamed(Routes.FORCEUPDATE,
-                  arguments: RouteArgument(id: '0'))
-            }
-        }
-      else
-        Get.offAndToNamed(Routes.HOME, arguments: 0)
-    }
+            if (double.tryParse(
+                    setting.value.appVersionIOS!.replaceAll(".", ""))! >
+                currentVersion)
+              {
+                if (setting.value.forceUpdateIOS!)
+                  Get.offAndToNamed(Routes.FORCEUPDATE,
+                      arguments: RouteArgument(id: ''))
+                else
+                  {
+                    Get.offAndToNamed(Routes.FORCEUPDATE,
+                        arguments: RouteArgument(id: '0'))
+                  }
+              }
+            else
+              Get.offAndToNamed(Routes.HOME, arguments: 0)
+          }
         : {
-      if (double.tryParse(
-          setting.value.appVersionAndroid!.replaceAll(".", ""))! >
-          currentVersion)
-        {
-          if (setting.value.forceUpdateAndroid!)
-            Get.offAndToNamed(Routes.FORCEUPDATE,
-                arguments: RouteArgument(id: ''))
-          else
-            {
-              Get.offAndToNamed(Routes.FORCEUPDATE,
-                  arguments: RouteArgument(id: '0'))
-            }
-        }
-      else
-        Get.offAndToNamed(Routes.HOME, arguments: 0)
-    };
+            if (double.tryParse(
+                    setting.value.appVersionAndroid!.replaceAll(".", ""))! >
+                currentVersion)
+              {
+                if (setting.value.forceUpdateAndroid!)
+                  Get.offAndToNamed(Routes.FORCEUPDATE,
+                      arguments: RouteArgument(id: ''))
+                else
+                  {
+                    Get.offAndToNamed(Routes.FORCEUPDATE,
+                        arguments: RouteArgument(id: '0'))
+                  }
+              }
+            else
+              Get.offAndToNamed(Routes.HOME, arguments: 0)
+          };
   }
 
   launchURL(String url) async {

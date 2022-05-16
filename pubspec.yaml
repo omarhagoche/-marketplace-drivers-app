@@ -51,6 +51,7 @@ dependencies:
   dio: ^4.0.4
   connectivity_plus: ^2.2.1
   dio_http_cache: ^0.3.0
+  geolocator: ^8.2.1
 
 dev_dependencies:
   flutter_test:

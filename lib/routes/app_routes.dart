@@ -19,7 +19,5 @@ abstract class Routes {
   static const NOTIFICATION = '/NOTIFICATION';
   static const FORCEUPDATE = '/FORCEUPDATE';
   static const PERMISSION = '/PERMISSION';
-
-
+  static const SIGNUPOTP = '/SIGNUP_OTP';
 }
-
